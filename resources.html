@@ -20,7 +20,21 @@
 </div>
 </section>
 
-<section class="soft-section" id="reflection-wall"><div class="section-shell"><div class="section-heading"><p class="eyebrow">Anonymous Reflection Wall</p><h2>Small wins count.</h2><p>Share a micro-win or a gentle truth. Posts are stored only in this browser for this demo.</p></div><form class="reflection-form" id="reflection-form"><input id="reflection-input" maxlength="120" required placeholder="I laughed today…"><button class="button button-primary">Post anonymously</button></form><div class="reflection-wall" id="reflection-wall"></div></div></section>
+<section class="soft-section" id="reflection-wall"><div class="section-shell">
+<div class="section-heading"><p class="eyebrow">Anonymous Reflection Wall</p><h2>Small wins count.</h2><p>Leave a micro-win, a gentle truth, a note of gratitude, or some hope for whoever reads it next. No names are attached to anything you post.</p></div>
+<div class="reflection-compose">
+<div class="reflection-copy"><h3>Add your reflection</h3><p>Progress is rarely linear. A glass of water, a phone call returned, a hard day survived: all of it belongs here.</p><ul class="reflection-guidelines"><li>Keep it anonymous. Leave out names, places, and contact details.</li><li>Speak from your own experience. Avoid advice about medication or treatment.</li><li>Be kind. Everyone here is somewhere in their own process.</li></ul></div>
+<form class="reflection-form" id="reflection-form" novalidate>
+<fieldset><legend>What kind of reflection is this?</legend><label class="chip"><input type="radio" name="tag" value="win" checked><span>Small win</span></label><label class="chip"><input type="radio" name="tag" value="truth"><span>Gentle truth</span></label><label class="chip"><input type="radio" name="tag" value="thanks"><span>Gratitude</span></label><label class="chip"><input type="radio" name="tag" value="hope"><span>Note of hope</span></label></fieldset>
+<label class="field-label" for="reflection-input">Your reflection</label><textarea id="reflection-input" maxlength="280" placeholder="I made it to my meeting even though I almost talked myself out of it…"></textarea>
+<div class="reflection-row"><span class="reflection-count" id="reflection-count">0 / 280</span><button class="button button-primary" type="submit">Post anonymously</button></div><p class="reflection-status" id="reflection-status" role="status"></p>
+</form>
+</div>
+<div class="reflection-head"><h3>From the community</h3><div class="reflection-filters" id="reflection-filters" role="group" aria-label="Filter reflections"><button type="button" data-filter="all" aria-pressed="true">All</button><button type="button" data-filter="win" aria-pressed="false">Small wins</button><button type="button" data-filter="truth" aria-pressed="false">Gentle truths</button><button type="button" data-filter="thanks" aria-pressed="false">Gratitude</button><button type="button" data-filter="hope" aria-pressed="false">Hope</button></div></div>
+<div class="reflection-empty" id="reflection-empty"><strong>The wall is waiting for its first note.</strong>Write one above and it will appear here.</div>
+<div class="reflection-wall" id="reflection-list"></div>
+<p class="small-note reflection-crisis"><strong>This wall is peer reflection, not crisis support.</strong> If you are in immediate danger, call 911. For emotional distress or substance-use crisis, call or text 988, any time.</p>
+</div></section>
 
 <section class="section-shell directory-section" id="directory"><div class="section-heading"><p class="eyebrow">Vetted starting points</p><h2>Resource directory</h2><p>For immediate danger, call 911. For emotional crisis support, call or text 988. Confirm availability and eligibility directly with each provider.</p></div><div class="directory-grid">
 <a class="directory-card" href="tel:988"><span>24/7 crisis support</span><h3>988 Suicide & Crisis Lifeline</h3><p>Call or text 988 for emotional distress, substance-use concerns, or crisis support.</p><strong>Call or text 988 →</strong></a>
