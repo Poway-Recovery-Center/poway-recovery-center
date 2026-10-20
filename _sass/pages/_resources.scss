@@ -1,54 +1,84 @@
-// Resources hub (resources.html)
+// Resources (resources.html): crisis line strip, then a centered directory of four categories
 @use "../tokens" as *;
 
-.jump__title { @include display-font; font-size: 1.35rem; margin-bottom: 14px; }
+.res {
+  max-width: 960px;
+  padding-top: 40px;
+}
 
-.jump {
-  @include panel(20px 22px);
+.res-crisis {
+  text-align: center;
+  padding: 18px 20px;
+  background: $sand;
+  border-radius: $radius;
+
+  h2 { font-size: 1.1rem; margin: 0 0 4px; }
+
+  p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 28px;
+    margin: 0;
+  }
+
+  a { color: $ink; font-weight: 700; }
+}
+
+.res-hub {
   display: grid;
-  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 56px;
+  margin-top: 44px;
+
+  @include md { grid-template-columns: 1fr; gap: 32px; }
 }
 
-.jump__group {
-  display: grid;
-  grid-template-columns: 170px minmax(0, 1fr);
-  gap: 12px;
-  align-items: center;
+.res-group {
+  scroll-margin-top: $header-height + 20px;
 
-  & + & { border-top: 1px solid $line; padding-top: 14px; }
+  h2 {
+    font-size: 1.25rem;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid $teal;
+  }
 
-  @include md { grid-template-columns: 1fr; gap: 8px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+
+  li {
+    padding: 10px 0;
+    border-bottom: 1px solid $line;
+    color: $muted;
+    scroll-margin-top: $header-height + 20px;
+  }
+
+  // Name on its own line, the note underneath
+  a, button {
+    display: block;
+    width: fit-content;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: 700;
+    color: $teal;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  a:hover, button:hover { text-decoration: underline; }
+  li:target { background: $mist; }
+
+  // Recovery groups: program name, then its links on one line
+  .res-group__programs a { display: inline; }
 }
 
-.jump__label { font-weight: 700; font-size: .95rem; }
-
-.jump .prc__links { gap: 8px; }
-
-.resource {
-  @include panel(22px);
-  display: flex;
-  flex-direction: column;
-  scroll-margin-top: $header-height + 24px;
-
-  h3 { margin-bottom: 6px; }
-  p { color: $muted; flex: 1; }
-  .prc__links { gap: 8px; }
-
-  &.is-highlighted { animation: resource-flash 2s ease; }
+.res-group__name {
+  display: block;
+  font-weight: 700;
+  color: $ink;
 }
 
-.resource__when {
-  font-size: .8rem;
-  font-weight: 600;
-  color: $teal;
-  margin-bottom: 4px;
-}
-
-@keyframes resource-flash {
-  0%, 40% { border-color: $teal; box-shadow: 0 0 0 4px rgba($teal, .25); }
-  100% { border-color: $line; box-shadow: none; }
-}
-
-.tabs__panel > .note { margin: 0 0 18px; }
-
-.resources__disclaimer { margin-top: 20px; }
+.res-note { text-align: center; margin: 36px 0 0; }

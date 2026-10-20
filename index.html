@@ -1,6 +1,6 @@
 ---
 title: Home
-description: Free peer-support recovery meetings and resources at 13939 Poway Rd, Poway, California.
+description: Recovery programs and meetings for people with different addictions and those affected by them, at 13939 and 13943 Poway Rd, Poway, California.
 scripts: [js/home.js]
 ---
 <section class="hero">
@@ -8,79 +8,128 @@ scripts: [js/home.js]
     <source src="PRChomepagevideo.mp4" type="video/mp4">
   </video>
   <div class="hero__shade"></div>
-  <div class="wrap hero__grid">
-    <div class="hero__text">
-      <h1>Poway Recovery Center</h1>
-      <p class="hero__lead">A peer-support community for recovery and mental health. Meetings run every day, they're free, and you're welcome to come as you are.</p>
-      <p class="hero__where">13939 Poway Rd, Suite A · Poway, CA 92064</p>
-      <p class="hero__next" id="hero-next" aria-live="polite"></p>
-    </div>
-
-    <nav class="quick-links" aria-label="How can we help?">
-      <h2>How can we help?</h2>
-      <a class="prc__btn large block accent fill" href="schedule.html">Find a meeting &amp; reserve a spot <span aria-hidden="true">→</span></a>
-      <a class="prc__btn large block alert-red fill" href="tel:988">Need help now? Call or text 988 <span aria-hidden="true">→</span></a>
-      <a class="prc__btn large block" href="resources.html">Browse all resources <span aria-hidden="true">→</span></a>
-      <div class="quick-links__pair">
-        <a class="prc__btn large block" href="mood-room.html">Mood Room <span aria-hidden="true">→</span></a>
-        <a class="prc__btn large block" href="reflection-wall.html">Reflection Wall <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="quick-links__pair">
-        <button class="prc__btn large block" type="button" data-open-chat>Talk to the assistant <span aria-hidden="true">→</span></button>
-        <a class="prc__btn large block" href="contact.html">Contact us <span aria-hidden="true">→</span></a>
-      </div>
-      <a class="prc__btn large block" href="login.html" data-account-link>Log in or create an account <span aria-hidden="true">→</span></a>
-    </nav>
+  <div class="wrap hero__text">
+    <h1>Poway Recovery Center</h1>
+    <p class="hero__lead">Helping individuals and their loved ones</p>
+    <p class="hero__where">13939 &amp; 13943 Poway Rd · Poway, CA 92064</p>
+    <p class="hero__next" id="hero-next" aria-live="polite"></p>
   </div>
 </section>
 
-<section class="section wrap" id="today">
+<nav class="wrap hub" aria-label="Poway Recovery Center hub">
+  <a class="hub__tile hub__tile--wide hub__tile--primary" href="schedule.html">
+    <span class="hub__kicker">Meetings</span>
+    <span class="hub__title">Find a meeting &amp; reserve a spot</span>
+    <span class="hub__desc">Join us in meetings that suit your needs and get help.</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="hub__tile" href="resources.html">
+    <span class="hub__kicker">Resources</span>
+    <span class="hub__title">Browse all resources</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="hub__tile" href="resources.html#care">
+    <span class="hub__kicker">Care</span>
+    <span class="hub__title">Help finding care</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="hub__tile" href="mood-room.html">
+    <span class="hub__kicker">Tools</span>
+    <span class="hub__title">Mood Room</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="hub__tile" href="reflection-wall.html">
+    <span class="hub__kicker">Tools</span>
+    <span class="hub__title">Reflection Wall</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <button class="hub__tile" type="button" data-open-chat>
+    <span class="hub__kicker">Ask</span>
+    <span class="hub__title">Talk to the assistant</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </button>
+  <a class="hub__tile" href="about.html">
+    <span class="hub__kicker">About</span>
+    <span class="hub__title">About the center</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="hub__tile" href="contact.html">
+    <span class="hub__kicker">Contact</span>
+    <span class="hub__title">Contact us</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="hub__tile" href="login.html" data-account-link>
+    <span class="hub__kicker">Account</span>
+    <span class="hub__title">Log in or create an account</span>
+    <span class="hub__arrow" aria-hidden="true">→</span>
+  </a>
+</nav>
+
+<section class="section wrap" aria-labelledby="programs-title">
   <div class="section-title">
-    <h2 id="today-title">Today at the center</h2>
-    <a class="prc__btn accent" href="schedule.html">Full weekly schedule</a>
+    <h2 id="programs-title">Recovery programs</h2>
+    <a class="prc__btn accent" href="schedule.html">See when they meet</a>
   </div>
-  <div class="today" id="today-list"><p class="muted">Loading today's meetings…</p></div>
+  <p class="muted">We offer programs for people with different addictions and those who are affected by them.</p>
+  <div class="programs">
+    <a class="program" href="https://powayrecoverycenter.org/aa/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">AA</span>
+      <h3>Alcoholics Anonymous (AA)</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/aca/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">ACA</span>
+      <h3>Adult Children of Alcoholics (ACA)</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/al-anon/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">AFG</span>
+      <h3>Al-Anon Family Groups</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/alateen/" target="_blank" rel="noopener">
+      <span class="program__badge program__badge--long" aria-hidden="true">Teen</span>
+      <h3>Alateen</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/na/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">NA</span>
+      <h3>Narcotics Anonymous (NA)</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/ca/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">CA</span>
+      <h3>Cocaine Anonymous (CA)</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/ga/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">GA</span>
+      <h3>Gamblers Anonymous (GA)</h3>
+    </a>
+    <a class="program" href="https://powayrecoverycenter.org/sa/" target="_blank" rel="noopener">
+      <span class="program__badge" aria-hidden="true">SA</span>
+      <h3>Sexaholics Anonymous (SA)</h3>
+    </a>
+  </div>
 </section>
 
-<section class="section wrap">
-  <div class="section-title"><h2>What we offer</h2></div>
-  <div class="grid grid--3">
-    <a class="card card--link" href="schedule.html">
-      <h3>Peer-support meetings</h3>
-      <p>Open and closed meetings every day of the week, in person and on Zoom. Reserve a spot ahead of time so we know you're coming.</p>
-      <span class="card__more">See the schedule →</span>
-    </a>
-    <a class="card card--link" href="resources.html#tab-site">
-      <h3>Tools for hard moments</h3>
-      <p>The Mood Room helps you settle when things feel like a lot. The Reflection Wall lets you share small wins anonymously.</p>
-      <span class="card__more">Open the tools →</span>
-    </a>
-    <a class="card card--link" href="resources.html#tab-care">
-      <h3>Help finding care</h3>
-      <p>Crisis lines, treatment search, county behavioral health and everyday needs like food and transportation, all in one place.</p>
-      <span class="card__more">Find services →</span>
-    </a>
-  </div>
-</section>
-
-<section class="section wrap">
-  <div class="visit">
-    <div>
-      <h2>Visiting for the first time?</h2>
-      <ul class="checklist">
-        <li>You don't need to sign up or explain your story to attend a meeting.</li>
-        <li>"Open" meetings welcome anyone. "Closed" meetings are for people who want to stop drinking or using.</li>
-        <li>Some meetings are upstairs. Each meeting's room and access details are listed on the schedule.</li>
-        <li>Hybrid meetings also run on Zoom. The Zoom details are listed with each meeting.</li>
-      </ul>
+<section class="section wrap hub-info">
+  <div class="hub-info__today">
+    <div class="section-title">
+      <h2 id="today-title">Today at the center</h2>
+      <a class="prc__btn accent" href="schedule.html">Full weekly schedule</a>
     </div>
+    <div class="today" id="today-list"><p class="muted">Loading today's meetings…</p></div>
+  </div>
+
+  <aside class="hub-info__side">
     <div class="note">
-      <h3>Find us</h3>
-      <p>13939 Poway Rd, Suite A<br>Poway, CA 92064</p>
+      <h3>Where we are</h3>
+      <p><strong>13939 Poway Rd, Suites 10 &amp; 11</strong><br>Stairs required.</p>
+      <p><strong>13943 Poway Rd, Suite A</strong><br>East side by the cement wall, no stairs.</p>
+      <p class="muted">Poway, CA 92064</p>
       <div class="prc__links">
         <a class="prc__btn accent fill" href="https://www.google.com/maps/search/?api=1&query=13939+Poway+Rd+Poway+CA+92064" target="_blank" rel="noopener">Get directions</a>
-        <a class="prc__btn" href="contact.html">Send us a message</a>
       </div>
     </div>
-  </div>
+    <div class="note note--sand">
+      <h3>Support the center</h3>
+      <p>Your donations help us continue our mission. Every contribution, no matter the size, makes a meaningful impact.</p>
+      <p><strong>PayPal:</strong> Poway Recovery Center<br><strong>Venmo:</strong> @powayrecovery-center</p>
+    </div>
+  </aside>
 </section>

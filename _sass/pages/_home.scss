@@ -1,14 +1,17 @@
-// Home page (index.html)
+// Home page (index.html): compact video hero, hub of tiles, then today's meetings beside visit info
+@use "sass:color";
 @use "../tokens" as *;
 
 .hero {
   position: relative;
   overflow: hidden;
   color: $white;
-  padding: 56px 0;
-  min-height: min(640px, calc(100vh - #{$header-height}));
+  padding: 96px 0;
+  min-height: min(520px, calc(100vh - #{$header-height}));
   display: flex;
   align-items: center;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(#0a2e2c, .45);
 }
 
 .hero__video,
@@ -20,24 +23,16 @@
   object-fit: cover;
 }
 
-.hero__shade { background: linear-gradient(90deg, rgba(#0e2a3e, .88) 0%, rgba(#0e2a3e, .7) 55%, rgba(#0e2a3e, .45) 100%); }
-
-.hero__grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  gap: 48px;
-  align-items: center;
-
-  @include md { grid-template-columns: 1fr; gap: 28px; }
-}
+.hero__shade { background: linear-gradient(180deg, rgba(#0a2e2c, .5) 0%, rgba(#0a2e2c, .65) 100%); }
 
 .hero__text {
-  h1 { @include display-font; font-size: clamp(2.4rem, 5.5vw, 4rem); margin-bottom: 16px; }
+  position: relative;
+
+  h1 { @include display-font; font-size: clamp(2.2rem, 5.5vw, 3.6rem); margin-bottom: 14px; }
 }
 
-.hero__lead { font-size: 1.15rem; max-width: 560px; color: #eaf2f5; }
-.hero__where { color: #c8dbe4; margin-bottom: 6px; }
+.hero__lead { font-size: 1.1rem; max-width: 600px; margin: 0 auto 12px; color: #e6f4f1; }
+.hero__where { color: #bfe0da; margin-bottom: 6px; }
 
 .hero__next {
   display: inline-block;
@@ -50,26 +45,139 @@
   &:empty { display: none; }
 }
 
-.quick-links {
-  background: $white;
-  color: $ink;
-  border-radius: 14px;
-  padding: 22px;
+// Hub: tiles in their own section below the hero
+.hub {
+  margin-top: 40px;
   display: grid;
-  gap: 10px;
-  box-shadow: 0 20px 50px rgba(#0e2a3e, .35);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 
-  h2 { @include display-font; font-size: 1.3rem; margin: 0 0 6px; }
-
-  .prc__btn.large { font-size: 16px; }
+  @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include sm { grid-template-columns: 1fr; }
 }
 
-.quick-links__pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+// Tile colors: background, border, kicker; hover deepens the background
+@mixin hub-tone($bg, $border, $text, $kicker) {
+  background: $bg;
+  border-color: $border;
+  color: $text;
 
+  .hub__kicker { color: $kicker; }
+  .hub__desc { color: rgba($text, .78); }
+
+  &:hover,
+  &:focus-visible {
+    color: $text;
+    background: if($bg == $white, $mist, color.adjust($bg, $lightness: -6%));
+    border-color: if($bg == $white, $ocean, $border);
+  }
+}
+
+.hub__tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 112px;
+  padding: 18px 20px 40px;
+  border: 1px solid;
+  border-radius: 14px;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: $shadow;
+  transition: background .2s, border-color .2s, transform .2s;
+  @include hub-tone($white, $line, $ink, $teal);
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+
+    .hub__arrow { transform: translateX(3px); }
+  }
+}
+
+.hub__tile--wide {
+  grid-column: 1 / -1;
+  min-height: 120px;
+
+  .hub__title { font-size: 1.35rem; }
+}
+
+.hub__tile--primary { @include hub-tone($ocean, $ocean, $white, $sand); }
+
+.hub__kicker {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.hub__title { @include display-font; font-size: 1.1rem; }
+.hub__desc { font-size: .92rem; }
+
+.hub__arrow {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: transform .2s;
+}
+
+// Recovery programs that meet at the center
+.programs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+
+  @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @include sm { grid-template-columns: 1fr; }
+}
+
+.program {
+  @include panel(18px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .2s, box-shadow .2s;
+
+  &:hover, &:focus-visible { border-color: $teal; box-shadow: $shadow; }
+
+  h3 { font-size: 1rem; margin: 0; }
+}
+
+.program__badge {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: $sage;
+  color: $teal;
+  @include display-font;
+  font-size: .95rem;
+}
+
+.program__badge--long { font-size: .78rem; }
+
+// Today's meetings beside the visit info
+.hub-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+
+  @include md { grid-template-columns: 1fr; }
+}
+
+.hub-info__side {
+  display: grid;
+  gap: 16px;
 }
 
 // Today's meetings list
@@ -107,39 +215,3 @@
 .today__spots { text-align: right; @include sm { text-align: left; } }
 .today > p { padding: 20px; margin: 0; }
 
-// First-visit section
-.visit > div > h2 { @include display-font; }
-.visit {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 32px;
-  align-items: start;
-
-  @include md { grid-template-columns: 1fr; }
-}
-
-.checklist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 10px;
-
-  li { padding-left: 30px; position: relative; }
-
-  li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    top: 1px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: $sage;
-    color: $teal;
-    font-size: .75rem;
-    font-weight: 700;
-    display: grid;
-    place-items: center;
-  }
-}

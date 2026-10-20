@@ -46,3 +46,10 @@
 .sidebar { display: grid; gap: 18px; position: sticky; top: $header-height + 20px; }
 
 @include md { .sidebar { position: static; } }
+
+// Centered heading band (set head_class: page-head--center in a page's front matter)
+.page-head--center {
+  text-align: center;
+
+  p { margin: 0 auto; }
+}

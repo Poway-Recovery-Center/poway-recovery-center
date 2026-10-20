@@ -17,7 +17,7 @@
 
   <main id="main">
     {% if page.heading %}
-    <section class="page-head">
+    <section class="page-head{% if page.head_class %} {{ page.head_class }}{% endif %}">
       <div class="wrap">
         {% if page.parent %}<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ page.parent_url }}">{{ page.parent }}</a> › {{ page.title }}</nav>{% endif %}
         <h1>{{ page.heading }}</h1>

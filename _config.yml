@@ -1,6 +1,6 @@
 # Site settings
 title: Poway Recovery Center
-description: A peer-support recovery community at 13939 Poway Rd, Poway, California. Free meetings every day, plus local resources.
+description: Poway Recovery Center offers programs for people with different addictions and those affected by them, at 13939 and 13943 Poway Rd, Poway, California.
 
 # Every page uses _layouts/default.html (shared header, footer and scripts) unless it sets its own layout
 defaults:

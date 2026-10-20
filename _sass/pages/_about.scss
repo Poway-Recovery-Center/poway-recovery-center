@@ -1,6 +1,26 @@
 // About page (about.html)
 @use "../tokens" as *;
 
+// "On this page" jump links under the page heading
+.about-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+.about-jump__label {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: $muted;
+  margin-right: 4px;
+}
+
+#who, #history, #programs, #visit { scroll-margin-top: $header-height + 16px; }
+
 .about {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
@@ -8,6 +28,7 @@
   align-items: start;
 
   > div > h2 { @include display-font; }
+  > div > h2 + p { margin-bottom: 24px; }
   > div > p { font-size: 1.05rem; }
 
   @include md { grid-template-columns: 1fr; }
@@ -25,4 +46,75 @@
 
 .card .prc__btn { align-self: flex-start; margin-top: 4px; }
 
-.values > div { border-top: 3px solid $teal; padding-top: 14px; }
+// Programs: compact two-up list with an abbreviation badge
+.about-programs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+
+  @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include sm { grid-template-columns: 1fr; }
+
+  a {
+    @include panel(12px 14px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+    color: $ink;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color .2s, box-shadow .2s;
+
+    &:hover, &:focus-visible { border-color: $teal; box-shadow: $shadow; }
+  }
+
+  strong {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: $sage;
+    color: $teal;
+    @include display-font;
+    font-size: .8rem;
+  }
+}
+
+// History: year column beside each event
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid $teal;
+
+  li {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 4px 16px;
+    padding: 0 0 18px 20px;
+    position: relative;
+
+    @include sm { grid-template-columns: 1fr; }
+  }
+
+  li::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $sand;
+    border: 2px solid $teal;
+  }
+
+  strong { color: $teal; }
+}
+

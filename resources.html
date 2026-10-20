@@ -1,213 +1,65 @@
 ---
 title: Resources
 nav: resources
+head_class: page-head--center
 heading: Resources
-intro: Everything we offer, plus trusted local and national services. Pick a resource below, or browse by category.
-description: Meeting schedule, Mood Room, Reflection Wall, crisis lines, treatment search and everyday help in San Diego County.
-scripts: [js/resources.js]
+intro: Recovery groups, treatment and crisis lines in San Diego County.
+description: Crisis lines, recovery groups, treatment search and everyday help in San Diego County, plus the center's own tools.
 ---
-<section class="section wrap">
-  <h2 class="jump__title">Go straight to a resource</h2>
-  <nav class="jump" aria-label="All resources">
-    <div class="jump__group">
-      <span class="jump__label">On this site</span>
-      <div class="prc__links">
-        <a class="prc__btn pill" href="schedule.html">Meeting schedule</a>
-        <a class="prc__btn pill" href="mood-room.html">Mood Room</a>
-        <a class="prc__btn pill" href="reflection-wall.html">Reflection Wall</a>
-        <button class="prc__btn pill" type="button" data-open-chat>Support assistant</button>
-      </div>
-    </div>
-    <div class="jump__group">
-      <span class="jump__label">Crisis help</span>
-      <div class="prc__links">
-        <a class="prc__btn pill" href="#r-988">988 Lifeline</a>
-        <a class="prc__btn pill" href="#r-textline">Crisis Text Line</a>
-        <a class="prc__btn pill" href="#r-access">SD Access &amp; Crisis Line</a>
-        <a class="prc__btn pill" href="#r-911">Emergency 911</a>
-      </div>
-    </div>
-    <div class="jump__group">
-      <span class="jump__label">Meetings &amp; groups</span>
-      <div class="prc__links">
-        <a class="prc__btn pill" href="#r-aa">North County AA</a>
-        <a class="prc__btn pill" href="#r-na">San Diego NA</a>
-        <a class="prc__btn pill" href="#r-alanon">Al-Anon</a>
-        <a class="prc__btn pill" href="#r-smart">SMART Recovery</a>
-        <a class="prc__btn pill" href="#r-nami">NAMI San Diego</a>
-      </div>
-    </div>
-    <div class="jump__group">
-      <span class="jump__label">Treatment &amp; care</span>
-      <div class="prc__links">
-        <a class="prc__btn pill" href="#r-samhsa">SAMHSA Helpline</a>
-        <a class="prc__btn pill" href="#r-findtreatment">FindTreatment.gov</a>
-        <a class="prc__btn pill" href="#r-county">SD County Behavioral Health</a>
-        <a class="prc__btn pill" href="#r-optum">County provider directory</a>
-      </div>
-    </div>
-    <div class="jump__group">
-      <span class="jump__label">Everyday needs</span>
-      <div class="prc__links">
-        <a class="prc__btn pill" href="#r-211">211 San Diego</a>
-        <a class="prc__btn pill" href="#r-food">Feeding San Diego</a>
-        <a class="prc__btn pill" href="#r-mts">MTS transit</a>
-      </div>
-    </div>
-  </nav>
-</section>
+<div class="wrap res">
+  <section class="res-crisis" id="crisis" aria-labelledby="crisis-title">
+    <h2 id="crisis-title">In crisis?</h2>
+    <p>
+      <span id="r-988">Call or text <a href="tel:988">988</a></span>
+      <span id="r-textline">Text HOME to <a href="sms:741741&amp;body=HOME">741741</a></span>
+      <span id="r-access">SD Access &amp; Crisis Line <a href="tel:18887247240">1-888-724-7240</a></span>
+      <span id="r-911">Emergency <a href="tel:911">911</a></span>
+    </p>
+  </section>
 
-<section class="section wrap">
-  <div class="tabs" data-tabs>
-    <div class="tabs__list" role="tablist" aria-label="Resource categories">
-      <button class="tabs__tab" role="tab" id="tab-site" aria-controls="panel-site" aria-selected="true">On this site</button>
-      <button class="tabs__tab" role="tab" id="tab-crisis" aria-controls="panel-crisis" aria-selected="false" tabindex="-1">Crisis help</button>
-      <button class="tabs__tab" role="tab" id="tab-groups" aria-controls="panel-groups" aria-selected="false" tabindex="-1">Meetings &amp; groups</button>
-      <button class="tabs__tab" role="tab" id="tab-care" aria-controls="panel-care" aria-selected="false" tabindex="-1">Treatment &amp; care</button>
-      <button class="tabs__tab" role="tab" id="tab-needs" aria-controls="panel-needs" aria-selected="false" tabindex="-1">Everyday needs</button>
-    </div>
+  <div class="res-hub">
+    <section class="res-group" id="groups">
+      <h2>Recovery groups</h2>
+      <ul class="res-group__programs">
+        <li id="r-aa"><span class="res-group__name">AA</span><a href="https://aasandiego.org/" target="_blank" rel="noopener">AA San Diego Central Office</a> · <a href="https://ncsandiegoaa.org/" target="_blank" rel="noopener">North County AA Central Office</a> · <a href="https://www.aa.org/" target="_blank" rel="noopener">Official website</a></li>
+        <li id="r-aca"><span class="res-group__name">ACA</span><a href="https://sandiegoaca.org/" target="_blank" rel="noopener">San Diego ACA</a> · <a href="https://adultchildren.org/" target="_blank" rel="noopener">Official website</a></li>
+        <li id="r-alanon"><span class="res-group__name">Al-Anon &amp; Alateen</span><a href="https://www.alanonsandiego.org/" target="_blank" rel="noopener">San Diego County Al-Anon</a> · <a href="https://al-anon.org/" target="_blank" rel="noopener">Official website</a></li>
+        <li id="r-na"><span class="res-group__name">NA</span><a href="https://www.sandiegona.org/" target="_blank" rel="noopener">San Diego County Narcotics Anonymous</a> · <a href="https://na.org/" target="_blank" rel="noopener">Official website</a></li>
+        <li id="r-ca"><span class="res-group__name">CA</span><a href="https://casandiego.org/" target="_blank" rel="noopener">Cocaine Anonymous San Diego</a> · <a href="https://ca.org/" target="_blank" rel="noopener">Official website</a></li>
+        <li id="r-ga"><span class="res-group__name">GA</span><a href="https://sandiego-ga.org/" target="_blank" rel="noopener">San Diego Gamblers Anonymous</a> · <a href="https://gamblersanonymous.org/" target="_blank" rel="noopener">Official website</a></li>
+        <li id="r-saa"><span class="res-group__name">SAA</span><a href="https://sandiegosaa.com/" target="_blank" rel="noopener">San Diego SAA</a> · <a href="https://saa-recovery.org/" target="_blank" rel="noopener">Official website</a></li>
+      </ul>
+    </section>
 
-    <div class="tabs__panel" role="tabpanel" id="panel-site" aria-labelledby="tab-site" tabindex="0">
-      <div class="grid">
-        <article class="resource" id="r-schedule">
-          <h3>Meeting schedule</h3>
-          <p>This week's meetings at the center, with open spots. Log in to reserve a spot for yourself or someone you're bringing.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="schedule.html">Open the schedule</a></div>
-        </article>
-        <article class="resource" id="r-mood">
-          <h3>Mood Room</h3>
-          <p>Describe how you're feeling in your own words and get a grounding prompt, music to match, and a small next step.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="mood-room.html">Enter the Mood Room</a></div>
-        </article>
-        <article class="resource" id="r-wall">
-          <h3>Reflection Wall</h3>
-          <p>Read and share anonymous small wins, gentle truths and notes of hope from the community.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="reflection-wall.html">Visit the wall</a></div>
-        </article>
-        <article class="resource" id="r-assistant">
-          <h3>Support assistant</h3>
-          <p>An AI chat that offers coping ideas and points you to the right page. It isn't a therapist or a crisis service.</p>
-          <div class="prc__links"><button class="prc__btn accent fill" type="button" data-open-chat>Start a chat</button></div>
-        </article>
-      </div>
-    </div>
+    <section class="res-group" id="care">
+      <h2>Sober living &amp; treatment</h2>
+      <ul>
+        <li id="r-sober"><a href="https://soberhousing.net/" target="_blank" rel="noopener">Find sober living</a></li>
+        <li id="r-treatment"><a href="https://www.drugstrategies.org/Treatment/California/San-Diego/" target="_blank" rel="noopener">Treatment centers in San Diego</a></li>
+        <li id="r-samhsa"><a href="tel:18006624357">SAMHSA National Helpline</a> 1-800-662-4357</li>
+        <li id="r-findtreatment"><a href="https://findtreatment.gov/" target="_blank" rel="noopener">FindTreatment.gov</a></li>
+      </ul>
+    </section>
 
-    <div class="tabs__panel" role="tabpanel" id="panel-crisis" aria-labelledby="tab-crisis" tabindex="0" hidden>
-      <p class="note note--crisis">If you or someone else is in immediate danger, call 911 now.</p>
-      <div class="grid">
-        <article class="resource" id="r-988">
-          <span class="resource__when">24/7 · free · confidential</span>
-          <h3>988 Suicide &amp; Crisis Lifeline</h3>
-          <p>Call or text 988 for emotional distress, thoughts of suicide, or a substance-use crisis.</p>
-          <div class="prc__links"><a class="prc__btn alert-red fill" href="tel:988">Call 988</a><a class="prc__btn" href="sms:988">Text 988</a><a class="prc__btn" href="https://988lifeline.org/" target="_blank" rel="noopener">Chat online ↗</a></div>
-        </article>
-        <article class="resource" id="r-textline">
-          <span class="resource__when">24/7 · text</span>
-          <h3>Crisis Text Line</h3>
-          <p>Text HOME to 741741 to reach a trained crisis counselor by text.</p>
-          <div class="prc__links"><a class="prc__btn alert-red fill" href="sms:741741&amp;body=HOME">Text HOME to 741741</a><a class="prc__btn" href="https://www.crisistextline.org/" target="_blank" rel="noopener">Website ↗</a></div>
-        </article>
-        <article class="resource" id="r-access">
-          <span class="resource__when">24/7 · San Diego County</span>
-          <h3>San Diego Access &amp; Crisis Line</h3>
-          <p>Crisis support and referrals to county mental health and substance-use services.</p>
-          <div class="prc__links"><a class="prc__btn alert-red fill" href="tel:18887247240">Call 1-888-724-7240</a></div>
-        </article>
-        <article class="resource" id="r-911">
-          <span class="resource__when">Emergencies</span>
-          <h3>Emergency services</h3>
-          <p>Call 911 for a medical emergency, an overdose, or if anyone is in immediate danger.</p>
-          <div class="prc__links"><a class="prc__btn alert-red fill" href="tel:911">Call 911</a></div>
-        </article>
-      </div>
-    </div>
+    <section class="res-group" id="needs">
+      <h2>Everyday needs</h2>
+      <ul>
+        <li id="r-211"><a href="tel:211">211 San Diego</a> Dial 2-1-1</li>
+        <li id="r-food"><a href="https://feedingsandiego.org/" target="_blank" rel="noopener">Feeding San Diego</a></li>
+        <li id="r-mts"><a href="https://www.sdmts.com/" target="_blank" rel="noopener">MTS (San Diego transit)</a></li>
+      </ul>
+    </section>
 
-    <div class="tabs__panel" role="tabpanel" id="panel-groups" aria-labelledby="tab-groups" tabindex="0" hidden>
-      <div class="grid">
-        <article class="resource" id="r-aa">
-          <span class="resource__when">Alcohol</span>
-          <h3>North County San Diego AA</h3>
-          <p>Every AA meeting in North County, including the meetings at our center. Our schedule is updated from this directory.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://ncsandiegoaa.org/meetings/" target="_blank" rel="noopener">Find AA meetings ↗</a></div>
-        </article>
-        <article class="resource" id="r-na">
-          <span class="resource__when">Drugs</span>
-          <h3>San Diego Narcotics Anonymous</h3>
-          <p>NA meetings and helpline information across San Diego and Imperial counties.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.sandiegona.org/" target="_blank" rel="noopener">Find NA meetings ↗</a></div>
-        </article>
-        <article class="resource" id="r-alanon">
-          <span class="resource__when">Family &amp; friends</span>
-          <h3>Al-Anon</h3>
-          <p>Support groups for people affected by someone else's drinking.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://al-anon.org/al-anon-meetings/" target="_blank" rel="noopener">Find Al-Anon meetings ↗</a></div>
-        </article>
-        <article class="resource" id="r-smart">
-          <span class="resource__when">Science-based</span>
-          <h3>SMART Recovery</h3>
-          <p>Self-empowering, skills-based recovery meetings, in person and online.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://meetings.smartrecovery.org/" target="_blank" rel="noopener">Find SMART meetings ↗</a></div>
-        </article>
-        <article class="resource" id="r-nami">
-          <span class="resource__when">Mental health</span>
-          <h3>NAMI San Diego</h3>
-          <p>Free mental health support groups and classes for individuals and families.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://namisandiego.org/" target="_blank" rel="noopener">Visit NAMI San Diego ↗</a></div>
-        </article>
-      </div>
-    </div>
-
-    <div class="tabs__panel" role="tabpanel" id="panel-care" aria-labelledby="tab-care" tabindex="0" hidden>
-      <div class="grid">
-        <article class="resource" id="r-samhsa">
-          <span class="resource__when">24/7 · free · confidential</span>
-          <h3>SAMHSA National Helpline</h3>
-          <p>Treatment referrals and information for mental health and substance use, in English and Spanish.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="tel:18006624357">Call 1-800-662-4357</a><a class="prc__btn" href="https://www.samhsa.gov/find-help/helplines/national-helpline" target="_blank" rel="noopener">Website ↗</a></div>
-        </article>
-        <article class="resource" id="r-findtreatment">
-          <span class="resource__when">Search</span>
-          <h3>FindTreatment.gov</h3>
-          <p>Search licensed treatment facilities near you by service, payment option and language.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://findtreatment.gov/" target="_blank" rel="noopener">Search treatment ↗</a></div>
-        </article>
-        <article class="resource" id="r-county">
-          <span class="resource__when">San Diego County</span>
-          <h3>County Behavioral Health Services</h3>
-          <p>San Diego County's mental health and substance-use programs and how to access them.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.sandiegocounty.gov/content/sdc/hhsa/programs/bhs.html" target="_blank" rel="noopener">County services ↗</a></div>
-        </article>
-        <article class="resource" id="r-optum">
-          <span class="resource__when">San Diego County</span>
-          <h3>County provider directory (Optum)</h3>
-          <p>Look up county-funded mental health and substance-use providers in San Diego.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.optumsandiego.com/" target="_blank" rel="noopener">Provider directory ↗</a></div>
-        </article>
-      </div>
-    </div>
-
-    <div class="tabs__panel" role="tabpanel" id="panel-needs" aria-labelledby="tab-needs" tabindex="0" hidden>
-      <div class="grid">
-        <article class="resource" id="r-211">
-          <span class="resource__when">24/7 · dial 2-1-1</span>
-          <h3>211 San Diego</h3>
-          <p>Connects you to housing, food, utilities, health care and other local services.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="tel:211">Call 211</a><a class="prc__btn" href="https://211sandiego.org/" target="_blank" rel="noopener">Website ↗</a></div>
-        </article>
-        <article class="resource" id="r-food">
-          <span class="resource__when">Food</span>
-          <h3>Feeding San Diego</h3>
-          <p>Find free food distributions and pantries near you.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://feedingsandiego.org/" target="_blank" rel="noopener">Find food ↗</a></div>
-        </article>
-        <article class="resource" id="r-mts">
-          <span class="resource__when">Transportation</span>
-          <h3>MTS (San Diego transit)</h3>
-          <p>Bus routes, trip planning and reduced fares for getting to meetings and appointments.</p>
-          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.sdmts.com/" target="_blank" rel="noopener">Plan a trip ↗</a></div>
-        </article>
-      </div>
-    </div>
+    <section class="res-group" id="tools">
+      <h2>At the center</h2>
+      <ul>
+        <li><a href="schedule.html">Meeting schedule</a></li>
+        <li><a href="mood-room.html">Mood Room</a></li>
+        <li><a href="reflection-wall.html">Reflection Wall</a></li>
+        <li><button type="button" data-open-chat>Support assistant</button></li>
+      </ul>
+    </section>
   </div>
-  <p class="small muted resources__disclaimer">Listings are for information only. Check hours and eligibility with each service before you go.</p>
-</section>
+
+  <p class="small muted res-note">Listings are for information only. Please check hours and eligibility with each service before you go.</p>
+</div>

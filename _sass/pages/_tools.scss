@@ -51,7 +51,7 @@
   gap: 12px;
 
   &[data-tag="win"] { background: #fdf6dc; }
-  &[data-tag="thanks"] { background: #e9f0f7; }
+  &[data-tag="thanks"] { background: #e4f3f0; }
   &[data-tag="hope"] { background: #f1f3e3; }
 
   blockquote { margin: 0; font-size: 1.05rem; line-height: 1.5; overflow-wrap: anywhere; }
@@ -71,7 +71,7 @@
 .reflection-post__tag { font-weight: 700; color: $teal; }
 
 .reflection-empty {
-  border: 1px dashed #b5c8d1;
+  border: 1px dashed #b0d0ca;
   border-radius: $radius;
   padding: 36px 24px;
   text-align: center;

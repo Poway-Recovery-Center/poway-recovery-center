@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!user) return;
     links.forEach(link => {
         link.href = "profile.html";
+        // Home page hub tile: only its title changes
+        const title = link.querySelector('.hub__title');
+        if (title) {
+            title.textContent = `My profile (${user.name.split(" ")[0]})`;
+            link.querySelector('.hub__desc').textContent = "See and change your reservations.";
+            return;
+        }
         // Keep a trailing arrow span if the link has one
         const arrow = link.querySelector('span');
         link.textContent = link.closest('.site-nav') ? "My profile" : `My profile (${user.name.split(" ")[0]})`;
