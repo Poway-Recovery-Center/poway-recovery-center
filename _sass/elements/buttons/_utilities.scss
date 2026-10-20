@@ -1,0 +1,102 @@
+// Button modifiers (ported from OCS elements/buttons/_utilities.scss and _compat.scss)
+// Usage: .prc__btn.small | .medium | .large, .pill, .accent, .accent.fill,
+//        .alert-red | .alert-yellow | .alert-green (+ .fill), .block
+@use "sass:list";
+@use "tokens" as *;
+
+// Generic size classes used across UI controls.
+@each $name, $values in $sizes {
+    .prc__btn.#{$name} {
+        height: list.nth($values, 1);
+        padding: list.nth($values, 2) list.nth($values, 3);
+        border-radius: list.nth($values, 4);
+        border-style: solid;
+        border-width: 1px;
+        font-size: list.nth($values, 5);
+        line-height: list.nth($values, 6);
+        letter-spacing: list.nth($values, 7);
+    }
+}
+
+.prc__btn.pill {
+    border: none;
+    border-radius: 999px;
+}
+
+.prc__btn.pill:not(.accent) {
+    background: color-mix(in srgb, var(--pref-text-color) 6%, var(--pref-bg-color));
+    border: 1px solid var(--ui-border);
+    color: var(--pref-accent-color) !important;
+
+    &:hover,
+    &:focus-visible {
+        background: color-mix(in srgb, var(--pref-text-color) 12%, var(--pref-bg-color));
+        border-color: var(--pref-accent-color);
+        color: var(--pref-text-color) !important;
+    }
+}
+
+.prc__btn.accent {
+    --prc-btn-tone: var(--pref-accent-color);
+    border-color: var(--pref-accent-color);
+    color: var(--pref-accent-color);
+}
+
+.prc__btn.accent.fill {
+    background: color-mix(in srgb, var(--pref-accent-color) 20%, var(--pref-bg-color));
+    color: var(--pref-text-color);
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: color-mix(in srgb, var(--pref-accent-color) 30%, var(--pref-bg-color));
+        border-color: var(--pref-accent-color);
+        color: var(--pref-text-color);
+    }
+}
+
+@each $name, $tone in $prc-alert-buttons {
+    .prc__btn.alert-#{$name} {
+        --prc-btn-tone: #{$tone};
+        background: transparent;
+        border-width: 2px;
+        border-color: $tone;
+        color: $tone;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background: transparent;
+            border-color: $tone;
+            color: $tone;
+        }
+    }
+
+    .prc__btn.alert-#{$name}.fill {
+        background: color-mix(in srgb, $tone 20%, var(--pref-bg-color));
+
+        &:hover,
+        &:focus,
+        &:active {
+            background: color-mix(in srgb, $tone 30%, var(--pref-bg-color));
+            border-color: $tone;
+            color: $tone;
+        }
+    }
+}
+
+// Full-width button with left-aligned, wrapping text (menus and quick links)
+.prc__btn.block {
+    display: flex;
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+    white-space: normal;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}

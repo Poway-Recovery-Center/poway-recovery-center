@@ -1,6 +1,18 @@
 # Site settings
 title: Poway Recovery Center
-description: A compassionate, evidence-informed place to find stability, connection, and a next step that feels possible.
+description: A peer-support recovery community at 13939 Poway Rd, Poway, California. Free meetings every day, plus local resources.
+
+# Every page uses _layouts/default.html (shared header, footer and scripts) unless it sets its own layout
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# All styling is Sass: assets/css/main.scss pulls in the partials in _sass/
+sass:
+  sass_dir: _sass
+  style: compressed
 
 # Files Jekyll should not copy into the site (same approach as Open Coding Society pages)
 exclude:
@@ -11,3 +23,4 @@ exclude:
 # Custom excludes
   - Makefile
   - README.md
+  - poway-recovery-center-logo.png

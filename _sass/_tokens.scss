@@ -1,0 +1,47 @@
+// Theme tokens: colors, type, spacing and breakpoints shared by every partial
+$ink: #1c2e3b;
+$muted: #5d7180;
+$cream: #f7f5ef;
+$mist: #eef5f4;
+$sage: #ddeeed;
+$ocean: #1d5e8a;
+$teal: #23797d;
+$sand: #f2cf66;
+$line: #d9e3e5;
+$white: #fff;
+$red: #b23a2b;
+$green: #2e7d4f;
+
+$font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-display: "Bowlby One", Impact, "Arial Black", sans-serif;  // super chunky: site name and main headings
+$wrap: 1120px;
+$radius: 10px;
+$header-height: 68px;
+$shadow: 0 6px 24px rgba($ink, .08);
+
+$bp-md: 820px;
+$bp-sm: 480px;
+
+@mixin md {
+  @media (max-width: $bp-md) { @content; }
+}
+
+@mixin sm {
+  @media (max-width: $bp-sm) { @content; }
+}
+
+// Super chunky display type (Bowlby One has a single heavy weight)
+@mixin display-font {
+  font-family: $font-display;
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1.1;
+}
+
+// White rounded panel used for cards, forms and tables
+@mixin panel($padding: 24px) {
+  background: $white;
+  border: 1px solid $line;
+  border-radius: $radius;
+  padding: $padding;
+}

@@ -5,14 +5,18 @@ export function getCredentials() {
     return apiRequest('/api/id').catch(() => null);
 }
 
-// Swap the "Log In" nav link for the user's profile link when logged in
+// Swap every "Log in" link (header button, home page quick link) for the user's profile link when logged in
 document.addEventListener('DOMContentLoaded', async () => {
-    const loginLink = document.querySelector('.main-nav a[href="login.html"]');
-    if (!loginLink) return;
+    const links = document.querySelectorAll('[data-account-link]');
+    if (!links.length) return;
     const user = await getCredentials();
     window.user = user;
-    if (user) {
-        loginLink.textContent = "My Profile";
-        loginLink.href = "profile.html";
-    }
+    if (!user) return;
+    links.forEach(link => {
+        link.href = "profile.html";
+        // Keep a trailing arrow span if the link has one
+        const arrow = link.querySelector('span');
+        link.textContent = link.closest('.site-nav') ? "My profile" : `My profile (${user.name.split(" ")[0]})`;
+        if (arrow) link.append(' ', arrow);
+    });
 });

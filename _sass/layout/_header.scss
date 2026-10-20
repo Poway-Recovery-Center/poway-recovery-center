@@ -1,0 +1,87 @@
+// Site header and main navigation (_includes/header.html)
+@use "../tokens" as *;
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba($white, .97);
+  border-bottom: 1px solid $line;
+}
+
+.site-header__inner {
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: $ink;
+  text-decoration: none;
+  @include display-font;
+  font-size: 1.2rem;
+
+  img { width: 40px; height: auto; }
+
+  @include sm { font-size: 1rem; gap: 8px; img { width: 34px; } }
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.site-nav__link {
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: $ink;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:hover { background: $mist; }
+
+  &[aria-current="page"] {
+    color: $teal;
+    box-shadow: inset 0 -3px 0 $teal;
+    border-radius: 6px 6px 0 0;
+  }
+}
+
+.site-nav .prc__btn { margin-left: 10px; }
+
+.nav-toggle { display: none; }
+
+@include md {
+  .nav-toggle { display: inline-flex; }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: $header-height;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 12px 16px 18px;
+    background: $white;
+    border-bottom: 1px solid $line;
+    box-shadow: $shadow;
+
+    &.is-open { display: flex; }
+  }
+
+  .site-nav__link {
+    padding: 12px;
+
+    &[aria-current="page"] { box-shadow: inset 3px 0 0 $teal; border-radius: 0 6px 6px 0; }
+  }
+
+  .site-nav .prc__btn { margin: 8px 0 0; }
+}

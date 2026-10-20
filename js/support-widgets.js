@@ -1,5 +1,5 @@
 // Site-wide support widgets: the 988 crisis tab (bottom left) and the support assistant (bottom right).
-// Every page loads this file plus sass/support-widgets.css, so neither widget lives in the page HTML.
+// Every page loads this file (styles in _sass/components/_support-widgets.scss), so neither widget lives in the page HTML.
 import { pythonURI, fetchOptions } from './api/config.js';
 
 const GREETING = "I’m here with you. What feels most important right now?";

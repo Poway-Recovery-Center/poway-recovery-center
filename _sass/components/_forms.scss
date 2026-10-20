@@ -1,0 +1,68 @@
+// Form fields shared by login, signup, profile, contact and the tools
+@use "../tokens" as *;
+@use "../mixins/buttons" as *;
+
+.form { display: grid; gap: 16px; }
+
+.field {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  font-size: .95rem;
+
+  small { font-weight: 400; color: $muted; }
+}
+
+.input,
+.form input:not([type="checkbox"]):not([type="radio"]),
+.form textarea,
+.form select {
+  width: 100%;
+  border: 1px solid #c5d3d7;
+  border-radius: 8px;
+  padding: 11px 13px;
+  background: $white;
+  font-weight: 400;
+
+  &:focus { outline: 2px solid $teal; outline-offset: 1px; border-color: $teal; }
+  &[readonly] { background: $mist; color: $muted; }
+}
+
+.form textarea { min-height: 120px; resize: vertical; }
+
+.form select { @include select-control; padding: 11px 13px; border-radius: 8px; height: auto; }
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.field-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @include sm { grid-template-columns: 1fr; }
+}
+
+// Radio "chips" (reflection wall categories)
+.chip {
+  input { position: absolute; opacity: 0; pointer-events: none; }
+
+  span {
+    @include toggle-button;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: .9rem;
+    font-weight: 600;
+  }
+
+  input:checked + span { background: color-mix(in srgb, $teal 18%, $white); border-color: $teal; color: $ink; }
+  input:focus-visible + span { outline: 2px solid $teal; outline-offset: 2px; }
+}
+
+.chips { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips legend { font-weight: 600; margin-bottom: 8px; padding: 0; }

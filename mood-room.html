@@ -1,0 +1,57 @@
+---
+title: Mood Room
+nav: resources
+parent: Resources
+parent_url: resources.html#tab-site
+heading: Mood Room
+intro: Tell us what's going on in your own words. You'll get a grounding prompt, music to match, and a small next step. Nothing you type is saved or sent anywhere.
+scripts: [js/mood-room.js]
+---
+<section class="section wrap">
+  <div class="with-sidebar">
+    <div class="mood">
+      <div class="mood__input card">
+        <form class="form" id="mood-form">
+          <label class="field" for="mood-input">What's going on right now?
+            <textarea id="mood-input" placeholder="For example: I feel restless and my thoughts are racing…"></textarea>
+          </label>
+          <div class="form-row">
+            <span class="small muted">You can be vague. No account needed.</span>
+            <button class="prc__btn medium accent fill" id="enter-room">Enter my room</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="mood__result card" id="mood-result" hidden>
+        <div class="form-row">
+          <span class="tag" id="mood-label">A room for grounding</span>
+          <button class="prc__btn small" id="reset-room" type="button">Start over</button>
+        </div>
+        <h2 id="mood-title">Let's lower the intensity, one minute at a time.</h2>
+        <p id="mood-description"></p>
+        <div class="mood__music">
+          <div><span class="small muted">Music to match</span><strong id="music-title">Calm focus</strong><span class="small muted" id="music-description"></span></div>
+          <a class="prc__btn" id="music-link" href="https://music.apple.com/" target="_blank" rel="noopener">Open in Apple Music ↗</a>
+        </div>
+        <button class="prc__btn medium accent" id="grounding-prompt" type="button">Give me a grounding prompt</button>
+        <p class="mood__prompt" id="grounding-text"></p>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="note note--crisis">
+        <h2>Need to talk to someone?</h2>
+        <p>Call or text <a href="tel:988">988</a> any time. In immediate danger, call <a href="tel:911">911</a>.</p>
+      </div>
+      <div class="note">
+        <h2>Other tools</h2>
+        <div class="prc__links">
+          <a class="prc__btn small" href="reflection-wall.html">Reflection Wall</a>
+          <button class="prc__btn small" type="button" data-open-chat>Support assistant</button>
+          <a class="prc__btn small" href="schedule.html">Find a meeting</a>
+        </div>
+      </div>
+      <p class="small muted">The Mood Room matches simple keywords. It doesn't diagnose anything or replace professional care.</p>
+    </aside>
+  </div>
+</section>

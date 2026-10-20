@@ -1,0 +1,82 @@
+// Mood Room (mood-room.html) and Reflection Wall (reflection-wall.html)
+@use "../tokens" as *;
+
+.card__title { font-size: 1.25rem; margin: 0; }
+
+// Mood Room
+.mood { display: grid; gap: 18px; }
+
+.mood__result {
+  border-top: 4px solid $teal;
+
+  h2 { margin: 14px 0 8px; }
+}
+
+.mood__music {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: $mist;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 18px 0;
+
+  strong, span { display: block; }
+}
+
+.mood__prompt {
+  margin: 14px 0 0;
+  font-weight: 600;
+
+  &:empty { display: none; }
+}
+
+// Reflection Wall
+.prc__btn[aria-pressed="true"] {
+  background: $ink !important;
+  border-color: $ink !important;
+  color: $white !important;
+}
+
+.reflection-wall { columns: 3 280px; column-gap: 16px; }
+
+.reflection-post {
+  break-inside: avoid;
+  margin: 0 0 16px;
+  @include panel(20px 20px 14px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &[data-tag="win"] { background: #fdf6dc; }
+  &[data-tag="thanks"] { background: #e9f0f7; }
+  &[data-tag="hope"] { background: #f1f3e3; }
+
+  blockquote { margin: 0; font-size: 1.05rem; line-height: 1.5; overflow-wrap: anywhere; }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: .82rem;
+    color: $muted;
+  }
+
+  .hold[aria-pressed="true"] { background: $sand !important; border-color: $sand !important; color: $ink !important; opacity: 1; }
+}
+
+.reflection-post__tag { font-weight: 700; color: $teal; }
+
+.reflection-empty {
+  border: 1px dashed #b5c8d1;
+  border-radius: $radius;
+  padding: 36px 24px;
+  text-align: center;
+  color: $muted;
+  margin-bottom: 16px;
+
+  strong { display: block; font-size: 1.15rem; color: $ink; margin-bottom: 4px; }
+}

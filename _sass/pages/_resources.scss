@@ -1,0 +1,54 @@
+// Resources hub (resources.html)
+@use "../tokens" as *;
+
+.jump__title { @include display-font; font-size: 1.35rem; margin-bottom: 14px; }
+
+.jump {
+  @include panel(20px 22px);
+  display: grid;
+  gap: 14px;
+}
+
+.jump__group {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+
+  & + & { border-top: 1px solid $line; padding-top: 14px; }
+
+  @include md { grid-template-columns: 1fr; gap: 8px; }
+}
+
+.jump__label { font-weight: 700; font-size: .95rem; }
+
+.jump .prc__links { gap: 8px; }
+
+.resource {
+  @include panel(22px);
+  display: flex;
+  flex-direction: column;
+  scroll-margin-top: $header-height + 24px;
+
+  h3 { margin-bottom: 6px; }
+  p { color: $muted; flex: 1; }
+  .prc__links { gap: 8px; }
+
+  &.is-highlighted { animation: resource-flash 2s ease; }
+}
+
+.resource__when {
+  font-size: .8rem;
+  font-weight: 600;
+  color: $teal;
+  margin-bottom: 4px;
+}
+
+@keyframes resource-flash {
+  0%, 40% { border-color: $teal; box-shadow: 0 0 0 4px rgba($teal, .25); }
+  100% { border-color: $line; box-shadow: none; }
+}
+
+.tabs__panel > .note { margin: 0 0 18px; }
+
+.resources__disclaimer { margin-top: 20px; }

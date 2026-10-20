@@ -1,0 +1,145 @@
+// Home page (index.html)
+@use "../tokens" as *;
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: $white;
+  padding: 56px 0;
+  min-height: min(640px, calc(100vh - #{$header-height}));
+  display: flex;
+  align-items: center;
+}
+
+.hero__video,
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__shade { background: linear-gradient(90deg, rgba(#0e2a3e, .88) 0%, rgba(#0e2a3e, .7) 55%, rgba(#0e2a3e, .45) 100%); }
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 48px;
+  align-items: center;
+
+  @include md { grid-template-columns: 1fr; gap: 28px; }
+}
+
+.hero__text {
+  h1 { @include display-font; font-size: clamp(2.4rem, 5.5vw, 4rem); margin-bottom: 16px; }
+}
+
+.hero__lead { font-size: 1.15rem; max-width: 560px; color: #eaf2f5; }
+.hero__where { color: #c8dbe4; margin-bottom: 6px; }
+
+.hero__next {
+  display: inline-block;
+  margin: 8px 0 0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba($white, .14);
+  font-weight: 600;
+
+  &:empty { display: none; }
+}
+
+.quick-links {
+  background: $white;
+  color: $ink;
+  border-radius: 14px;
+  padding: 22px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 20px 50px rgba(#0e2a3e, .35);
+
+  h2 { @include display-font; font-size: 1.3rem; margin: 0 0 6px; }
+
+  .prc__btn.large { font-size: 16px; }
+}
+
+.quick-links__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  @include sm { grid-template-columns: 1fr; }
+}
+
+// Today's meetings list
+.today {
+  @include panel(0);
+  overflow: hidden;
+}
+
+.today__row {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) auto 80px;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid $line;
+  color: inherit;
+  text-decoration: none;
+
+  &:last-child { border-bottom: 0; }
+  &:hover { background: $mist; }
+  &.is-past { color: $muted; }
+
+  @include sm {
+    grid-template-columns: 80px 1fr;
+    row-gap: 2px;
+
+    .today__meta, .today__spots { grid-column: 2; }
+  }
+}
+
+.today__time { font-weight: 700; color: $teal; }
+.is-past .today__time { color: $muted; }
+.today__name { font-weight: 600; }
+.today__meta, .today__spots { font-size: .9rem; color: $muted; }
+.today__spots { text-align: right; @include sm { text-align: left; } }
+.today > p { padding: 20px; margin: 0; }
+
+// First-visit section
+.visit > div > h2 { @include display-font; }
+.visit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+
+  @include md { grid-template-columns: 1fr; }
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+
+  li { padding-left: 30px; position: relative; }
+
+  li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: $sage;
+    color: $teal;
+    font-size: .75rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+}

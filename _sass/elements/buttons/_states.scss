@@ -1,0 +1,55 @@
+// Button states (ported from OCS elements/buttons/_states.scss; darken() is now color.adjust())
+@use "sass:color";
+
+// disabled state
+@mixin disabled {
+    color: rgba(118, 118, 128, 0.48);
+    background-color: rgba(120, 120, 128, 0.12);
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    transition: all 0.5s;
+
+    // Remove hover and active effects
+    &:hover,
+    &:active {
+        background-color: inherit;
+        transform: none;
+    }
+}
+
+// Disabled class
+.disabled {
+    @include disabled;
+}
+
+// Native disabled buttons should keep the same visual state as disabled button classes.
+.prc__btn:disabled,
+.prc__btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+
+    &:hover,
+    &:active {
+        opacity: 0.5;
+        transform: none;
+    }
+}
+
+// hover and active states
+@mixin hover-darken($color, $amount: 10%) {
+    transition: all 0.5s;
+
+    &:hover {
+        background-color: color.adjust($color, $lightness: -$amount);
+    }
+}
+
+@mixin active-darken($color, $amount: 20%) {
+    transition: all 0.5s;
+
+    &:active {
+        background-color: color.adjust($color, $lightness: -$amount);
+    }
+}

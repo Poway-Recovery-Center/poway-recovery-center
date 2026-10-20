@@ -1,0 +1,47 @@
+// Tabs (resources hub, schedule day picker). Markup: .tabs > [role=tablist].tabs__list > button[role=tab]
+@use "../tokens" as *;
+@use "../mixins/buttons" as *;
+
+.tabs__list {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid $line;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.tabs__tab {
+  @include toggle-button;
+  flex: none;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  margin-bottom: -2px;
+  border-bottom: 2px solid transparent;
+  padding: 12px 18px;
+  font-weight: 600;
+  color: $muted;
+
+  &:hover { background: $mist; color: $ink; border-bottom-color: $line; }
+
+  &[aria-selected="true"] {
+    color: $teal;
+    background: $white;
+    border-bottom-color: $teal;
+  }
+
+  .tabs__count {
+    margin-left: 8px;
+    font-size: .75rem;
+    background: $mist;
+    color: $muted;
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
+}
+
+.tabs__panel {
+  padding-top: 24px;
+
+  &:focus-visible { outline: 2px solid $teal; outline-offset: 4px; }
+}

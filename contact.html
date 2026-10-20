@@ -1,0 +1,44 @@
+---
+title: Contact Us
+nav: contact
+heading: Contact us
+intro: Questions about meetings, volunteering or the website? Send us a message and we'll get back to you.
+scripts: [js/contact.js]
+---
+<section class="section wrap">
+  <div class="with-sidebar">
+    <form class="form card" id="contact-form">
+      <h2 class="card__title">Send a message</h2>
+      <div class="field-pair">
+        <label class="field">Name<input name="name" required autocomplete="name"></label>
+        <label class="field">What's it about?<select name="topic" id="contact-topic"><option value="general">General question</option></select></label>
+      </div>
+      <div class="field-pair">
+        <label class="field">Email <small>(optional, so we can reply)</small><input type="email" name="email" autocomplete="email"></label>
+        <label class="field">Phone <small>(optional)</small><input type="tel" name="phone" autocomplete="tel"></label>
+      </div>
+      <label class="field">Message<textarea name="message" required maxlength="2000"></textarea></label>
+      <div class="form-row">
+        <span class="small muted">Please don't use this form in an emergency.</span>
+        <button class="prc__btn medium accent fill">Send message</button>
+      </div>
+      <p class="status-msg" id="contact-message" role="status"></p>
+    </form>
+
+    <aside class="sidebar">
+      <div class="note note--crisis">
+        <h2>In crisis right now?</h2>
+        <p>Call or text <a href="tel:988">988</a> any time, or text HOME to <a href="sms:741741&amp;body=HOME">741741</a>. In immediate danger, call <a href="tel:911">911</a>.</p>
+      </div>
+      <div class="note">
+        <h2>Visit us</h2>
+        <p>13939 Poway Rd, Suite A<br>Poway, CA 92064</p>
+        <p class="small muted">Meetings run every day. See the schedule for times.</p>
+        <div class="prc__links">
+          <a class="prc__btn small accent fill" href="https://www.google.com/maps/search/?api=1&query=13939+Poway+Rd+Poway+CA+92064" target="_blank" rel="noopener">Directions</a>
+          <a class="prc__btn small" href="schedule.html">Schedule</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>

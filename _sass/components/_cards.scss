@@ -1,0 +1,68 @@
+// Cards, info boxes and simple grids
+@use "../tokens" as *;
+
+.card {
+  @include panel;
+
+  h3 { margin-bottom: 6px; }
+  p { color: $muted; }
+  > :last-child { margin-bottom: 0; }
+}
+
+.card--link {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .2s, box-shadow .2s;
+
+  &:hover { border-color: $teal; box-shadow: $shadow; }
+  .card__more { margin-top: auto; color: $teal; font-weight: 700; }
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+
+.grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@include md { .grid--3 { grid-template-columns: 1fr; } }
+
+// Colored side-note boxes
+.note {
+  border-radius: $radius;
+  padding: 18px 20px;
+  background: $white;
+  border: 1px solid $line;
+  border-left: 4px solid $teal;
+
+  h2, h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  p:last-child, ul:last-child { margin-bottom: 0; }
+}
+
+.note--crisis { border-left-color: $red; background: #fdf3f1; }
+.note--sand { border-left-color: $sand; }
+
+.tag {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: $mist;
+  color: $ocean;
+  border: 1px solid $line;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.status-msg {
+  margin: 0;
+  font-weight: 600;
+  color: $teal;
+
+  &:empty { display: none; }
+  &.is-error { color: $red; }
+}

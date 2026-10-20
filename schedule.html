@@ -1,0 +1,47 @@
+---
+title: Meeting schedule
+nav: resources
+parent: Resources
+parent_url: resources.html
+heading: Meeting schedule
+intro: Every meeting held at Poway Recovery Center, 13939 Poway Rd. Pick a day, then reserve a spot. The schedule updates automatically from the North County San Diego AA directory.
+scripts: [js/schedule.js]
+---
+<section class="section wrap">
+  <div class="with-sidebar">
+    <div class="schedule" id="schedule">
+      <div class="schedule__bar">
+        <div class="prc__links">
+          <button class="prc__btn" type="button" id="prev-week" aria-label="Previous week">‹ Prev</button>
+          <button class="prc__btn" type="button" id="this-week">This week</button>
+          <button class="prc__btn" type="button" id="next-week" aria-label="Next week">Next ›</button>
+        </div>
+        <h2 class="schedule__range" id="week-range" aria-live="polite"></h2>
+      </div>
+
+      <div class="tabs__list schedule__days" role="tablist" aria-label="Days" id="day-tabs"></div>
+
+      <div class="schedule__day" role="tabpanel" id="day-panel" tabindex="0">
+        <div class="schedule__table" id="day-table"><p class="schedule__empty">Loading meetings…</p></div>
+      </div>
+      <p class="status-msg is-error" id="schedule-status" role="status"></p>
+    </div>
+
+    <aside class="sidebar">
+      <section class="note" id="my-bookings">
+        <h2>Your reservations</h2>
+        <div id="my-bookings-list"><p class="small muted">Loading…</p></div>
+      </section>
+      <section class="note note--sand">
+        <h2>How reserving works</h2>
+        <ul class="small">
+          <li>Reserving is optional. Walk-ins are always welcome.</li>
+          <li>You can hold up to 5 spots at a meeting if you're bringing people.</li>
+          <li>Spots open 30 days ahead and close when the meeting starts.</li>
+          <li>Cancel any time before the meeting if your plans change.</li>
+        </ul>
+      </section>
+      <p class="small muted" id="schedule-source"></p>
+    </aside>
+  </div>
+</section>

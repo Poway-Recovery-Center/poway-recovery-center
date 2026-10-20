@@ -1,33 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>My Profile | Poway Recovery Center</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css"><link rel="stylesheet" href="sass/support-widgets.css"></head>
-<body><header class="site-header"><a class="brand" href="index.html"><img class="brand-logo" src="images/logo-mark.png" alt="" width="49" height="48">Poway <span>Recovery</span> Center</a><button class="menu-toggle" aria-label="Open navigation">☰</button><nav class="main-nav"><a href="login.html">Log In</a><a href="resources.html">Resources</a><a href="programs.html">Programs</a><a href="about.html">About Us</a></nav></header>
-<main class="profile-page" hidden>
-<section class="page-hero"><div class="section-shell"><p class="eyebrow">Member since <span id="member-since"></span></p><h1>Welcome back, <span id="profile-name"></span>.</h1><p>Keep your contact information current, and pick up wherever you left off.</p></div></section>
+---
+title: My profile
+scripts: [js/profile.js]
+---
+<div class="profile-page" hidden>
+  <section class="page-head">
+    <div class="wrap">
+      <h1>Hi, <span id="profile-name"></span></h1>
+      <p>Member since <span id="member-since"></span></p>
+    </div>
+  </section>
 
-<section class="section-shell profile-layout">
-<div class="profile-panel">
-<div class="section-heading"><p class="eyebrow">Your information</p><h2>Profile details</h2></div>
-<form id="profile-form" class="profile-form"><label>Username<input type="text" name="uid" readonly></label><label>Name<input type="text" name="name" required autocomplete="name"></label><label>Email address<input type="email" name="email" autocomplete="email" placeholder="Add your email address"></label><label>Phone number<input type="tel" name="phone" autocomplete="tel" placeholder="(858) 555-0123"></label><button class="button button-primary">Save changes</button><p class="form-message" id="profile-message" role="status"></p></form>
+  <section class="section wrap">
+    <div class="with-sidebar">
+      <div class="profile-main">
+        <section class="card">
+          <div class="section-title">
+            <h2>Your upcoming meetings</h2>
+            <a class="prc__btn small accent" href="schedule.html">Open schedule</a>
+          </div>
+          <div id="profile-bookings"><p class="small muted">Loading…</p></div>
+        </section>
 
-<details class="password-panel"><summary>Change password</summary>
-<form id="password-form" class="profile-form"><label>Current password<input type="password" name="current_password" required autocomplete="current-password"></label><label>New password<input type="password" name="new_password" required minlength="6" autocomplete="new-password"></label><label>Confirm new password<input type="password" name="confirm" required minlength="6" autocomplete="new-password"></label><button class="button button-secondary">Update password</button><p class="form-message" id="password-message" role="status"></p></form>
-</details>
-<button class="button button-secondary" id="logout">Log out</button>
+        <section class="card">
+          <h2>Your details</h2>
+          <form class="form" id="profile-form">
+            <div class="field-pair">
+              <label class="field">Username<input type="text" name="uid" readonly></label>
+              <label class="field">Name<input type="text" name="name" required autocomplete="name"></label>
+            </div>
+            <div class="field-pair">
+              <label class="field">Email<input type="email" name="email" autocomplete="email"></label>
+              <label class="field">Phone<input type="tel" name="phone" autocomplete="tel"></label>
+            </div>
+            <div class="form-row">
+              <p class="status-msg" id="profile-message" role="status"></p>
+              <button class="prc__btn medium accent fill">Save changes</button>
+            </div>
+          </form>
+        </section>
+
+        <details class="card password-panel">
+          <summary>Change password</summary>
+          <form class="form" id="password-form">
+            <label class="field">Current password<input type="password" name="current_password" required autocomplete="current-password"></label>
+            <div class="field-pair">
+              <label class="field">New password<input type="password" name="new_password" required minlength="6" autocomplete="new-password"></label>
+              <label class="field">Confirm new password<input type="password" name="confirm" required minlength="6" autocomplete="new-password"></label>
+            </div>
+            <div class="form-row">
+              <p class="status-msg" id="password-message" role="status"></p>
+              <button class="prc__btn medium accent">Update password</button>
+            </div>
+          </form>
+        </details>
+      </div>
+
+      <aside class="sidebar">
+        <nav class="note" aria-label="Shortcuts">
+          <h2>Shortcuts</h2>
+          <div class="shortcut-list">
+            <a class="prc__btn block" href="schedule.html">Meeting schedule <span aria-hidden="true">→</span></a>
+            <a class="prc__btn block" href="mood-room.html">Mood Room <span aria-hidden="true">→</span></a>
+            <a class="prc__btn block" href="reflection-wall.html">Reflection Wall <span aria-hidden="true">→</span></a>
+            <a class="prc__btn block" href="resources.html">All resources <span aria-hidden="true">→</span></a>
+          </div>
+        </nav>
+        <button class="prc__btn alert-red" id="logout" type="button">Log out</button>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section wrap admin" id="admin" hidden>
+    <div class="section-title"><h2>Admin</h2></div>
+    <div class="tabs" data-tabs>
+      <div class="tabs__list" role="tablist" aria-label="Admin">
+        <button class="tabs__tab" role="tab" id="tab-messages" aria-controls="panel-messages" aria-selected="true">Contact messages <span class="tabs__count" id="messages-count">0</span></button>
+        <button class="tabs__tab" role="tab" id="tab-members" aria-controls="panel-members" aria-selected="false" tabindex="-1">Members <span class="tabs__count" id="members-count">0</span></button>
+      </div>
+      <div class="tabs__panel" role="tabpanel" id="panel-messages" aria-labelledby="tab-messages" tabindex="0">
+        <div id="messages-list"></div>
+        <p class="status-msg is-error" id="messages-status" role="status"></p>
+      </div>
+      <div class="tabs__panel" role="tabpanel" id="panel-members" aria-labelledby="tab-members" tabindex="0" hidden>
+        <div class="table-scroll"><table class="data-table" id="members-table"><thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Role</th></tr></thead><tbody></tbody></table></div>
+        <p class="status-msg is-error" id="members-message" role="status"></p>
+      </div>
+    </div>
+  </section>
 </div>
-
-<div class="profile-links">
-<div class="section-heading"><p class="eyebrow">Your spaces</p><h2>Where to next?</h2></div>
-<a class="feature-card" href="programs.html#meetings"><span class="card-number">01</span><h3>Meeting calendar</h3><p>See this week’s meetings and reserve a spot.</p><span class="text-link">Open calendar →</span></a>
-<a class="feature-card" href="resources.html#mood-room"><span class="card-number">02</span><h3>The Mood Room</h3><p>A grounding space with music, prompts, and gentle next steps.</p><span class="text-link">Enter the room →</span></a>
-<a class="feature-card" href="resources.html#reflection-wall"><span class="card-number">03</span><h3>Reflection Wall</h3><p>Share or read anonymous reflections from the community.</p><span class="text-link">Read reflections →</span></a>
-<a class="feature-card" href="resources.html#directory"><span class="card-number">04</span><h3>Resource directory</h3><p>Find local clinical, housing, and crisis support.</p><span class="text-link">Find resources →</span></a>
-<a class="feature-card" href="programs.html"><span class="card-number">05</span><h3>Programs</h3><p>Peer support, wellness workshops, and care connections.</p><span class="text-link">Explore programs →</span></a>
-</div>
-</section>
-
-<section class="section-shell members-section" id="members" hidden>
-<div class="section-heading"><p class="eyebrow">Admin</p><h2>Members</h2><p>Everyone registered in the user database.</p></div>
-<div class="members-scroll"><table id="members-table"><thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Role</th></tr></thead><tbody></tbody></table></div><p class="form-message" id="members-message" role="status"></p>
-</section>
-</main><script src="js/main.js"></script><script type="module" src="js/api/login.js"></script><script type="module" src="js/support-widgets.js"></script><script type="module" src="js/profile.js"></script></body></html>

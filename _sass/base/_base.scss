@@ -1,0 +1,71 @@
+// Reset, theme custom properties, typography
+@use "../tokens" as *;
+
+:root {
+  // Same custom property names OCS buttons read, mapped to our theme
+  --pref-bg-color: #{$white};
+  --pref-text-color: #{$ink};
+  --pref-accent-color: #{$teal};
+  --pref-font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --pref-font-size: 1rem;
+  --ui-border: #{$line};
+  --panel-mid: #{$mist};
+  --red: #{$red};
+  --warn: #b7791f;
+  --green: #{$green};
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: $header-height + 16px; }
+
+body {
+  margin: 0;
+  background: $cream;
+  color: $ink;
+  font-family: $font;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video { max-width: 100%; display: block; }
+
+a { color: $ocean; }
+
+button, input, textarea, select { font: inherit; color: inherit; }
+
+h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .5em; letter-spacing: -.01em; }
+h1 { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; }
+h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 700; }
+h3 { font-size: 1.15rem; font-weight: 700; }
+p { margin: 0 0 1em; }
+
+[hidden] { display: none !important; }
+
+.wrap { width: min($wrap, calc(100% - 32px)); margin-inline: auto; }
+
+.muted { color: $muted; }
+.small { font-size: .875rem; }
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  background: $ink;
+  color: $white;
+  padding: 10px 14px;
+  border-radius: 6px;
+
+  &:focus { top: 12px; }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

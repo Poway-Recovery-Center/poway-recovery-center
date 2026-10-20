@@ -1,46 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resources | Poway Recovery Center</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css"><link rel="stylesheet" href="sass/support-widgets.css">
-</head>
-<body>
-<header class="site-header"><a class="brand" href="index.html"><img class="brand-logo" src="images/logo-mark.png" alt="" width="49" height="48">Poway <span>Recovery</span> Center</a><button class="menu-toggle" aria-label="Open navigation">☰</button><nav class="main-nav"><a href="login.html">Log In</a><a class="active" href="resources.html">Resources</a><a href="programs.html">Programs</a><a href="about.html">About Us</a></nav></header>
-
-<main>
-<section class="page-hero"><div class="section-shell"><p class="eyebrow">Tools and pathways</p><h1>Resources for the next moment.</h1><p>Practical support for grounding, connection, reflection, and finding professional help.</p></div></section>
-
-<section class="section-shell resource-layout" id="mood-room">
-<div class="section-heading"><p class="eyebrow">Interactive tool</p><h2>The Mood Room</h2><p>Tell us what is happening in your own words. This local demo uses supportive keyword-based categorization; it does not diagnose or replace professional care.</p></div>
-<div class="mood-room">
-<div class="mood-input-panel"><label for="mood-input">What is your current situation?</label><textarea id="mood-input" placeholder="Something like: I feel restless and my thoughts are racing…"></textarea><button class="button button-primary" id="enter-room">Enter my room</button><p class="small-note">You can be vague. No account or identifying information is required.</p></div>
-<div class="mood-result" id="mood-result" hidden><div class="room-top"><span id="mood-label">A room for grounding</span><button id="reset-room">Start over</button></div><h3 id="mood-title">Let’s lower the intensity, one minute at a time.</h3><p id="mood-description"></p><div class="music-card"><div><span class="music-kicker">Soundtrack</span><strong id="music-title">Calm focus</strong><small id="music-description"></small></div><a id="music-link" href="https://music.apple.com/" target="_blank" rel="noopener">Open Apple Music ↗</a></div><label class="toggle-row"><span>Show lyrics when available</span><input type="checkbox" id="lyrics-toggle"><span class="switch"></span></label><div class="room-actions"><button class="button button-secondary" id="grounding-prompt">Give me a grounding prompt</button><p id="grounding-text"></p></div></div>
-</div>
+---
+title: Resources
+nav: resources
+heading: Resources
+intro: Everything we offer, plus trusted local and national services. Pick a resource below, or browse by category.
+description: Meeting schedule, Mood Room, Reflection Wall, crisis lines, treatment search and everyday help in San Diego County.
+scripts: [js/resources.js]
+---
+<section class="section wrap">
+  <h2 class="jump__title">Go straight to a resource</h2>
+  <nav class="jump" aria-label="All resources">
+    <div class="jump__group">
+      <span class="jump__label">On this site</span>
+      <div class="prc__links">
+        <a class="prc__btn pill" href="schedule.html">Meeting schedule</a>
+        <a class="prc__btn pill" href="mood-room.html">Mood Room</a>
+        <a class="prc__btn pill" href="reflection-wall.html">Reflection Wall</a>
+        <button class="prc__btn pill" type="button" data-open-chat>Support assistant</button>
+      </div>
+    </div>
+    <div class="jump__group">
+      <span class="jump__label">Crisis help</span>
+      <div class="prc__links">
+        <a class="prc__btn pill" href="#r-988">988 Lifeline</a>
+        <a class="prc__btn pill" href="#r-textline">Crisis Text Line</a>
+        <a class="prc__btn pill" href="#r-access">SD Access &amp; Crisis Line</a>
+        <a class="prc__btn pill" href="#r-911">Emergency 911</a>
+      </div>
+    </div>
+    <div class="jump__group">
+      <span class="jump__label">Meetings &amp; groups</span>
+      <div class="prc__links">
+        <a class="prc__btn pill" href="#r-aa">North County AA</a>
+        <a class="prc__btn pill" href="#r-na">San Diego NA</a>
+        <a class="prc__btn pill" href="#r-alanon">Al-Anon</a>
+        <a class="prc__btn pill" href="#r-smart">SMART Recovery</a>
+        <a class="prc__btn pill" href="#r-nami">NAMI San Diego</a>
+      </div>
+    </div>
+    <div class="jump__group">
+      <span class="jump__label">Treatment &amp; care</span>
+      <div class="prc__links">
+        <a class="prc__btn pill" href="#r-samhsa">SAMHSA Helpline</a>
+        <a class="prc__btn pill" href="#r-findtreatment">FindTreatment.gov</a>
+        <a class="prc__btn pill" href="#r-county">SD County Behavioral Health</a>
+        <a class="prc__btn pill" href="#r-optum">County provider directory</a>
+      </div>
+    </div>
+    <div class="jump__group">
+      <span class="jump__label">Everyday needs</span>
+      <div class="prc__links">
+        <a class="prc__btn pill" href="#r-211">211 San Diego</a>
+        <a class="prc__btn pill" href="#r-food">Feeding San Diego</a>
+        <a class="prc__btn pill" href="#r-mts">MTS transit</a>
+      </div>
+    </div>
+  </nav>
 </section>
 
-<section class="soft-section" id="reflection-wall"><div class="section-shell">
-<div class="section-heading"><p class="eyebrow">Anonymous Reflection Wall</p><h2>Small wins count.</h2><p>Leave a micro-win, a gentle truth, a note of gratitude, or some hope for whoever reads it next. No names are attached to anything you post.</p></div>
-<div class="reflection-compose">
-<div class="reflection-copy"><h3>Add your reflection</h3><p>Progress is rarely linear. A glass of water, a phone call returned, a hard day survived: all of it belongs here.</p><ul class="reflection-guidelines"><li>Keep it anonymous. Leave out names, places, and contact details.</li><li>Speak from your own experience. Avoid advice about medication or treatment.</li><li>Be kind. Everyone here is somewhere in their own process.</li></ul></div>
-<form class="reflection-form" id="reflection-form" novalidate>
-<fieldset><legend>What kind of reflection is this?</legend><label class="chip"><input type="radio" name="tag" value="win" checked><span>Small win</span></label><label class="chip"><input type="radio" name="tag" value="truth"><span>Gentle truth</span></label><label class="chip"><input type="radio" name="tag" value="thanks"><span>Gratitude</span></label><label class="chip"><input type="radio" name="tag" value="hope"><span>Note of hope</span></label></fieldset>
-<label class="field-label" for="reflection-input">Your reflection</label><textarea id="reflection-input" maxlength="280" placeholder="I made it to my meeting even though I almost talked myself out of it…"></textarea>
-<div class="reflection-row"><span class="reflection-count" id="reflection-count">0 / 280</span><button class="button button-primary" type="submit">Post anonymously</button></div><p class="reflection-status" id="reflection-status" role="status"></p>
-</form>
-</div>
-<div class="reflection-head"><h3>From the community</h3><div class="reflection-filters" id="reflection-filters" role="group" aria-label="Filter reflections"><button type="button" data-filter="all" aria-pressed="true">All</button><button type="button" data-filter="win" aria-pressed="false">Small wins</button><button type="button" data-filter="truth" aria-pressed="false">Gentle truths</button><button type="button" data-filter="thanks" aria-pressed="false">Gratitude</button><button type="button" data-filter="hope" aria-pressed="false">Hope</button></div></div>
-<div class="reflection-empty" id="reflection-empty"><strong>The wall is waiting for its first note.</strong>Write one above and it will appear here.</div>
-<div class="reflection-wall" id="reflection-list"></div>
-<p class="small-note reflection-crisis"><strong>This wall is peer reflection, not crisis support.</strong> If you are in immediate danger, call 911. For emotional distress or substance-use crisis, call or text 988, any time.</p>
-</div></section>
+<section class="section wrap">
+  <div class="tabs" data-tabs>
+    <div class="tabs__list" role="tablist" aria-label="Resource categories">
+      <button class="tabs__tab" role="tab" id="tab-site" aria-controls="panel-site" aria-selected="true">On this site</button>
+      <button class="tabs__tab" role="tab" id="tab-crisis" aria-controls="panel-crisis" aria-selected="false" tabindex="-1">Crisis help</button>
+      <button class="tabs__tab" role="tab" id="tab-groups" aria-controls="panel-groups" aria-selected="false" tabindex="-1">Meetings &amp; groups</button>
+      <button class="tabs__tab" role="tab" id="tab-care" aria-controls="panel-care" aria-selected="false" tabindex="-1">Treatment &amp; care</button>
+      <button class="tabs__tab" role="tab" id="tab-needs" aria-controls="panel-needs" aria-selected="false" tabindex="-1">Everyday needs</button>
+    </div>
 
-<section class="section-shell directory-section" id="directory"><div class="section-heading"><p class="eyebrow">Vetted starting points</p><h2>Resource directory</h2><p>For immediate danger, call 911. For emotional crisis support, call or text 988. Confirm availability and eligibility directly with each provider.</p></div><div class="directory-grid">
-<a class="directory-card" href="tel:988"><span>24/7 crisis support</span><h3>988 Suicide & Crisis Lifeline</h3><p>Call or text 988 for emotional distress, substance-use concerns, or crisis support.</p><strong>Call or text 988 →</strong></a>
-<a class="directory-card" href="https://www.samhsa.gov/find-help/national-helpline" target="_blank" rel="noopener"><span>Treatment navigation</span><h3>SAMHSA National Helpline</h3><p>Free, confidential information and referrals for mental health and substance-use services.</p><strong>Visit SAMHSA →</strong></a>
-<a class="directory-card" href="https://www.sandiegocounty.gov/content/sdc/hhsa/programs/bhs.html" target="_blank" rel="noopener"><span>Local behavioral health</span><h3>San Diego County BHS</h3><p>County behavioral health information, services, and access points.</p><strong>Explore county services →</strong></a>
-</div></section>
-</main>
-<script src="js/main.js"></script><script type="module" src="js/api/login.js"></script><script type="module" src="js/support-widgets.js"></script><script src="js/resources.js"></script>
-</body></html>
+    <div class="tabs__panel" role="tabpanel" id="panel-site" aria-labelledby="tab-site" tabindex="0">
+      <div class="grid">
+        <article class="resource" id="r-schedule">
+          <h3>Meeting schedule</h3>
+          <p>This week's meetings at the center, with open spots. Log in to reserve a spot for yourself or someone you're bringing.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="schedule.html">Open the schedule</a></div>
+        </article>
+        <article class="resource" id="r-mood">
+          <h3>Mood Room</h3>
+          <p>Describe how you're feeling in your own words and get a grounding prompt, music to match, and a small next step.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="mood-room.html">Enter the Mood Room</a></div>
+        </article>
+        <article class="resource" id="r-wall">
+          <h3>Reflection Wall</h3>
+          <p>Read and share anonymous small wins, gentle truths and notes of hope from the community.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="reflection-wall.html">Visit the wall</a></div>
+        </article>
+        <article class="resource" id="r-assistant">
+          <h3>Support assistant</h3>
+          <p>An AI chat that offers coping ideas and points you to the right page. It isn't a therapist or a crisis service.</p>
+          <div class="prc__links"><button class="prc__btn accent fill" type="button" data-open-chat>Start a chat</button></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="tabs__panel" role="tabpanel" id="panel-crisis" aria-labelledby="tab-crisis" tabindex="0" hidden>
+      <p class="note note--crisis">If you or someone else is in immediate danger, call 911 now.</p>
+      <div class="grid">
+        <article class="resource" id="r-988">
+          <span class="resource__when">24/7 · free · confidential</span>
+          <h3>988 Suicide &amp; Crisis Lifeline</h3>
+          <p>Call or text 988 for emotional distress, thoughts of suicide, or a substance-use crisis.</p>
+          <div class="prc__links"><a class="prc__btn alert-red fill" href="tel:988">Call 988</a><a class="prc__btn" href="sms:988">Text 988</a><a class="prc__btn" href="https://988lifeline.org/" target="_blank" rel="noopener">Chat online ↗</a></div>
+        </article>
+        <article class="resource" id="r-textline">
+          <span class="resource__when">24/7 · text</span>
+          <h3>Crisis Text Line</h3>
+          <p>Text HOME to 741741 to reach a trained crisis counselor by text.</p>
+          <div class="prc__links"><a class="prc__btn alert-red fill" href="sms:741741&amp;body=HOME">Text HOME to 741741</a><a class="prc__btn" href="https://www.crisistextline.org/" target="_blank" rel="noopener">Website ↗</a></div>
+        </article>
+        <article class="resource" id="r-access">
+          <span class="resource__when">24/7 · San Diego County</span>
+          <h3>San Diego Access &amp; Crisis Line</h3>
+          <p>Crisis support and referrals to county mental health and substance-use services.</p>
+          <div class="prc__links"><a class="prc__btn alert-red fill" href="tel:18887247240">Call 1-888-724-7240</a></div>
+        </article>
+        <article class="resource" id="r-911">
+          <span class="resource__when">Emergencies</span>
+          <h3>Emergency services</h3>
+          <p>Call 911 for a medical emergency, an overdose, or if anyone is in immediate danger.</p>
+          <div class="prc__links"><a class="prc__btn alert-red fill" href="tel:911">Call 911</a></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="tabs__panel" role="tabpanel" id="panel-groups" aria-labelledby="tab-groups" tabindex="0" hidden>
+      <div class="grid">
+        <article class="resource" id="r-aa">
+          <span class="resource__when">Alcohol</span>
+          <h3>North County San Diego AA</h3>
+          <p>Every AA meeting in North County, including the meetings at our center. Our schedule is updated from this directory.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://ncsandiegoaa.org/meetings/" target="_blank" rel="noopener">Find AA meetings ↗</a></div>
+        </article>
+        <article class="resource" id="r-na">
+          <span class="resource__when">Drugs</span>
+          <h3>San Diego Narcotics Anonymous</h3>
+          <p>NA meetings and helpline information across San Diego and Imperial counties.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.sandiegona.org/" target="_blank" rel="noopener">Find NA meetings ↗</a></div>
+        </article>
+        <article class="resource" id="r-alanon">
+          <span class="resource__when">Family &amp; friends</span>
+          <h3>Al-Anon</h3>
+          <p>Support groups for people affected by someone else's drinking.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://al-anon.org/al-anon-meetings/" target="_blank" rel="noopener">Find Al-Anon meetings ↗</a></div>
+        </article>
+        <article class="resource" id="r-smart">
+          <span class="resource__when">Science-based</span>
+          <h3>SMART Recovery</h3>
+          <p>Self-empowering, skills-based recovery meetings, in person and online.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://meetings.smartrecovery.org/" target="_blank" rel="noopener">Find SMART meetings ↗</a></div>
+        </article>
+        <article class="resource" id="r-nami">
+          <span class="resource__when">Mental health</span>
+          <h3>NAMI San Diego</h3>
+          <p>Free mental health support groups and classes for individuals and families.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://namisandiego.org/" target="_blank" rel="noopener">Visit NAMI San Diego ↗</a></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="tabs__panel" role="tabpanel" id="panel-care" aria-labelledby="tab-care" tabindex="0" hidden>
+      <div class="grid">
+        <article class="resource" id="r-samhsa">
+          <span class="resource__when">24/7 · free · confidential</span>
+          <h3>SAMHSA National Helpline</h3>
+          <p>Treatment referrals and information for mental health and substance use, in English and Spanish.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="tel:18006624357">Call 1-800-662-4357</a><a class="prc__btn" href="https://www.samhsa.gov/find-help/helplines/national-helpline" target="_blank" rel="noopener">Website ↗</a></div>
+        </article>
+        <article class="resource" id="r-findtreatment">
+          <span class="resource__when">Search</span>
+          <h3>FindTreatment.gov</h3>
+          <p>Search licensed treatment facilities near you by service, payment option and language.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://findtreatment.gov/" target="_blank" rel="noopener">Search treatment ↗</a></div>
+        </article>
+        <article class="resource" id="r-county">
+          <span class="resource__when">San Diego County</span>
+          <h3>County Behavioral Health Services</h3>
+          <p>San Diego County's mental health and substance-use programs and how to access them.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.sandiegocounty.gov/content/sdc/hhsa/programs/bhs.html" target="_blank" rel="noopener">County services ↗</a></div>
+        </article>
+        <article class="resource" id="r-optum">
+          <span class="resource__when">San Diego County</span>
+          <h3>County provider directory (Optum)</h3>
+          <p>Look up county-funded mental health and substance-use providers in San Diego.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.optumsandiego.com/" target="_blank" rel="noopener">Provider directory ↗</a></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="tabs__panel" role="tabpanel" id="panel-needs" aria-labelledby="tab-needs" tabindex="0" hidden>
+      <div class="grid">
+        <article class="resource" id="r-211">
+          <span class="resource__when">24/7 · dial 2-1-1</span>
+          <h3>211 San Diego</h3>
+          <p>Connects you to housing, food, utilities, health care and other local services.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="tel:211">Call 211</a><a class="prc__btn" href="https://211sandiego.org/" target="_blank" rel="noopener">Website ↗</a></div>
+        </article>
+        <article class="resource" id="r-food">
+          <span class="resource__when">Food</span>
+          <h3>Feeding San Diego</h3>
+          <p>Find free food distributions and pantries near you.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://feedingsandiego.org/" target="_blank" rel="noopener">Find food ↗</a></div>
+        </article>
+        <article class="resource" id="r-mts">
+          <span class="resource__when">Transportation</span>
+          <h3>MTS (San Diego transit)</h3>
+          <p>Bus routes, trip planning and reduced fares for getting to meetings and appointments.</p>
+          <div class="prc__links"><a class="prc__btn accent fill" href="https://www.sdmts.com/" target="_blank" rel="noopener">Plan a trip ↗</a></div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <p class="small muted resources__disclaimer">Listings are for information only. Check hours and eligibility with each service before you go.</p>
+</section>

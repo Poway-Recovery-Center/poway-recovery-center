@@ -1,0 +1,48 @@
+// Page heading band, breadcrumbs and section spacing shared by inner pages
+@use "../tokens" as *;
+
+.page-head {
+  background: $mist;
+  border-bottom: 1px solid $line;
+  padding: 36px 0 32px;
+
+  h1 { @include display-font; margin-bottom: 10px; }
+  p { color: $muted; max-width: 680px; margin: 0; font-size: 1.05rem; }
+}
+
+.crumbs {
+  font-size: .9rem;
+  margin-bottom: 10px;
+  color: $muted;
+
+  a { color: $teal; font-weight: 600; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+}
+
+.section { padding: 48px 0 0; }
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+
+  h2 { @include display-font; margin: 0; }
+  p { margin: 4px 0 0; color: $muted; width: 100%; }
+}
+
+// Two-column page body: main content + sidebar
+.with-sidebar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+
+  @include md { grid-template-columns: 1fr; }
+}
+
+.sidebar { display: grid; gap: 18px; position: sticky; top: $header-height + 20px; }
+
+@include md { .sidebar { position: static; } }

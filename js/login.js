@@ -11,5 +11,4 @@ document.addEventListener("DOMContentLoaded", () => {
       callback: () => { window.location.href = "profile.html"; }
     });
   });
-  document.querySelector("#guest-login").addEventListener("click", () => { window.location.href = "resources.html"; });
 });

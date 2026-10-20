@@ -1,0 +1,162 @@
+// Meeting schedule (schedule.html)
+@use "../tokens" as *;
+
+.schedule__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  .prc__links { gap: 6px; }
+}
+
+.schedule__range { font-size: 1.2rem; margin: 0; }
+
+.schedule__days { margin-bottom: 0; }
+
+.schedule__tab {
+  flex: 1 0 auto;
+  min-width: 84px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 10px 12px;
+  line-height: 1.25;
+
+  &.is-past { opacity: .55; }
+}
+
+.schedule__tab-day { font-weight: 700; }
+.schedule__tab-date { font-size: .82rem; font-weight: 500; }
+
+.schedule__tab-dot {
+  margin-top: 4px;
+  font-size: .68rem;
+  font-weight: 700;
+  color: $ink;
+  background: $sand;
+  border-radius: 999px;
+  padding: 0 8px;
+}
+
+.schedule__day { padding-top: 0; }
+
+.schedule__table {
+  background: $white;
+  border: 1px solid $line;
+  border-top: 0;
+  border-radius: 0 0 $radius $radius;
+}
+
+.schedule__row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) 110px 220px;
+  gap: 18px;
+  align-items: start;
+  padding: 16px 20px;
+  border-top: 1px solid $line;
+
+  &:first-child { border-top: 0; }
+  &.is-past { background: #fafbfb; color: $muted; }
+  &.is-mine { box-shadow: inset 4px 0 0 $teal; }
+}
+
+.schedule__row--head {
+  padding-block: 10px;
+  font-size: .8rem;
+  font-weight: 700;
+  color: $muted;
+  background: $mist;
+}
+
+.schedule__time {
+  strong, span { display: block; }
+  strong { color: $teal; font-size: 1.05rem; }
+  span { font-size: .85rem; color: $muted; }
+}
+
+.is-past .schedule__time strong { color: $muted; }
+
+.schedule__info {
+  h3 { margin: 0 0 6px; font-size: 1.08rem; }
+}
+
+.schedule__where { margin: 6px 0 0; font-size: .9rem; color: $muted; }
+
+.schedule__notes {
+  margin-top: 6px;
+  font-size: .9rem;
+
+  summary { cursor: pointer; color: $ocean; font-weight: 600; }
+  p { white-space: pre-line; margin: 6px 0 0; color: $ink; background: $mist; padding: 10px 12px; border-radius: 8px; }
+}
+
+.schedule__spots {
+  font-size: .9rem;
+
+  strong { font-size: 1.05rem; }
+  span { color: $muted; }
+}
+
+.schedule__meter {
+  display: block;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, $teal var(--fill), $sage var(--fill));
+}
+
+.schedule__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.schedule__mine { width: 100%; text-align: right; font-weight: 700; color: $teal; font-size: .9rem; }
+
+.schedule__empty { padding: 28px 20px; margin: 0; color: $muted; text-align: center; }
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  output { min-width: 1.4em; text-align: center; font-weight: 700; }
+  .prc__btn.small { width: 30px; padding: 0; }
+}
+
+// Sidebar reservation list
+.mine { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+
+.mine__item {
+  width: 100%;
+  text-align: left;
+  background: $mist;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: .9rem;
+
+  strong, span { display: block; }
+  &:hover { border-color: $teal; }
+}
+
+#schedule-status { margin-top: 12px; }
+
+@include md {
+  .schedule__row {
+    grid-template-columns: 80px minmax(0, 1fr);
+    row-gap: 10px;
+  }
+
+  .schedule__row--head { display: none; }
+  .schedule__row:nth-child(2) { border-top: 0; }
+  .schedule__spots, .schedule__actions { grid-column: 2; }
+  .schedule__actions { justify-content: flex-start; }
+  .schedule__mine { text-align: left; }
+}

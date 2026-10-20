@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="icon" href="images/logo-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  {% include header.html %}
+
+  <main id="main">
+    {% if page.heading %}
+    <section class="page-head">
+      <div class="wrap">
+        {% if page.parent %}<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ page.parent_url }}">{{ page.parent }}</a> › {{ page.title }}</nav>{% endif %}
+        <h1>{{ page.heading }}</h1>
+        {% if page.intro %}<p>{{ page.intro }}</p>{% endif %}
+      </div>
+    </section>
+    {% endif %}
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/api/login.js"></script>
+  <script type="module" src="js/support-widgets.js"></script>
+  {% for script in page.scripts %}<script type="module" src="{{ script }}"></script>
+  {% endfor %}
+</body>
+</html>

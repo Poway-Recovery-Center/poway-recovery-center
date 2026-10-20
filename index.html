@@ -1,117 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poway Recovery Center | Navigating recovery</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="sass/support-widgets.css">
-</head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="index.html"><img class="brand-logo" src="images/logo-mark.png" alt="" width="49" height="48">Poway <span>Recovery</span> Center</a>
-    <button class="menu-toggle" aria-label="Open navigation">☰</button>
-    <nav class="main-nav">
-      <a href="login.html">Log In</a>
-      <a href="resources.html">Resources</a>
-      <a href="programs.html">Programs</a>
-      <a href="about.html">About Us</a>
+---
+title: Home
+description: Free peer-support recovery meetings and resources at 13939 Poway Rd, Poway, California.
+scripts: [js/home.js]
+---
+<section class="hero">
+  <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="PRChomepagevideo.mp4" type="video/mp4">
+  </video>
+  <div class="hero__shade"></div>
+  <div class="wrap hero__grid">
+    <div class="hero__text">
+      <h1>Poway Recovery Center</h1>
+      <p class="hero__lead">A peer-support community for recovery and mental health. Meetings run every day, they're free, and you're welcome to come as you are.</p>
+      <p class="hero__where">13939 Poway Rd, Suite A · Poway, CA 92064</p>
+      <p class="hero__next" id="hero-next" aria-live="polite"></p>
+    </div>
+
+    <nav class="quick-links" aria-label="How can we help?">
+      <h2>How can we help?</h2>
+      <a class="prc__btn large block accent fill" href="schedule.html">Find a meeting &amp; reserve a spot <span aria-hidden="true">→</span></a>
+      <a class="prc__btn large block alert-red fill" href="tel:988">Need help now? Call or text 988 <span aria-hidden="true">→</span></a>
+      <a class="prc__btn large block" href="resources.html">Browse all resources <span aria-hidden="true">→</span></a>
+      <div class="quick-links__pair">
+        <a class="prc__btn large block" href="mood-room.html">Mood Room <span aria-hidden="true">→</span></a>
+        <a class="prc__btn large block" href="reflection-wall.html">Reflection Wall <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="quick-links__pair">
+        <button class="prc__btn large block" type="button" data-open-chat>Talk to the assistant <span aria-hidden="true">→</span></button>
+        <a class="prc__btn large block" href="contact.html">Contact us <span aria-hidden="true">→</span></a>
+      </div>
+      <a class="prc__btn large block" href="login.html" data-account-link>Log in or create an account <span aria-hidden="true">→</span></a>
     </nav>
-  </header>
+  </div>
+</section>
 
-  <main>
-    <section class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto">
-        <source src="PRChomepagevideo.mp4" type="video/mp4">
-      </video>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <p class="eyebrow">Recovery is a journey to be navigated. Chart your course.</p>
-        <h1>Poway Recovery Center</h1>
-        <p class="hero-copy">A compassionate, evidence-informed place to find stability, connection, and a next step that feels possible.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="programs.html">Explore programs</a>
-          <a class="button button-ghost" href="resources.html">Find support now</a>
-        </div>
-      </div>
-    </section>
+<section class="section wrap" id="today">
+  <div class="section-title">
+    <h2 id="today-title">Today at the center</h2>
+    <a class="prc__btn accent" href="schedule.html">Full weekly schedule</a>
+  </div>
+  <div class="today" id="today-list"><p class="muted">Loading today's meetings…</p></div>
+</section>
 
-    <section class="carousel-section section-shell">
-      <div class="section-heading">
-        <p class="eyebrow">A softer place to land</p>
-        <h2>Start where you are</h2>
-        <p>Explore a few of the spaces and services that can support your next step.</p>
-      </div>
-      <div class="carousel" data-carousel>
-        <button class="carousel-control prev" aria-label="Previous slide">←</button>
-        <div class="carousel-track">
-          <article class="carousel-slide is-active">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=85" alt="Friends sitting together outdoors">
-            <div class="carousel-caption">
-              <span>01 / Connection</span><h3>Find people who understand</h3>
-              <p>Peer-led meetings create room for truth, laughter, and support without judgment.</p>
-              <a href="programs.html#meetings">View meetings →</a>
-            </div>
-          </article>
-          <article class="carousel-slide">
-            <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1400&q=85" alt="Person resting peacefully near a window">
-            <div class="carousel-caption">
-              <span>02 / Regulation</span><h3>Make space for your nervous system</h3>
-              <p>Small, practical tools can help you move through stress without forcing yourself to be okay.</p>
-              <a href="resources.html#mood-room">Enter the Mood Room →</a>
-            </div>
-          </article>
-          <article class="carousel-slide">
-            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=85" alt="People gathered around a table">
-            <div class="carousel-caption">
-              <span>03 / Community</span><h3>Recovery grows in community</h3>
-              <p>Learn about programs, volunteer opportunities, and ways to make support more accessible.</p>
-              <a href="about.html">Meet our team →</a>
-            </div>
-          </article>
-        </div>
-        <button class="carousel-control next" aria-label="Next slide">→</button>
-        <div class="carousel-dots" aria-label="Carousel navigation"></div>
-      </div>
-    </section>
+<section class="section wrap">
+  <div class="section-title"><h2>What we offer</h2></div>
+  <div class="grid grid--3">
+    <a class="card card--link" href="schedule.html">
+      <h3>Peer-support meetings</h3>
+      <p>Open and closed meetings every day of the week, in person and on Zoom. Reserve a spot ahead of time so we know you're coming.</p>
+      <span class="card__more">See the schedule →</span>
+    </a>
+    <a class="card card--link" href="resources.html#tab-site">
+      <h3>Tools for hard moments</h3>
+      <p>The Mood Room helps you settle when things feel like a lot. The Reflection Wall lets you share small wins anonymously.</p>
+      <span class="card__more">Open the tools →</span>
+    </a>
+    <a class="card card--link" href="resources.html#tab-care">
+      <h3>Help finding care</h3>
+      <p>Crisis lines, treatment search, county behavioral health and everyday needs like food and transportation, all in one place.</p>
+      <span class="card__more">Find services →</span>
+    </a>
+  </div>
+</section>
 
-    <section class="statement-section">
-      <div class="section-shell statement-grid">
-        <div><p class="eyebrow">Our promise</p><h2>You deserve support that sees the whole person.</h2></div>
-        <p>We combine trauma-informed care, peer connection, practical education, and pathways to clinical support. We do not measure recovery by perfection. We measure it by safety, choice, connection, and the courage to keep going.</p>
+<section class="section wrap">
+  <div class="visit">
+    <div>
+      <h2>Visiting for the first time?</h2>
+      <ul class="checklist">
+        <li>You don't need to sign up or explain your story to attend a meeting.</li>
+        <li>"Open" meetings welcome anyone. "Closed" meetings are for people who want to stop drinking or using.</li>
+        <li>Some meetings are upstairs. Each meeting's room and access details are listed on the schedule.</li>
+        <li>Hybrid meetings also run on Zoom. The Zoom details are listed with each meeting.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h3>Find us</h3>
+      <p>13939 Poway Rd, Suite A<br>Poway, CA 92064</p>
+      <div class="prc__links">
+        <a class="prc__btn accent fill" href="https://www.google.com/maps/search/?api=1&query=13939+Poway+Rd+Poway+CA+92064" target="_blank" rel="noopener">Get directions</a>
+        <a class="prc__btn" href="contact.html">Send us a message</a>
       </div>
-    </section>
-
-    <section class="section-shell feature-section">
-      <div class="section-heading">
-        <p class="eyebrow">Tools for the moment</p><h2>Support, at your pace</h2>
-      </div>
-      <div class="feature-grid">
-        <a class="feature-card" href="resources.html#mood-room"><span class="card-number">01</span><h3>The Mood Room</h3><p>Describe what is happening right now and receive a grounding space with music, prompts, and gentle next steps.</p><span class="text-link">Try the tool →</span></a>
-        <a class="feature-card" href="resources.html#reflection-wall"><span class="card-number">02</span><h3>Anonymous Reflection Wall</h3><p>Share a small win, a hard moment, or a reminder for someone who is still finding their footing.</p><span class="text-link">Read reflections →</span></a>
-        <a class="feature-card" href="programs.html#meetings"><span class="card-number">03</span><h3>Interactive Schedule</h3><p>Find a meeting, see available spaces, and reserve a spot without needing to explain your whole story.</p><span class="text-link">See the schedule →</span></a>
-      </div>
-    </section>
-
-    <section class="journey-section">
-      <div class="section-shell">
-        <div class="section-heading"><p class="eyebrow">Real recovery timelines</p><h2>There is no single way forward</h2><p>These composite snapshots reflect common experiences. Every person’s path is different.</p></div>
-        <div class="journey-gallery">
-          <article><div class="journey-image" style="background-image:url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=900&q=80')"></div><span>Before</span><h3>“I was surviving each day.”</h3><p>Overwhelmed, isolated, and unsure where to begin.</p></article>
-          <article><div class="journey-image" style="background-image:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80')"></div><span>During</span><h3>“I learned to pause.”</h3><p>Building routines, asking for help, and practicing new responses.</p></article>
-          <article><div class="journey-image" style="background-image:url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=900&q=80')"></div><span>After</span><h3>“My life became bigger again.”</h3><p>Reconnecting with people, purpose, and possibilities.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta-section section-shell">
-      <div><p class="eyebrow">You can begin today</p><h2>One conversation can be a first step.</h2></div>
-      <a class="button button-primary" href="resources.html#directory">Find local resources</a>
-    </section>
-  </main>
-
-  <script src="js/main.js"></script><script type="module" src="js/api/login.js"></script><script type="module" src="js/support-widgets.js"></script>
-</body>
-</html>
+    </div>
+  </div>
+</section>

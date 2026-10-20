@@ -14,3 +14,12 @@ export async function logoutUser() {
     await apiRequest('/api/authenticate', 'DELETE').catch(() => {});
     window.location.href = "login.html";
 }
+
+// Admin only: messages sent from the Contact Us form
+export function getContactMessages() {
+    return apiRequest('/api/contact');
+}
+
+export function setMessageHandled(id, handled) {
+    return apiRequest('/api/contact', 'PUT', { id, handled });
+}
