@@ -1,0 +1,56 @@
+---
+# Front matter tells Jekyll to compile this file to sass/schedule.css
+---
+// Meeting calendar on programs.html (layout for the .meeting cards is in styles.scss)
+$ink:#1c2e3b;$muted:#5d7180;$sage:#ddeeed;$ocean:#1d5e8a;$teal:#23797d;$sand:#f2cf66;$line:#d9e3e5;
+
+.calendar-toolbar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px}
+.calendar-toolbar .button{margin:0}
+.calendar-toolbar .button[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.calendar-title{font-family:"Playfair Display",serif;font-size:1.4rem;text-align:center;margin:0}
+.text-button{background:none;border:0;padding:0;color:$ocean;font-weight:700;cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:3px}
+.calendar-toolbar + .text-button{justify-self:center}
+.calendar-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.calendar-date{display:flex;flex-direction:column;align-items:center;gap:2px;background:white;border:1px solid $line;border-radius:6px;padding:12px 6px;cursor:pointer;color:$ink;transition:.2s}
+.calendar-date:hover{border-color:$teal}
+.calendar-date strong{font-family:"Playfair Display",serif;font-size:1.6rem;line-height:1.1}
+.calendar-weekday{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:$teal}
+.calendar-count{font-size:.75rem;color:$muted}
+.calendar-dot{font-size:.65rem;font-weight:700;background:$sand;border-radius:999px;padding:1px 8px;margin-top:4px}
+.calendar-date.is-today{border-color:$teal;box-shadow:inset 0 0 0 1px $teal}
+.calendar-date.is-past{opacity:.5}
+.calendar-date.is-selected{background:$ocean;border-color:$ocean;color:white}
+.calendar-date.is-selected .calendar-weekday,.calendar-date.is-selected .calendar-count{color:#ffffffcc}
+.calendar-day{display:grid;gap:15px}
+.calendar-day-title{font-family:"Playfair Display",serif;font-size:1.5rem;margin:10px 0 0}
+.calendar-empty,.calendar-source{color:$muted;margin:0}
+.calendar-source{font-size:.85rem}
+.calendar-source a{color:$ocean;text-decoration:underline}
+.calendar-status:empty{display:none}
+.calendar-status{color:#a03a2c;font-weight:600;margin:0}
+.meeting-tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.meeting-tag{font-size:.72rem;font-weight:700;background:$sage;color:$ocean;border-radius:999px;padding:2px 10px}
+.meeting-notes summary{cursor:pointer;color:$ocean;font-weight:600;font-size:.85rem}
+.meeting-notes p{white-space:pre-line;font-size:.88rem}
+.meeting-action{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.meeting-action .button{margin:0}
+.meeting-action .button[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.spot-stepper{display:flex;align-items:center;gap:8px}
+.spot-label{font-size:.8rem;font-weight:700;color:$muted;margin-right:4px}
+.spot-stepper output{min-width:1.5em;text-align:center;font-weight:700;font-size:1.1rem}
+.spot-step{width:34px;height:34px;border-radius:50%;border:1px solid $line;background:white;color:$ocean;font-size:1.1rem;font-weight:700;cursor:pointer;line-height:1}
+.spot-step:hover:not([disabled]){border-color:$teal}
+.spot-step[disabled]{opacity:.4;cursor:not-allowed}
+.meeting-reserved{font-weight:700;color:$teal}
+.my-bookings{background:white;border:1px solid $line;border-left:4px solid $sand;padding:20px 25px}
+.my-bookings h3{font-family:"Playfair Display",serif;margin:0 0 8px}
+.my-bookings ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+
+@media(max-width:800px){
+  .calendar-toolbar{grid-template-columns:1fr 1fr}
+  .calendar-title{grid-column:1 / -1;grid-row:1}
+  .calendar-week{grid-template-columns:repeat(7,minmax(64px,1fr));overflow-x:auto;padding-bottom:4px}
+  .calendar-count{display:none}
+  .meeting-action{align-items:stretch}
+  .spot-stepper{justify-content:center}
+}

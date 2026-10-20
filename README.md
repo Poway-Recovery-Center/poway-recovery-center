@@ -28,6 +28,8 @@ The site still works without the backend running, but logging in, signing up, an
 - `js/api/config.js`: backend address (`pythonURI`), `fetchOptions`, and `login()`, following Open Coding Society pages
 - `js/api/login.js`: checks `/api/id` on every page and switches "Log In" to "My Profile"
 - `js/api/profile.js`: profile update, member list, and logout helpers
+- `js/api/schedule.js`: meeting calendar and booking calls; all schedule data comes from the API's `/api/schedule` endpoints
+- `sass/schedule.scss`: meeting calendar styling (compiled by Jekyll to `sass/schedule.css`)
 - `.github/workflows/jekyll-gh-pages.yml`: builds the site with `bundle exec jekyll build` (same Jekyll as `make`) and deploys it to GitHub Pages
 
 ## Deploying
@@ -35,4 +37,4 @@ Every push to `main` runs `.github/workflows/jekyll-gh-pages.yml`, which publish
 
 GitHub Pages only serves static files, so the API has to be deployed separately (see the poway-recovery-center-api README). Once it's running on HTTPS, set that address as `deployedPythonURI` in `js/api/config.js` and push.
 
-The meeting reservations and reflection wall still use browser localStorage. The Mood Room uses a local supportive categorizer and Apple Music search links.
+The meeting calendar and reservations come from the backend (`/api/schedule`), which syncs the center's real meetings from the North County San Diego AA meeting feed. The reflection wall still uses browser localStorage. The Mood Room uses a local supportive categorizer and Apple Music search links.
