@@ -7,7 +7,8 @@
   overflow: hidden;
   color: $white;
   padding: 72px 0;
-  min-height: min(600px, calc(100vh - #{$header-height}));
+  min-height: calc(100vh - #{$header-height});
+  min-height: calc(100svh - #{$header-height});
   display: flex;
   align-items: center;
   text-shadow: 0 2px 12px rgba(#0a2e2c, .45);
@@ -29,12 +30,14 @@
   background: linear-gradient(90deg, rgba(#0a2e2c, .72) 0%, rgba(#0a2e2c, .5) 55%, rgba(#0a2e2c, .4) 100%);
 }
 
-// Title on the left, hub tiles on the right
+// Title on the left, hub tiles on the right, each inset about an inch from the edge
+$hero-inset: 96px;
+
 .hero__inner {
   position: relative;
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 40px;
   align-items: center;
 
@@ -43,6 +46,10 @@
 
 .hero__text {
   text-align: left;
+  padding-left: $hero-inset;
+
+  @media (max-width: 1100px) { padding-left: $hero-inset * .33; }
+  @include md { padding-left: 0; }
 
   h1 { @include display-font; font-size: clamp(2.2rem, 5vw, 3.4rem); margin-bottom: 14px; }
 }
@@ -63,10 +70,13 @@
 
 .hero__hub {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(2, 200px);
+  gap: 12px;
+  margin-right: $hero-inset;
   text-shadow: none;
 
+  @media (max-width: 1100px) { grid-template-columns: repeat(2, 170px); margin-right: $hero-inset * .33; }
+  @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-right: 0; }
   @include sm { grid-template-columns: 1fr; }
 }
 
@@ -130,10 +140,10 @@
 
 // Slightly see-through tiles over the hero video
 .hub__tile--glass {
-  min-height: 84px;
-  padding: 14px 16px 30px;
-  background: rgba($white, .14);
-  border-color: rgba($white, .28);
+  min-height: 112px;
+  padding: 16px 16px 32px;
+  background: rgba($white, .24);
+  border-color: rgba($white, .36);
   color: $white;
   box-shadow: none;
   backdrop-filter: blur(6px);
@@ -145,8 +155,8 @@
   &:hover,
   &:focus-visible {
     color: $white;
-    background: rgba($white, .26);
-    border-color: rgba($white, .5);
+    background: rgba($white, .36);
+    border-color: rgba($white, .6);
   }
 }
 
