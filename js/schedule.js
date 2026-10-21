@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (s.started) spots.append(el("span", null, "Started"));
     else {
       spots.append(el("strong", null, s.spots_left), el("span", null, ` of ${s.capacity} left`));
-      const bar = el("span", "schedule__meter"); bar.style.setProperty("--fill", `${(1 - s.spots_left / s.capacity) * 100}%`);
+      const bar = el("meter", "schedule__meter"); bar.max = s.capacity; bar.value = s.capacity - s.spots_left;
       spots.append(bar);
     }
 

@@ -8,62 +8,67 @@ scripts: [js/home.js]
     <source src="PRChomepagevideo.mp4" type="video/mp4">
   </video>
   <div class="hero__shade"></div>
-  <div class="wrap hero__text">
-    <h1>Poway Recovery Center</h1>
-    <p class="hero__lead">Helping individuals and their loved ones</p>
-    <p class="hero__where">13939 &amp; 13943 Poway Rd · Poway, CA 92064</p>
-    <p class="hero__next" id="hero-next" aria-live="polite"></p>
+  <div class="wrap hero__inner">
+    <div class="hero__text">
+      <h1>Poway Recovery Center</h1>
+      <p class="hero__lead">Helping individuals and their loved ones</p>
+      <p class="hero__where">13939 &amp; 13943 Poway Rd · Poway, CA 92064</p>
+      <p class="hero__next" id="hero-next" aria-live="polite"></p>
+    </div>
+
+    <nav class="hero__hub" aria-label="Poway Recovery Center hub">
+      <a class="hub__tile hub__tile--glass" href="resources.html">
+        <span class="hub__kicker">Resources</span>
+        <span class="hub__title">Browse all resources</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="hub__tile hub__tile--glass" href="resources.html#care">
+        <span class="hub__kicker">Care</span>
+        <span class="hub__title">Help finding care</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="hub__tile hub__tile--glass" href="mood-room.html">
+        <span class="hub__kicker">Tools</span>
+        <span class="hub__title">Mood Room</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="hub__tile hub__tile--glass" href="reflection-wall.html">
+        <span class="hub__kicker">Tools</span>
+        <span class="hub__title">Reflection Wall</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+      <button class="hub__tile hub__tile--glass" type="button" data-open-chat>
+        <span class="hub__kicker">Ask</span>
+        <span class="hub__title">Talk to the assistant</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </button>
+      <a class="hub__tile hub__tile--glass" href="about.html">
+        <span class="hub__kicker">About</span>
+        <span class="hub__title">About the center</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="hub__tile hub__tile--glass" href="contact.html">
+        <span class="hub__kicker">Contact</span>
+        <span class="hub__title">Contact us</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="hub__tile hub__tile--glass" href="login.html" data-account-link>
+        <span class="hub__kicker">Account</span>
+        <span class="hub__title">Log in or create an account</span>
+        <span class="hub__arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
   </div>
 </section>
 
-<nav class="wrap hub" aria-label="Poway Recovery Center hub">
+<div class="wrap hub">
   <a class="hub__tile hub__tile--wide hub__tile--primary" href="schedule.html">
     <span class="hub__kicker">Meetings</span>
     <span class="hub__title">Find a meeting &amp; reserve a spot</span>
     <span class="hub__desc">Join us in meetings that suit your needs and get help.</span>
     <span class="hub__arrow" aria-hidden="true">→</span>
   </a>
-  <a class="hub__tile" href="resources.html">
-    <span class="hub__kicker">Resources</span>
-    <span class="hub__title">Browse all resources</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-  <a class="hub__tile" href="resources.html#care">
-    <span class="hub__kicker">Care</span>
-    <span class="hub__title">Help finding care</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-  <a class="hub__tile" href="mood-room.html">
-    <span class="hub__kicker">Tools</span>
-    <span class="hub__title">Mood Room</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-  <a class="hub__tile" href="reflection-wall.html">
-    <span class="hub__kicker">Tools</span>
-    <span class="hub__title">Reflection Wall</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-  <button class="hub__tile" type="button" data-open-chat>
-    <span class="hub__kicker">Ask</span>
-    <span class="hub__title">Talk to the assistant</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </button>
-  <a class="hub__tile" href="about.html">
-    <span class="hub__kicker">About</span>
-    <span class="hub__title">About the center</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-  <a class="hub__tile" href="contact.html">
-    <span class="hub__kicker">Contact</span>
-    <span class="hub__title">Contact us</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-  <a class="hub__tile" href="login.html" data-account-link>
-    <span class="hub__kicker">Account</span>
-    <span class="hub__title">Log in or create an account</span>
-    <span class="hub__arrow" aria-hidden="true">→</span>
-  </a>
-</nav>
+</div>
 
 <section class="section wrap" aria-labelledby="programs-title">
   <div class="section-title">

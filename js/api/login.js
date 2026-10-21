@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const title = link.querySelector('.hub__title');
         if (title) {
             title.textContent = `My profile (${user.name.split(" ")[0]})`;
-            link.querySelector('.hub__desc').textContent = "See and change your reservations.";
             return;
         }
         // Keep a trailing arrow span if the link has one

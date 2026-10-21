@@ -100,12 +100,23 @@
   span { color: $muted; }
 }
 
+// Native <meter>: filled part is spots taken
 .schedule__meter {
   display: block;
+  width: 100%;
   height: 6px;
   margin-top: 6px;
+  border: 0;
   border-radius: 6px;
-  background: linear-gradient(90deg, $teal var(--fill), $sage var(--fill));
+  overflow: hidden;
+  background: $sage;
+  appearance: none;
+
+  &::-webkit-meter-bar { background: $sage; border: 0; border-radius: 6px; height: 6px; }
+  &::-webkit-meter-optimum-value,
+  &::-webkit-meter-suboptimum-value,
+  &::-webkit-meter-even-less-good-value { background: $teal; border-radius: 6px; }
+  &::-moz-meter-bar { background: $teal; border-radius: 6px; }
 }
 
 .schedule__actions {
