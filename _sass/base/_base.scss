@@ -1,6 +1,13 @@
 // Reset, theme custom properties, typography
 @use "../tokens" as *;
 
+// Local font for the hero title (path is relative to assets/css/main.css)
+@font-face {
+  font-family: "Super Joyful";
+  src: url("super-joyful-font/SuperJoyful-lxwPq.ttf") format("truetype");
+  font-display: swap;
+}
+
 :root {
   // Same custom property names OCS buttons read, mapped to our theme
   --pref-bg-color: #{$white};

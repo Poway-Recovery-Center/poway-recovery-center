@@ -35,15 +35,14 @@
   border-radius: $radius;
   padding: 18px 20px;
   background: $white;
-  border: 1px solid $line;
-  border-left: 4px solid $teal;
+  border: 2px solid $teal;
 
   h2, h3 { font-size: 1.05rem; margin-bottom: 6px; }
   p:last-child, ul:last-child { margin-bottom: 0; }
 }
 
-.note--crisis { border-left-color: $red; background: #fdf3f1; }
-.note--sand { border-left-color: $sand; }
+.note--crisis { border-color: $red; background: #fdf3f1; }
+.note--sand { border-color: $sand; }
 
 .tag {
   display: inline-block;

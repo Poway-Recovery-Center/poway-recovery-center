@@ -51,10 +51,10 @@ $hero-inset: 96px;
   @media (max-width: 1100px) { padding-left: $hero-inset * .33; }
   @include md { padding-left: 0; }
 
-  h1 { @include display-font; font-size: clamp(2.2rem, 5vw, 3.4rem); margin-bottom: 14px; }
+  h1 { @include title-font; font-size: clamp(2.8rem, 6.5vw, 4.4rem); margin-bottom: 14px; }
 }
 
-.hero__lead { font-size: 1.1rem; max-width: 460px; margin: 0 0 12px; color: #e6f4f1; }
+.hero__lead { font-size: 1.2rem; font-weight: 700; max-width: 460px; margin: 0 0 12px; color: #e6f4f1; }
 .hero__where { color: #bfe0da; margin-bottom: 6px; }
 
 .hero__next {

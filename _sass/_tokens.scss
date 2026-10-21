@@ -13,7 +13,8 @@ $red: #b23a2b;
 $green: #2e7d4f;
 
 $font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-$font-display: "Bowlby One", Impact, "Arial Black", sans-serif;  // super chunky: site name and main headings
+$font-display: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;  // site name and main headings
+$font-title: "Super Joyful", "Montserrat", sans-serif;  // hero title only
 $wrap: 1120px;
 $radius: 10px;
 $header-height: 68px;
@@ -30,9 +31,17 @@ $bp-sm: 480px;
   @media (max-width: $bp-sm) { @content; }
 }
 
-// Super chunky display type (Bowlby One has a single heavy weight)
+// Display type for headings
 @mixin display-font {
   font-family: $font-display;
+  font-weight: 800;
+  letter-spacing: .01em;
+  line-height: 1.1;
+}
+
+// Hero title type (local Super Joyful font, see base)
+@mixin title-font {
+  font-family: $font-title;
   font-weight: 400;
   letter-spacing: .01em;
   line-height: 1.1;
