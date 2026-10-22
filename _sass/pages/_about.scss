@@ -46,7 +46,7 @@
 
 .card .prc__btn { align-self: flex-start; margin-top: 4px; }
 
-// Programs: compact two-up list with an abbreviation badge
+// Programs: compact list with each program's logo card
 .about-programs {
   list-style: none;
   margin: 0;
@@ -72,17 +72,14 @@
     &:hover, &:focus-visible { border-color: $teal; box-shadow: $shadow; }
   }
 
-  strong {
+  img {
     flex: none;
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: $sage;
-    color: $teal;
-    @include display-font;
-    font-size: .8rem;
+    width: 48px;
+    height: 64px;
+    border: 1px solid $line;
+    border-radius: 6px;
+    background: $white;
+    object-fit: contain;
   }
 }
 
