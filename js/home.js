@@ -27,8 +27,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     list.innerHTML = "";
     if (!day.sessions.length) { list.append(el("p", "muted", "No meetings are scheduled.")); return; }
     day.sessions.forEach(s => {
-      const row = el("a", "today__row" + (s.started ? " is-past" : ""));
-      row.href = `schedule.html?date=${s.date}`;
+      const row = el("button", "today__row" + (s.started ? " is-past" : ""));
+      row.type = "button";
+      row.dataset.feature = "schedule";
+      row.dataset.date = s.date;
       row.append(el("span", "today__time", s.start_formatted), el("span", "today__name", s.name),
         el("span", "today__meta", s.started ? "Started" : [s.attendance, ...s.types.slice(0, 2)].filter(Boolean).join(" · ")),
         el("span", "today__spots", s.started ? "" : `${s.spots_left} spots`));

@@ -1,0 +1,36 @@
+<div class="with-sidebar">
+  <div class="schedule">
+    <div class="schedule__bar">
+      <div class="prc__links">
+        <button class="prc__btn" type="button" id="prev-week" aria-label="Previous week">‹ Prev</button>
+        <button class="prc__btn" type="button" id="this-week">This week</button>
+        <button class="prc__btn" type="button" id="next-week" aria-label="Next week">Next ›</button>
+      </div>
+      <h3 class="schedule__range" id="week-range" aria-live="polite"></h3>
+    </div>
+
+    <div class="tabs__list schedule__days" role="tablist" aria-label="Days" id="day-tabs"></div>
+
+    <div class="schedule__day" role="tabpanel" id="day-panel" tabindex="0">
+      <div class="schedule__table" id="day-table"><p class="schedule__empty">Loading meetings…</p></div>
+    </div>
+    <p class="status-msg is-error" id="schedule-status" role="status"></p>
+  </div>
+
+  <aside class="sidebar">
+    <section class="note" id="my-bookings">
+      <h3>Your reservations</h3>
+      <div id="my-bookings-list"><p class="small muted">Loading…</p></div>
+    </section>
+    <section class="note note--sand">
+      <h3>How reserving works</h3>
+      <ul class="small">
+        <li>Reserving is optional. Walk-ins are always welcome.</li>
+        <li>You can hold up to 5 spots at a meeting if you're bringing people.</li>
+        <li>Spots open 30 days ahead and close when the meeting starts.</li>
+        <li>Cancel any time before the meeting if your plans change.</li>
+      </ul>
+    </section>
+    <p class="small muted" id="schedule-source"></p>
+  </aside>
+</div>

@@ -34,6 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
   prev.addEventListener("click", () => show(addDays(weekStart, -7)));
   next.addEventListener("click", () => show(addDays(weekStart, 7)));
   thisWeek.addEventListener("click", () => { selected = today; show(sundayOf(today)); });
+  // The home page opens the schedule popup on a given day (js/features.js)
+  document.addEventListener("schedule:show-date", e => {
+    if (!today || e.detail < today) return;
+    selected = e.detail;
+    show(sundayOf(selected));
+  });
 
   async function load() {
     try {

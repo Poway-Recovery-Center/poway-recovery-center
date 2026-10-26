@@ -1,4 +1,4 @@
-// Mood Room (mood-room.html) and Reflection Wall (reflection-wall.html)
+// Mood Room and Reflection Wall (popups on the home page, _includes/features/)
 @use "../tokens" as *;
 
 .card__title { font-size: 1.25rem; margin: 0; }
@@ -9,7 +9,7 @@
 .mood__result {
   border-top: 4px solid $teal;
 
-  h2 { margin: 14px 0 8px; }
+  h3 { margin: 14px 0 8px; font-size: 1.4rem; }
 }
 
 .mood__music {

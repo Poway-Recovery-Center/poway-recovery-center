@@ -1,4 +1,4 @@
-// Resources (resources.html): crisis line strip, recovery groups across the top, then three categories in a row
+// Resources (resources.html): crisis line strip, the programs carousel, recovery groups across the top, then two categories in a row
 @use "../tokens" as *;
 
 .res {
@@ -25,10 +25,18 @@
   a { color: $ink; font-weight: 700; }
 }
 
-// Recovery groups span the top; the three shorter lists sit in a row beneath
+// Recovery programs that meet at the center
+.res-programs {
+  margin-top: 44px;
+  scroll-margin-top: $header-height + 20px;
+
+  h2 { font-size: 1.25rem; margin: 0; }
+}
+
+// Recovery groups span the top; the two shorter lists sit in a row beneath
 .res-hub {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 40px;
   margin-top: 44px;
 
@@ -93,3 +101,75 @@
 }
 
 .res-note { text-align: center; margin: 36px 0 0; }
+
+// Recovery programs that meet at the center
+// Small logo cards: one row of 8 on desktop, 4 on tablets, 2 on phones
+$program-gap: 10px;
+
+$program-width: 180px;
+$program-height: 160px;
+
+// Program cards scroll across the screen in an endless loop
+.programs {
+  overflow: hidden;
+  margin-top: 16px;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+
+  &:hover .programs__track,
+  &:has(:focus-visible) .programs__track { animation-play-state: paused; }
+
+  @media (prefers-reduced-motion: reduce) {
+    mask-image: none;
+
+    .programs__track {
+      flex-wrap: wrap;
+      width: auto;
+      animation: none;
+    }
+    .programs__dup { display: none; }
+  }
+}
+
+// Track holds the cards twice so sliding it by half loops seamlessly
+.programs__track {
+  display: flex;
+  width: max-content;
+  animation: programs-scroll 40s linear infinite;
+
+  .program {
+    flex: 0 0 $program-width;
+    margin-right: $program-gap;
+
+    @include sm { flex-basis: 140px; }
+  }
+}
+
+.programs__dup { display: contents; }
+
+@keyframes programs-scroll {
+  to { transform: translateX(-50%); }
+}
+
+.program {
+  display: block;
+  overflow: hidden;
+  background: $white;
+  border: 1px solid $line;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .15s;
+
+  &:hover, &:focus-visible { border-color: $teal; }
+  &:focus-visible { outline: 2px solid $teal; outline-offset: 2px; }
+}
+
+// Program logo card (name and description are part of the image)
+.program__img {
+  display: block;
+  width: 100%;
+  height: $program-height;
+  object-fit: contain;
+
+  @include sm { height: 130px; }
+}

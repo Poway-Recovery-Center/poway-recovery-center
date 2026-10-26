@@ -1,4 +1,4 @@
-// Home page (index.html): compact video hero, hub of tiles, then today's meetings beside visit info
+// Home page (index.html): compact video hero, hub of tiles, then the support tools beside today's meetings, then visit info
 @use "sass:color";
 @use "../tokens" as *;
 
@@ -80,13 +80,6 @@ $hero-inset: 96px;
   @include sm { grid-template-columns: 1fr; }
 }
 
-// Meetings tile in its own section below the hero
-.hub {
-  margin-top: 40px;
-  display: grid;
-  gap: 14px;
-}
-
 // Tile colors: background, border, kicker; hover deepens the background
 @mixin hub-tone($bg, $border, $text, $kicker) {
   background: $bg;
@@ -129,15 +122,6 @@ $hero-inset: 96px;
   }
 }
 
-.hub__tile--wide {
-  grid-column: 1 / -1;
-  min-height: 120px;
-
-  .hub__title { font-size: 1.35rem; }
-}
-
-.hub__tile--primary { @include hub-tone($ocean, $ocean, $white, $sand); }
-
 // Slightly see-through tiles over the hero video
 .hub__tile--glass {
   min-height: 112px;
@@ -179,91 +163,76 @@ $hero-inset: 96px;
   transition: transform .2s;
 }
 
-// Recovery programs that meet at the center
-// Small logo cards: one row of 8 on desktop, 4 on tablets, 2 on phones
-$program-gap: 10px;
+// Support tools: buttons on the left open each tool as a popup (_sass/components/_feature-dialog.scss); today's meetings on the right
+.tools { scroll-margin-top: $header-height + 16px; }
 
-$program-width: 180px;
-$program-height: 160px;
-
-// Program cards scroll across the screen in an endless loop
-.programs {
-  overflow: hidden;
-  margin-top: 16px;
-  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-
-  &:hover .programs__track,
-  &:has(:focus-visible) .programs__track { animation-play-state: paused; }
-
-  @media (prefers-reduced-motion: reduce) {
-    mask-image: none;
-
-    .programs__track {
-      flex-wrap: wrap;
-      width: auto;
-      animation: none;
-    }
-    .programs__dup { display: none; }
-  }
-}
-
-// Track holds the cards twice so sliding it by half loops seamlessly
-.programs__track {
-  display: flex;
-  width: max-content;
-  animation: programs-scroll 40s linear infinite;
-
-  .program {
-    flex: 0 0 $program-width;
-    margin-right: $program-gap;
-
-    @include sm { flex-basis: 140px; }
-  }
-}
-
-.programs__dup { display: contents; }
-
-@keyframes programs-scroll {
-  to { transform: translateX(-50%); }
-}
-
-.program {
-  display: block;
-  overflow: hidden;
-  background: $white;
-  border: 1px solid $line;
-  border-radius: 6px;
-  color: inherit;
-  text-decoration: none;
-  transition: border-color .15s;
-
-  &:hover, &:focus-visible { border-color: $teal; }
-  &:focus-visible { outline: 2px solid $teal; outline-offset: 2px; }
-}
-
-// Program logo card (name and description are part of the image)
-.program__img {
-  display: block;
-  width: 100%;
-  height: $program-height;
-  object-fit: contain;
-
-  @include sm { height: 130px; }
-}
-
-// Today's meetings beside the visit info
-.hub-info {
+.tools__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-columns: 300px minmax(0, 1fr);
   gap: 28px;
   align-items: start;
 
   @include md { grid-template-columns: 1fr; }
 }
 
-.hub-info__side {
+.tools__menu {
   display: grid;
+  gap: 12px;
+
+  @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include sm { grid-template-columns: 1fr; }
+}
+
+.tool {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  position: relative;
+  @include panel(16px 44px 16px 18px);
+  border-left: 4px solid $teal;
+  font: inherit;
+  text-align: left;
+  color: $ink;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s;
+
+  .hub__kicker { color: $teal; }
+
+  &::after {
+    content: "→";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    color: $teal;
+    transition: transform .2s;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: $mist;
+    border-color: $ocean;
+    transform: translateX(2px);
+
+    &::after { transform: translate(3px, -50%); }
+  }
+}
+
+.tool__title { @include display-font; font-size: 1.1rem; }
+.tool__desc { font-size: .9rem; color: $muted; }
+
+.tools__today .section-title { align-items: center; margin-bottom: 12px; }
+.tools__today h3 { @include display-font; font-size: 1.3rem; margin: 0; }
+
+// Where we are + donations, side by side
+.visit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+
+  @include md { grid-template-columns: 1fr; }
 }
 
 // Today's meetings list
@@ -273,6 +242,13 @@ $program-height: 160px;
 }
 
 .today__row {
+  width: 100%;
+  margin: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
   display: grid;
   grid-template-columns: 100px minmax(0, 1fr) auto 80px;
   gap: 16px;
