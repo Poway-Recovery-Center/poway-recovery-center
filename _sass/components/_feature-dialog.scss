@@ -77,16 +77,14 @@ $feature-gap: 48px;
   #schedule .feature__body,
   #mood-room .feature__body { overflow: hidden; }
 
-  #schedule .with-sidebar,
-  #mood-room .with-sidebar {
+  #schedule .with-sidebar {
     height: 100%;
     grid-template-columns: minmax(0, 1fr) 300px;
     align-items: stretch;
     gap: 20px;
   }
 
-  #schedule .sidebar,
-  #mood-room .sidebar { align-content: start; overflow-y: auto; }
+  #schedule .sidebar { align-content: start; overflow-y: auto; }
 
   // Week bar and day tabs stay put; only a long day's list of meetings scrolls inside the table
   #schedule .schedule { display: flex; flex-direction: column; min-height: 0; }
@@ -98,14 +96,13 @@ $feature-gap: 48px;
 
   // Mood Room: what you typed and your room sit side by side once the room opens
   #mood-room .mood {
+    height: 100%;
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
     align-items: start;
     min-height: 0;
   }
-
   #mood-room .mood__result { max-height: 100%; overflow-y: auto; }
-  #mood-room .form textarea { min-height: 140px; }
 }
 
 .feature__subhead {

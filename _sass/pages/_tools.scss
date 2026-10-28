@@ -5,6 +5,7 @@
 
 // Mood Room
 .mood { display: grid; gap: 18px; }
+.mood .form textarea { min-height: 64px; }
 
 .mood__result {
   border-top: 4px solid $teal;

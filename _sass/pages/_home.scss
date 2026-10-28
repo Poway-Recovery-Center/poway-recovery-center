@@ -190,7 +190,6 @@ $hero-inset: 96px;
   width: 100%;
   position: relative;
   @include panel(16px 44px 16px 18px);
-  border-left: 4px solid $teal;
   font: inherit;
   text-align: left;
   color: $ink;

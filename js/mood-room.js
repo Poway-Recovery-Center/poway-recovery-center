@@ -1,21 +1,35 @@
-// Mood Room: matches keywords in what the person types to a grounding "room" (runs only in the browser)
+import { apiRequest } from './api/config.js';
+
+// Mood Room: sends what the person types to the backend (/api/mood), which picks the matching room
 document.addEventListener("DOMContentLoaded", () => {
-  const input = document.querySelector("#mood-input"), result = document.querySelector("#mood-result");
+  const form = document.querySelector("#mood-form"), input = document.querySelector("#mood-input"), result = document.querySelector("#mood-result");
   const label = document.querySelector("#mood-label"), title = document.querySelector("#mood-title"), description = document.querySelector("#mood-description");
   const musicTitle = document.querySelector("#music-title"), musicDescription = document.querySelector("#music-description"), musicLink = document.querySelector("#music-link");
   const promptButton = document.querySelector("#grounding-prompt"), groundingText = document.querySelector("#grounding-text");
-  const moods = [
-    {keys:["panic","anxious","anxiety","racing","overwhelmed","overwhelm"], label:"A room for settling", title:"Let’s make the next minute smaller.", desc:"Your system may be carrying a lot of activation. You do not have to solve everything right now. Try reducing stimulation and orienting to the room around you.", music:"Ambient piano", musicDesc:"Soft instrumental music for a slower pace.", url:"https://music.apple.com/us/search?term=ambient%20piano", prompt:"Look around and name three neutral objects. Let your eyes move slowly rather than forcing a deep breath."},
-    {keys:["sad","lonely","alone","grief","empty"], label:"A room for connection", title:"You do not have to carry this in isolation.", desc:"Low mood can make reaching out feel like work. A small connection counts: a text, a shared space, or simply sitting near someone safe.", music:"Acoustic comfort", musicDesc:"Gentle acoustic songs for companionship.", url:"https://music.apple.com/us/search?term=acoustic%20comfort", prompt:"Write one person’s name. You do not have to contact them yet; just consider what you might say if you did."},
-    {keys:["angry","anger","trigger","irritated","rage"], label:"A room for creating space", title:"You can pause without dismissing what happened.", desc:"Anger often carries information about boundaries, hurt, or overload. You can honor the feeling while choosing a response that protects you.", music:"Low-tempo focus", musicDesc:"Steady instrumental sound for a reset.", url:"https://music.apple.com/us/search?term=low%20tempo%20instrumental", prompt:"Put one sentence between the feeling and the action: “I am angry, and I can wait ten minutes before deciding.”"},
-    {keys:["withdraw","craving","urge","restless","sick"], label:"A room for steadiness", title:"Your body deserves care and attention.", desc:"Physical discomfort and urges can be exhausting. If you are experiencing withdrawal or concerning symptoms, seek medical guidance rather than trying to push through alone.", music:"Nature sounds", musicDesc:"Simple environmental sound with minimal stimulation.", url:"https://music.apple.com/us/search?term=nature%20sounds", prompt:"Check the basics: water, a safe place to sit, a supportive person, and whether you need urgent medical help."}
-  ];
-  document.querySelector("#mood-form").addEventListener("submit", e => {
+  const enterButton = document.querySelector("#enter-room");
+
+  form.addEventListener("submit", async e => {
     e.preventDefault();
-    const text = input.value.trim().toLowerCase();
-    const mood = moods.find(m => m.keys.some(k => text.includes(k))) || {label:"A room for whatever is here", title:"You can begin without having the right words.", desc:"There is no requirement to name your experience perfectly. Start with one thing you can notice: a sensation, a thought, or something you need.", music:"Gentle instrumental", musicDesc:"A flexible starting point for a quieter environment.", url:"https://music.apple.com/us/search?term=gentle%20instrumental", prompt:"Complete this sentence privately: “Right now, the smallest helpful thing might be…”"};
-    label.textContent = mood.label; title.textContent = mood.title; description.textContent = mood.desc; musicTitle.textContent = mood.music; musicDescription.textContent = mood.musicDesc; musicLink.href = mood.url; groundingText.textContent = ""; result.hidden = false; result.scrollIntoView({behavior:"smooth", block:"center"});
-    promptButton.onclick = () => groundingText.textContent = mood.prompt;
+    enterButton.disabled = true;
+    try {
+      const room = await apiRequest("/api/mood", "POST", { text: input.value.trim() });
+      label.textContent = room.label; title.textContent = room.title; description.textContent = room.description;
+      musicTitle.textContent = room.music; musicDescription.textContent = room.music_description; musicLink.href = room.music_url;
+      groundingText.textContent = "";
+      promptButton.hidden = false;
+      promptButton.onclick = () => groundingText.textContent = room.prompt;
+    } catch (err) {
+      label.textContent = "Can't open a room right now"; title.textContent = "We couldn't reach the Mood Room."; description.textContent = err.message;
+      musicTitle.textContent = ""; musicDescription.textContent = ""; musicLink.removeAttribute("href");
+      groundingText.textContent = ""; promptButton.hidden = true;
+    }
+    enterButton.disabled = false;
+    result.hidden = false;
+    result.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+  // Enter opens the room; Shift+Enter adds a new line (skipped while an IME is composing text)
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
   });
   document.querySelector("#reset-room").addEventListener("click", () => { result.hidden = true; input.focus(); });
 });
