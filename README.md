@@ -33,8 +33,8 @@ Pages share one layout, so the header (About · Resources · Contact Us · Log i
 - `.github/workflows/jekyll-gh-pages.yml`: builds the site with `bundle exec jekyll build` (same Jekyll as `make`) and deploys it to GitHub Pages
 
 ## Deploying
-Every push to `main` runs `.github/workflows/jekyll-gh-pages.yml`, which publishes the site to https://adyashipekar.github.io/poway-recovery-center/ (repo Settings → Pages → Source must be "GitHub Actions").
+Every push to `main` runs `.github/workflows/jekyll-gh-pages.yml`, which publishes the site to https://prc.opencodingsociety.com (repo Settings → Pages → Source must be "GitHub Actions", custom domain `prc.opencodingsociety.com`).
 
-GitHub Pages only serves static files, so the API has to be deployed separately (see the poway-recovery-center-api README). Once it's running on HTTPS, set that address as `deployedPythonURI` in `js/api/config.js` and push.
+GitHub Pages only serves static files, so the API is deployed separately (see the poway-recovery-center-api README) at https://prc-api.opencodingsociety.com, which is set as `deployedPythonURI` in `js/api/config.js`.
 
 The meeting schedule, reservations and contact messages live in the backend; the schedule is synced from the North County San Diego AA meeting feed. The reflection wall still uses browser localStorage. The Mood Room uses a local supportive categorizer and Apple Music search links.
