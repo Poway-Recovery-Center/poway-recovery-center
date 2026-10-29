@@ -1,6 +1,9 @@
 ---
 title: Home
 description: Recovery programs and meetings for people with different addictions and those affected by them, at 13939 and 13943 Poway Rd, Poway, California.
+# FullCalendar for the meeting schedule, same version as Open Coding Society pages' calendar
+styles: [https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css]
+vendor_scripts: [https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js]
 scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflection-wall.js]
 ---
 <section class="hero">
@@ -8,7 +11,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
     <source src="PRChomepagevideo.mp4" type="video/mp4">
   </video>
   <div class="hero__shade"></div>
-  <div class="wrap hero__inner">
+  <div class="wide hero__inner">
     <div class="hero__text">
       <h1>Poway Recovery Center</h1>
       <p class="hero__lead">Helping individuals and their loved ones</p>
@@ -51,46 +54,73 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
   </div>
 </section>
 
-<section class="section wrap tools" id="tools" aria-labelledby="tools-title">
-  <div class="section-title">
-    <h2 id="tools-title">Our support tools</h2>
-    <p>Everything opens right here on this page. Nothing you type in the Mood Room is saved or sent anywhere.</p>
-  </div>
+<section class="section wide tools" id="tools" aria-label="Our support tools">
   <div class="tools__layout">
     <nav class="tools__menu" aria-label="Support tools">
-      <button class="tool" type="button" data-feature="schedule">
+      <button class="tool" type="button" data-feature="schedule" aria-controls="schedule" aria-pressed="false">
         <span class="hub__kicker">Meetings</span>
         <span class="tool__title">Meeting schedule</span>
         <span class="tool__desc">Every meeting at the center. Pick a day and reserve a spot.</span>
       </button>
-      <button class="tool" type="button" data-feature="mood-room">
+      <button class="tool" type="button" data-feature="mood-room" aria-controls="mood-room" aria-pressed="false">
         <span class="hub__kicker">Grounding</span>
         <span class="tool__title">Mood Room</span>
         <span class="tool__desc">Say how you feel and get a grounding prompt and music to match.</span>
       </button>
-      <button class="tool" type="button" data-feature="reflection-wall">
+      <button class="tool" type="button" data-feature="reflection-wall" aria-controls="reflection-wall" aria-pressed="false">
         <span class="hub__kicker">Community</span>
         <span class="tool__title">Reflection Wall</span>
         <span class="tool__desc">Share a small win or a note of hope, anonymously.</span>
       </button>
-      <button class="tool" type="button" data-open-chat>
-        <span class="hub__kicker">Ask</span>
-        <span class="tool__title">Support assistant</span>
-        <span class="tool__desc">Talk through what you're going through, any time.</span>
-      </button>
     </nav>
 
-    <div class="tools__today">
-      <div class="section-title">
-        <h3 id="today-title">Today at the center</h3>
-        <button class="prc__btn accent" type="button" data-feature="schedule">Full weekly schedule</button>
+    <!-- The tool picked on the left shows here in place of today's meetings (js/features.js); #schedule, #mood-room and #reflection-wall in the URL open one directly -->
+    <div class="tools__panel" aria-live="polite">
+      <div class="tools__today" id="today-panel">
+        <div class="section-title">
+          <h3 id="today-title">Today at the center</h3>
+          <button class="prc__btn accent" type="button" data-feature="schedule">Full schedule</button>
+        </div>
+        <div class="today" id="today-list"><p class="muted">Loading today's meetings…</p></div>
       </div>
-      <div class="today" id="today-list"><p class="muted">Loading today's meetings…</p></div>
+
+      <section class="feature" id="schedule" aria-labelledby="schedule-title" hidden>
+        <header class="feature__head">
+          <div>
+            <h3 id="schedule-title">Meeting schedule</h3>
+            <p>Meetings at 13939 &amp; 13943 Poway Rd. Pick a day, then reserve a spot.</p>
+          </div>
+          <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
+        </header>
+        <div class="feature__body">{% include features/schedule.html %}</div>
+      </section>
+
+      <section class="feature" id="mood-room" aria-labelledby="mood-room-title" hidden>
+        <header class="feature__head">
+          <div>
+            <h3 id="mood-room-title">Mood Room</h3>
+            <p>Say how you feel and get a grounding prompt and music to match. Nothing is saved.</p>
+          </div>
+          <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
+        </header>
+        <div class="feature__body">{% include features/mood-room.html %}</div>
+      </section>
+
+      <section class="feature" id="reflection-wall" aria-labelledby="reflection-wall-title" hidden>
+        <header class="feature__head">
+          <div>
+            <h3 id="reflection-wall-title">Reflection Wall</h3>
+            <p>Share a small win, gratitude or hope for whoever reads it next, anonymously.</p>
+          </div>
+          <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
+        </header>
+        <div class="feature__body">{% include features/reflection-wall.html %}</div>
+      </section>
     </div>
   </div>
 </section>
 
-<section class="section wrap visit">
+<section class="section wide visit">
   <div class="note">
     <h3>Where we are</h3>
     <p><strong>13939 Poway Rd, Suites 10 &amp; 11</strong><br>Stairs required.</p>
@@ -106,37 +136,3 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
     <p><strong>PayPal:</strong> Poway Recovery Center<br><strong>Venmo:</strong> @powayrecovery-center</p>
   </div>
 </section>
-
-<!-- Support tools open as popups over the home page (js/features.js); #schedule, #mood-room and #reflection-wall in the URL open them directly -->
-<dialog class="feature" id="schedule" aria-labelledby="schedule-title">
-  <header class="feature__head">
-    <div>
-      <h2 id="schedule-title">Meeting schedule</h2>
-      <p>Meetings at 13939 &amp; 13943 Poway Rd. Pick a day, then reserve a spot.</p>
-    </div>
-    <button class="feature__close" type="button" aria-label="Close meeting schedule">×</button>
-  </header>
-  <div class="feature__body">{% include features/schedule.html %}</div>
-</dialog>
-
-<dialog class="feature" id="mood-room" aria-labelledby="mood-room-title">
-  <header class="feature__head">
-    <div>
-      <h2 id="mood-room-title">Mood Room</h2>
-      <p>Say how you feel and get a grounding prompt and music to match. Nothing is saved.</p>
-    </div>
-    <button class="feature__close" type="button" aria-label="Close Mood Room">×</button>
-  </header>
-  <div class="feature__body">{% include features/mood-room.html %}</div>
-</dialog>
-
-<dialog class="feature" id="reflection-wall" aria-labelledby="reflection-wall-title">
-  <header class="feature__head">
-    <div>
-      <h2 id="reflection-wall-title">Reflection Wall</h2>
-      <p>Share a small win, gratitude or hope for whoever reads it next, anonymously.</p>
-    </div>
-    <button class="feature__close" type="button" aria-label="Close Reflection Wall">×</button>
-  </header>
-  <div class="feature__body">{% include features/reflection-wall.html %}</div>
-</dialog>

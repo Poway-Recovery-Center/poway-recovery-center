@@ -1,0 +1,69 @@
+// Support tools on the home page: each tool shows in .tools__panel beside the tools menu (js/features.js).
+// Layouts inside respond to the panel's own width (container queries), not the window's, so nothing gets squeezed.
+@use "../tokens" as *;
+
+.tools__panel {
+  container: tool-panel / inline-size;
+  min-width: 0;
+}
+
+.feature {
+  @include panel(0);
+  background: $cream;
+  overflow: hidden;
+}
+
+.feature__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 14px 20px;
+  background: $mist;
+  border-bottom: 1px solid $line;
+
+  h3 { @include display-font; font-size: 1.3rem; margin: 0 0 2px; }
+  p { color: $muted; font-size: .9rem; margin: 0; }
+}
+
+.feature__body {
+  padding: 20px;
+
+  @include sm { padding: 14px; }
+
+  .sidebar { position: static; gap: 12px; align-content: start; }
+  .note { padding: 14px 16px; }
+}
+
+// Schedule and Reflection Wall: main column plus a sidebar only when there's room for both
+.feature .with-sidebar {
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 20px;
+}
+
+@container tool-panel (max-width: 1040px) {
+  .feature .with-sidebar { grid-template-columns: 1fr; }
+  // Sidebar notes sit side by side under the main column
+  .feature .sidebar { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+}
+
+// Meeting rows: time, details, spots and actions in one line only when wide enough
+@container tool-panel (max-width: 760px) {
+  .feature .schedule__row {
+    grid-template-columns: 80px minmax(0, 1fr);
+    row-gap: 10px;
+  }
+  .feature .schedule__row--head { display: none; }
+  .feature .schedule__row:nth-child(2) { border-top: 0; }
+  .feature .schedule__spots, .feature .schedule__actions { grid-column: 2; }
+  .feature .schedule__actions { justify-content: flex-start; }
+  .feature .schedule__mine { text-align: left; }
+  .feature .schedule__calendar .fc-toolbar { justify-content: center; }
+  .feature .schedule__calendar .fc-toolbar-title { font-size: 1.05rem; }
+}
+
+// Mood Room: what you typed and your room side by side once the room opens, when there's room
+@container tool-panel (min-width: 880px) {
+  .feature .mood { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); align-items: start; }
+}

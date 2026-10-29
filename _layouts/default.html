@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css">
+  {% for sheet in page.styles %}<link rel="stylesheet" href="{{ sheet }}">
+  {% endfor %}<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -30,7 +31,8 @@
 
   {% include footer.html %}
 
-  <script type="module" src="js/main.js"></script>
+  {% for script in page.vendor_scripts %}<script src="{{ script }}"></script>
+  {% endfor %}<script type="module" src="js/main.js"></script>
   <script type="module" src="js/api/login.js"></script>
   <script type="module" src="js/support-widgets.js"></script>
   {% for script in page.scripts %}<script type="module" src="{{ script }}"></script>

@@ -1,53 +1,58 @@
 // Meeting schedule (popup on the home page, _includes/features/schedule.html)
 @use "../tokens" as *;
 
-.schedule__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
+// FullCalendar (same library and toolbar as the Open Coding Society pages calendar), in PRC colors
+.schedule__calendar {
+  --fc-border-color: #{$line};
+  --fc-today-bg-color: #{$mist};
+  --fc-neutral-bg-color: #{$mist};
+  --fc-page-bg-color: #{$white};
+  --fc-button-bg-color: #{$white};
+  --fc-button-border-color: #{$line};
+  --fc-button-text-color: #{$ink};
+  --fc-button-hover-bg-color: #{$mist};
+  --fc-button-hover-border-color: #{$teal};
+  --fc-button-active-bg-color: #{$teal};
+  --fc-button-active-border-color: #{$teal};
+  --fc-event-bg-color: #{$teal};
+  --fc-event-border-color: #{$teal};
+  --fc-event-text-color: #{$white};
 
-  .prc__links { gap: 6px; }
+  @include panel(16px);
+  margin-bottom: 20px;
+
+  .fc-toolbar { flex-wrap: wrap; gap: 10px; }
+  .fc-toolbar-title { @include display-font; font-size: 1.25rem; }
+  .fc .fc-button { font-weight: 600; text-transform: none; box-shadow: none; }
+  .fc .fc-button-primary:not(:disabled).fc-button-active { color: $white; }
+  .fc .fc-button-primary:disabled { opacity: .55; }
+  .fc .fc-button:focus-visible { outline: 2px solid $ocean; outline-offset: 2px; }
+  .fc-col-header-cell-cushion, .fc-daygrid-day-number { color: $ink; text-decoration: none; }
+  .fc-day-today .fc-daygrid-day-number { font-weight: 700; color: $teal; }
+  .fc-daygrid-day { cursor: pointer; }
+  .fc-daygrid-day.fc-day-past { background: #fafbfb; }
+  .fc-daygrid-day.is-selected { box-shadow: inset 0 0 0 2px $teal; }
+  .fc-daygrid-more-link { color: $ocean; font-weight: 600; }
 }
 
-.schedule__range { font-size: 1.2rem; margin: 0; }
+.schedule__event {
+  cursor: pointer;
+  font-size: .8rem;
+  border-radius: 6px;
 
-.schedule__days { margin-bottom: 0; }
-
-.schedule__tab {
-  flex: 1 0 auto;
-  min-width: 84px;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0;
-  padding: 10px 12px;
-  line-height: 1.25;
-
+  &.is-mine { background: $sand; border-color: $sand; .fc-event-main, .fc-event-time, .fc-event-title { color: $ink; } }
+  &.is-full { background: $sage; border-color: $sage; .fc-event-main, .fc-event-time, .fc-event-title { color: $muted; } }
   &.is-past { opacity: .55; }
 }
 
-.schedule__tab-day { font-weight: 700; }
-.schedule__tab-date { font-size: .82rem; font-weight: 500; }
-
-.schedule__tab-dot {
-  margin-top: 4px;
-  font-size: .68rem;
-  font-weight: 700;
-  color: $ink;
-  background: $sand;
-  border-radius: 999px;
-  padding: 0 8px;
-}
+.schedule__range { font-size: 1.2rem; margin: 0 0 12px; }
 
 .schedule__day { padding-top: 0; }
 
 .schedule__table {
   background: $white;
   border: 1px solid $line;
-  border-top: 0;
-  border-radius: 0 0 $radius $radius;
+  border-radius: $radius;
 }
 
 .schedule__row {
@@ -61,6 +66,7 @@
   &:first-child { border-top: 0; }
   &.is-past { background: #fafbfb; color: $muted; }
   &.is-mine { box-shadow: inset 4px 0 0 $teal; }
+  &.is-focused { background: $mist; }
 }
 
 .schedule__row--head {
@@ -160,6 +166,9 @@
 #schedule-status { margin-top: 12px; }
 
 @include md {
+  .schedule__calendar .fc-toolbar { justify-content: center; }
+  .schedule__calendar .fc-toolbar-title { font-size: 1.05rem; }
+
   .schedule__row {
     grid-template-columns: 80px minmax(0, 1fr);
     row-gap: 10px;

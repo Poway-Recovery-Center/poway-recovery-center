@@ -21,7 +21,7 @@ Pages share one layout, so the header (About · Resources · Contact Us · Log i
 - `_includes/header.html`, `_includes/footer.html`: navigation and footer
 - `index.html`: home; hero with "How can we help?" quick links and today's meetings from the API
 - `resources.html`: resource hub; pill buttons for every resource and tabs by category (on this site, crisis help, meetings & groups, treatment & care, everyday needs)
-- `schedule.html`: meeting schedule and reservations (all data from the API's `/api/schedule`); `programs.html` redirects here
+- `schedule.html`: shows the meeting schedule in the home page tools panel, a FullCalendar 5.11 month/week/day calendar set up like the Open Coding Society pages calendar (all data from the API's `/api/schedule`); `programs.html` redirects here
 - `mood-room.html`, `reflection-wall.html`: wellness tools, linked from Resources
 - `about.html`, `contact.html`: about the center; Contact Us form (sent to the API's `/api/contact`)
 - `login.html`, `signup.html`, `profile.html`: accounts; profile shows upcoming reservations, and admins also see contact messages and members

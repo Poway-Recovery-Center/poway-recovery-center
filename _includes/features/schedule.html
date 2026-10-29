@@ -1,17 +1,10 @@
 <div class="with-sidebar">
   <div class="schedule">
-    <div class="schedule__bar">
-      <div class="prc__links">
-        <button class="prc__btn" type="button" id="prev-week" aria-label="Previous week">‹ Prev</button>
-        <button class="prc__btn" type="button" id="this-week">This week</button>
-        <button class="prc__btn" type="button" id="next-week" aria-label="Next week">Next ›</button>
-      </div>
-      <h3 class="schedule__range" id="week-range" aria-live="polite"></h3>
-    </div>
+    <!-- FullCalendar month / week / day view, as on Open Coding Society pages (js/schedule.js) -->
+    <div id="calendar" class="schedule__calendar"></div>
 
-    <div class="tabs__list schedule__days" role="tablist" aria-label="Days" id="day-tabs"></div>
-
-    <div class="schedule__day" role="tabpanel" id="day-panel" tabindex="0">
+    <h3 class="schedule__range" id="day-heading" aria-live="polite"></h3>
+    <div class="schedule__day" id="day-panel" tabindex="0">
       <div class="schedule__table" id="day-table"><p class="schedule__empty">Loading meetings…</p></div>
     </div>
     <p class="status-msg is-error" id="schedule-status" role="status"></p>

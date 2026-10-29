@@ -30,8 +30,8 @@
   background: linear-gradient(90deg, rgba(#0a2e2c, .72) 0%, rgba(#0a2e2c, .5) 55%, rgba(#0a2e2c, .4) 100%);
 }
 
-// Title on the left, hub tiles on the right, each inset about an inch from the edge
-$hero-inset: 96px;
+// Title on the left, hub tiles on the right, each inset about an inch from the edge (with the .wide gutter)
+$hero-inset: 72px;
 
 .hero__inner {
   position: relative;
@@ -163,21 +163,27 @@ $hero-inset: 96px;
   transition: transform .2s;
 }
 
-// Support tools: buttons on the left open each tool as a popup (_sass/components/_feature-dialog.scss); today's meetings on the right
+// Support tools: buttons on the left show each tool in the panel on the right (_sass/components/_feature-panel.scss),
+// which holds today's meetings until a tool is picked
 .tools { scroll-margin-top: $header-height + 16px; }
 
 .tools__layout {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
 
+  @media (max-width: 1080px) { grid-template-columns: 240px minmax(0, 1fr); gap: 20px; }
   @include md { grid-template-columns: 1fr; }
 }
 
 .tools__menu {
   display: grid;
   gap: 12px;
+  position: sticky;
+  top: $header-height + 16px;
+
+  @include md { position: static; }
 
   @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @include sm { grid-template-columns: 1fr; }
@@ -216,6 +222,13 @@ $hero-inset: 96px;
     transform: translateX(2px);
 
     &::after { transform: translate(3px, -50%); }
+  }
+
+  // The tool showing in the panel
+  &[aria-pressed="true"] {
+    background: $mist;
+    border-color: $teal;
+    box-shadow: inset 4px 0 0 $teal;
   }
 }
 
