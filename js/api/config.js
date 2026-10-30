@@ -1,11 +1,11 @@
 // Backend address (same structure as Open Coding Society pages assets/js/api/config.js)
-// Locally: run `make` in the poway-recovery-center-api repo (port 8587).
+// Locally: run `make` in the poway-recovery-center-api repo (port 8450).
 // Deployed: prc.opencodingsociety.com talks to the API at prc-api.opencodingsociety.com.
 const deployedPythonURI = "https://prc-api.opencodingsociety.com";
 
 export var pythonURI;
 if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-    pythonURI = `http://${location.hostname}:8587`;  // Same host name as the page so the login cookie is sent
+    pythonURI = `http://${location.hostname}:8450`;  // Same host name as the page so the login cookie is sent
 } else {
     pythonURI = deployedPythonURI;
 }
