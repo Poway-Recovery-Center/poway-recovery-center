@@ -5,12 +5,12 @@ import { getCheckIns, saveCheckIn } from './api/checkin.js';
 // account (/api/checkins), with patterns (overall wellbeing, streak, area to watch, habits that line up with better weeks)
 // and trend charts. The backend alerts the center's counselors when a week drops dangerously low.
 document.addEventListener("DOMContentLoaded", async () => {
-  // invert: a high rating is the harder one (more cravings, more stress), so wellbeing flips it.
+  // invert: a high rating is the harder one (more stress), so wellbeing flips it.
   // levels: what each slider position 1-5 means
   const METRICS = [
     {key:"mood", label:"Mood", ask:"How was your mood?", levels:["Very low", "Low", "Okay", "Good", "Great"]},
     {key:"sleep", label:"Sleep", ask:"How did you sleep?", levels:["Barely slept", "Poorly", "Okay", "Well", "Very well"]},
-    {key:"cravings", label:"Cravings", ask:"How strong were cravings?", invert:true, levels:["None", "Mild", "Noticeable", "Strong", "Overwhelming"]},
+    {key:"connection", label:"Connection", ask:"How connected did you feel to others?", levels:["Isolated", "Distant", "Somewhat", "Connected", "Very connected"]},
     {key:"stress", label:"Stress", ask:"How stressed did you feel?", invert:true, levels:["Calm", "A little", "Somewhat", "Quite stressed", "Very stressed"]}
   ];
   // Keys match ACTIONS in the API's model/checkin.py; label finishes "This week I…", did finishes "In weeks you…"
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   };
   const average = list => list.reduce((a, b) => a + b, 0) / list.length;
-  // Overall wellbeing 0-100: the average of the four areas, with cravings and stress flipped
+  // Overall wellbeing 0-100: the average of the four areas, with stress flipped
   const score = c => Math.round((average(METRICS.map(m => well(m, c[m.key]))) - 1) / 4 * 100);
 
   // Logged out: keep the log in prompt
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     $("#tracker-alert-text").textContent = `${what}The center's counselors have been alerted so someone can reach out. You don't have to wait for it to pass on your own.`;
   }
 
-  // "Sleep improved, cravings rose": changes since last week first, then anything sitting at the hard end
+  // "Sleep improved, stress rose": changes since last week first, then anything sitting at the hard end
   function summarize(latest, previous) {
     const parts = [];
     METRICS.forEach(m => {
