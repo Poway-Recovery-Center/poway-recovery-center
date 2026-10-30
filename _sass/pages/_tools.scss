@@ -81,3 +81,131 @@
 
   strong { display: block; font-size: 1.15rem; color: $ink; margin-bottom: 4px; }
 }
+
+// Recovery Tracker
+.tracker__gate .note { max-width: 560px; }
+
+.tracker { display: grid; gap: 18px; min-width: 0; }
+
+.tracker__form { gap: 20px; }
+.tracker__form textarea { min-height: 64px; }
+.tracker__form .status-msg { margin: 0; }
+
+.tracker__metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px; }
+
+@container tool-panel (max-width: 640px) {
+  .tracker__metrics { grid-template-columns: 1fr; }
+}
+
+.tracker__metric { display: grid; gap: 6px; min-width: 0; }
+.tracker__metric-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.tracker__metric-head label { font-weight: 600; }
+.tracker__value { flex-shrink: 0; font-size: .85rem; font-weight: 700; color: $ocean; }
+
+// 1-5 slider: track filled up to the thumb (--fill is set by js/recovery-tracker.js)
+.tracker__range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(to right, $teal var(--fill, 50%), $line var(--fill, 50%));
+  }
+  &::-moz-range-track { height: 6px; border-radius: 999px; background: $line; }
+  &::-moz-range-progress { height: 6px; border-radius: 999px; background: $teal; }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -7px;
+    border-radius: 50%;
+    background: $white;
+    border: 3px solid $teal;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  }
+  &::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: $white; border: 3px solid $teal; }
+
+  &:focus-visible { outline: 2px solid $teal; outline-offset: 4px; border-radius: 999px; }
+}
+
+.tracker__actions { border: 0; padding: 0; margin: 0; }
+.tracker__actions legend { font-weight: 600; padding: 0; margin-bottom: 10px; }
+
+.tracker__alert h3 { margin-top: 0; }
+
+// Patterns: three stats in a row, the habit line, then the charts
+.tracker__insights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+
+@container tool-panel (max-width: 640px) {
+  .tracker__insights { grid-template-columns: 1fr; }
+}
+
+.tracker__stat {
+  @include panel(14px 16px);
+  display: grid;
+  gap: 2px;
+  align-content: start;
+
+  strong { @include display-font; font-size: 1.4rem; color: $ink; }
+  p { margin: 0; color: $muted; }
+}
+
+.tracker__label { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: $teal; }
+
+.tracker__helps {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: $radius;
+  background: $mist;
+  color: $ink;
+}
+
+.tracker__charts { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.tracker__chart--wide { grid-column: 1 / -1; }
+
+.tracker__chart {
+  @include panel(14px 14px 8px);
+
+  header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  h4 { @include display-font; font-size: 1.05rem; margin: 0; }
+}
+
+.tracker__now {
+  text-align: right;
+
+  strong { font-size: 1.15rem; color: $ink; margin-right: 6px; }
+  span { color: $muted; }
+  .is-better { color: $green; }
+  .is-worse { color: $red; }
+}
+
+.tracker__svg { display: block; width: 100%; height: auto; margin-top: 6px; overflow: visible; }
+.tracker__grid { stroke: $line; stroke-width: 1; }
+.tracker__axis { fill: $muted; font-size: 10px; }
+.tracker__line { fill: none; stroke: $teal; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.tracker__point { fill: $teal; stroke: $white; stroke-width: 2; }
+.tracker__hit { fill: transparent; }
+.tracker__dot { outline: none; }
+.tracker__dot:hover .tracker__point,
+.tracker__dot:focus-visible .tracker__point { fill: $ocean; r: 6; }
+
+.tracker__history summary { cursor: pointer; font-weight: 600; color: $teal; }
+.tracker__table-wrap { overflow-x: auto; margin-top: 10px; }
+
+.tracker__table {
+  width: 100%;
+  border-collapse: collapse;
+  @include panel(0);
+  font-size: .9rem;
+
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid $line; }
+  th { background: $mist; }
+  td:last-child { color: $muted; }
+}

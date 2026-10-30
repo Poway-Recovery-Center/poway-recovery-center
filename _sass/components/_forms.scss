@@ -14,7 +14,7 @@
 }
 
 .input,
-.form input:not([type="checkbox"]):not([type="radio"]),
+.form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 .form textarea,
 .form select {
   width: 100%;

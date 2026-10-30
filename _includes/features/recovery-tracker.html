@@ -1,0 +1,65 @@
+<!-- Shown until js/recovery-tracker.js finds a logged-in user -->
+<div class="tracker__gate" id="tracker-gate">
+  <div class="note">
+    <h3>Log in to use the Recovery Tracker</h3>
+    <p id="tracker-gate-text">Your weekly check-ins are saved to your account, so only you can see your trends, from any device.</p>
+    <div class="prc__links">
+      <a class="prc__btn accent fill" href="login.html">Log in</a>
+      <a class="prc__btn" href="signup.html">Create an account</a>
+    </div>
+  </div>
+</div>
+
+<div class="with-sidebar" id="tracker-app" hidden>
+  <div class="tracker">
+    <form class="form card tracker__form" id="tracker-form" novalidate>
+      <div class="form-row">
+        <h3 class="card__title">How was your week?</h3>
+        <span class="tag" id="tracker-week">This week</span>
+      </div>
+      <div class="tracker__metrics" id="tracker-metrics"></div>
+      <fieldset class="tracker__actions">
+        <legend>This week I…</legend>
+        <div class="chips" id="tracker-actions"></div>
+      </fieldset>
+      <label class="field">Note <small>(optional)</small>
+        <textarea name="note" maxlength="280" rows="2"></textarea>
+      </label>
+      <div class="form-row">
+        <p class="status-msg" id="tracker-status" role="status"></p>
+        <button class="prc__btn medium accent fill" type="submit">Save check-in</button>
+      </div>
+    </form>
+
+    <div class="note note--crisis tracker__alert" id="tracker-alert" role="alert" hidden>
+      <h3>This week looks really hard</h3>
+      <p id="tracker-alert-text"></p>
+      <div class="prc__links">
+        <a class="prc__btn small accent fill" href="tel:988">Call or text 988</a>
+        <button class="prc__btn small" type="button" data-feature="schedule">Find a meeting</button>
+      </div>
+    </div>
+
+    <div class="section-title feature__subhead">
+      <h3>Your patterns</h3>
+      <p id="tracker-summary">Your first check-in will start your trends.</p>
+    </div>
+    <div class="tracker__insights" id="tracker-insights"></div>
+    <p class="tracker__helps small" id="tracker-helps"></p>
+    <div class="tracker__charts" id="tracker-charts"></div>
+
+    <details class="tracker__history" id="tracker-history" hidden>
+      <summary>All check-ins</summary>
+      <div class="tracker__table-wrap"><table class="tracker__table" id="tracker-table"></table></div>
+    </details>
+  </div>
+
+  <aside class="sidebar">
+    <div class="note">
+      <h3>You're not alone</h3>
+      <p class="small">If a week drops really low, the center's counselors see your scores so someone can reach out. They only see those weeks.</p>
+      <p class="small">Need to talk now? Call or text <a href="tel:988">988</a>. In immediate danger, call <a href="tel:911">911</a>.</p>
+    </div>
+    <p class="small muted">The tracker is for noticing patterns. It doesn't diagnose anything or replace professional care.</p>
+  </aside>
+</div>

@@ -1,4 +1,4 @@
-// Home page (index.html): compact video hero, hub of tiles, then the support tools beside today's meetings, then visit info
+// Home page (index.html): compact video hero, hub of tiles, then the support tools beside today's meetings
 @use "sass:color";
 @use "../tokens" as *;
 
@@ -169,17 +169,17 @@ $hero-inset: 72px;
 
 .tools__layout {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 20px;
   align-items: start;
 
-  @media (max-width: 1080px) { grid-template-columns: 240px minmax(0, 1fr); gap: 20px; }
+  @media (max-width: 1080px) { grid-template-columns: 200px minmax(0, 1fr); gap: 16px; }
   @include md { grid-template-columns: 1fr; }
 }
 
 .tools__menu {
   display: grid;
-  gap: 12px;
+  gap: 8px;
   position: sticky;
   top: $header-height + 16px;
 
@@ -195,19 +195,17 @@ $hero-inset: 72px;
   gap: 2px;
   width: 100%;
   position: relative;
-  @include panel(16px 44px 16px 18px);
+  @include panel(10px 34px 10px 14px);
   font: inherit;
   text-align: left;
   color: $ink;
   cursor: pointer;
   transition: background .2s, border-color .2s, transform .2s;
 
-  .hub__kicker { color: $teal; }
-
   &::after {
     content: "→";
     position: absolute;
-    right: 18px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
     font-weight: 700;
@@ -232,20 +230,11 @@ $hero-inset: 72px;
   }
 }
 
-.tool__title { @include display-font; font-size: 1.1rem; }
-.tool__desc { font-size: .9rem; color: $muted; }
+.tool__title { @include display-font; font-size: 1rem; }
+.tool__desc { font-size: .8rem; line-height: 1.35; color: $muted; }
 
 .tools__today .section-title { align-items: center; margin-bottom: 12px; }
 .tools__today h3 { @include display-font; font-size: 1.3rem; margin: 0; }
-
-// Where we are + donations, side by side
-.visit {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-
-  @include md { grid-template-columns: 1fr; }
-}
 
 // Today's meetings list
 .today {

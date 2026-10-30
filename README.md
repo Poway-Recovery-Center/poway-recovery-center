@@ -23,7 +23,7 @@ Pages share one layout, so the header (About · Resources · Contact Us · Log i
 - `resources.html`: resource hub; pill buttons for every resource and tabs by category (on this site, crisis help, meetings & groups, treatment & care, everyday needs)
 - `schedule.html`: shows the meeting schedule in the home page tools panel, a FullCalendar 5.11 month/week/day calendar set up like the Open Coding Society pages calendar (all data from the API's `/api/schedule`); `programs.html` redirects here
 - `mood-room.html`, `reflection-wall.html`: wellness tools, linked from Resources
-- `about.html`, `contact.html`: about the center; Contact Us form (sent to the API's `/api/contact`)
+- `about.html`: about the center, donations, and the Contact Us form (sent to the API's `/api/contact`)
 - `login.html`, `signup.html`, `profile.html`: accounts; profile shows upcoming reservations, and admins also see contact messages and members
 - `_sass/`: all styling, compiled by Jekyll from `assets/css/main.scss` (there are no hand-written `.css` files)
   - `_tokens.scss`: colors, fonts, breakpoints
@@ -37,4 +37,4 @@ Every push to `main` runs `.github/workflows/jekyll-gh-pages.yml`, which publish
 
 GitHub Pages only serves static files, so the API is deployed separately (see the poway-recovery-center-api README) at https://prc-api.opencodingsociety.com, which is set as `deployedPythonURI` in `js/api/config.js`.
 
-The meeting schedule, reservations and contact messages live in the backend; the schedule is synced from the North County San Diego AA meeting feed. The reflection wall still uses browser localStorage. The Mood Room uses a local supportive categorizer and Apple Music search links.
+The meeting schedule, reservations and contact messages live in the backend; the schedule is synced from the North County San Diego AA meeting feed. Recovery tracker check-ins are saved to the logged-in user's account (`/api/checkins`), and very low weeks alert admins through their contact messages. The reflection wall still uses browser localStorage. The Mood Room uses a local supportive categorizer and Apple Music search links.

@@ -19,7 +19,7 @@
   margin-right: 4px;
 }
 
-#who, #history, #programs, #visit { scroll-margin-top: $header-height + 16px; }
+#who, #history, #programs, #visit, #support, #contact { scroll-margin-top: $header-height + 16px; }
 
 .about {
   display: grid;
@@ -115,3 +115,5 @@
   strong { color: $teal; }
 }
 
+
+.about-support { max-width: 640px; }

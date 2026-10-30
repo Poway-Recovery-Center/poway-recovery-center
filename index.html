@@ -4,7 +4,7 @@ description: Recovery programs and meetings for people with different addictions
 # FullCalendar for the meeting schedule, same version as Open Coding Society pages' calendar
 styles: [https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css]
 vendor_scripts: [https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js]
-scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflection-wall.js]
+scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflection-wall.js, js/recovery-tracker.js]
 ---
 <section class="hero">
   <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
@@ -40,7 +40,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
         <span class="hub__title">About the center</span>
         <span class="hub__arrow" aria-hidden="true">→</span>
       </a>
-      <a class="hub__tile hub__tile--glass" href="contact.html">
+      <a class="hub__tile hub__tile--glass" href="about.html#contact">
         <span class="hub__kicker">Contact</span>
         <span class="hub__title">Contact us</span>
         <span class="hub__arrow" aria-hidden="true">→</span>
@@ -58,23 +58,24 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
   <div class="tools__layout">
     <nav class="tools__menu" aria-label="Support tools">
       <button class="tool" type="button" data-feature="schedule" aria-controls="schedule" aria-pressed="false">
-        <span class="hub__kicker">Meetings</span>
         <span class="tool__title">Meeting schedule</span>
         <span class="tool__desc">Every meeting at the center. Pick a day and reserve a spot.</span>
       </button>
       <button class="tool" type="button" data-feature="mood-room" aria-controls="mood-room" aria-pressed="false">
-        <span class="hub__kicker">Grounding</span>
         <span class="tool__title">Mood Room</span>
         <span class="tool__desc">Say how you feel and get a grounding prompt and music to match.</span>
       </button>
       <button class="tool" type="button" data-feature="reflection-wall" aria-controls="reflection-wall" aria-pressed="false">
-        <span class="hub__kicker">Community</span>
         <span class="tool__title">Reflection Wall</span>
         <span class="tool__desc">Share a small win or a note of hope, anonymously.</span>
       </button>
+      <button class="tool" type="button" data-feature="recovery-tracker" aria-controls="recovery-tracker" aria-pressed="false">
+        <span class="tool__title">Recovery Tracker</span>
+        <span class="tool__desc">Weekly check-ins and your recovery trends. Log in to use it.</span>
+      </button>
     </nav>
 
-    <!-- The tool picked on the left shows here in place of today's meetings (js/features.js); #schedule, #mood-room and #reflection-wall in the URL open one directly -->
+    <!-- The tool picked on the left shows here in place of today's meetings (js/features.js); #schedule, #mood-room, #reflection-wall and #recovery-tracker in the URL open one directly -->
     <div class="tools__panel" aria-live="polite">
       <div class="tools__today" id="today-panel">
         <div class="section-title">
@@ -116,23 +117,18 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
         </header>
         <div class="feature__body">{% include features/reflection-wall.html %}</div>
       </section>
+
+      <section class="feature" id="recovery-tracker" aria-labelledby="recovery-tracker-title" hidden>
+        <header class="feature__head">
+          <div>
+            <h3 id="recovery-tracker-title">Recovery Tracker</h3>
+            <p>A weekly check-in on your physical, emotional, mental and spiritual health.</p>
+          </div>
+          <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
+        </header>
+        <div class="feature__body">{% include features/recovery-tracker.html %}</div>
+      </section>
     </div>
   </div>
 </section>
 
-<section class="section wide visit">
-  <div class="note">
-    <h3>Where we are</h3>
-    <p><strong>13939 Poway Rd, Suites 10 &amp; 11</strong><br>Stairs required.</p>
-    <p><strong>13943 Poway Rd, Suite A</strong><br>East side by the cement wall, no stairs.</p>
-    <p class="muted">Poway, CA 92064</p>
-    <div class="prc__links">
-      <a class="prc__btn accent fill" href="https://www.google.com/maps/search/?api=1&query=13939+Poway+Rd+Poway+CA+92064" target="_blank" rel="noopener">Get directions</a>
-    </div>
-  </div>
-  <div class="note note--sand">
-    <h3>Support the center</h3>
-    <p>Your donations help us continue our mission. Every contribution, no matter the size, makes a meaningful impact.</p>
-    <p><strong>PayPal:</strong> Poway Recovery Center<br><strong>Venmo:</strong> @powayrecovery-center</p>
-  </div>
-</section>
