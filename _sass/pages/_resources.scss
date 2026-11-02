@@ -1,4 +1,4 @@
-// Resources (resources.html): crisis line strip, the programs carousel, recovery groups across the top, then two categories in a row
+// Resources (resources.html): crisis line strip, the programs carousel, then two categories in a row
 @use "../tokens" as *;
 
 .res {
@@ -33,7 +33,7 @@
   h2 { font-size: 1.25rem; margin: 0; }
 }
 
-// Recovery groups span the top; the two shorter lists sit in a row beneath
+// Two resource lists side by side
 .res-hub {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -42,8 +42,6 @@
 
   @include md { grid-template-columns: 1fr; gap: 32px; }
 }
-
-#groups { grid-column: 1 / -1; }
 
 .res-group {
   scroll-margin-top: $header-height + 20px;
@@ -81,23 +79,6 @@
 
   a:hover, button:hover { text-decoration: underline; }
   li:target { background: $mist; }
-
-  // Recovery groups: two columns of program name, then its links on one line
-  .res-group__programs {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 40px;
-
-    @include md { grid-template-columns: 1fr; }
-
-    a { display: inline; }
-  }
-}
-
-.res-group__name {
-  display: block;
-  font-weight: 700;
-  color: $ink;
 }
 
 .res-note { text-align: center; margin: 36px 0 0; }

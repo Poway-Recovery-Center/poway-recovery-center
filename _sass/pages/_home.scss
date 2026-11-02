@@ -226,7 +226,6 @@ $hero-inset: 72px;
   &[aria-pressed="true"] {
     background: $mist;
     border-color: $teal;
-    box-shadow: inset 4px 0 0 $teal;
   }
 }
 

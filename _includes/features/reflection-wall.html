@@ -1,12 +1,9 @@
 <div class="with-sidebar">
   <form class="form card" id="reflection-form" novalidate>
     <h3 class="card__title">Add a reflection</h3>
-    <fieldset class="chips">
+    <!-- Kinds of reflection come from the backend (/api/reflections/tags) -->
+    <fieldset class="chips" id="reflection-tags">
       <legend>What kind of reflection is this?</legend>
-      <label class="chip"><input type="radio" name="tag" value="win" checked><span>Small win</span></label>
-      <label class="chip"><input type="radio" name="tag" value="truth"><span>Gentle truth</span></label>
-      <label class="chip"><input type="radio" name="tag" value="thanks"><span>Gratitude</span></label>
-      <label class="chip"><input type="radio" name="tag" value="hope"><span>Note of hope</span></label>
     </fieldset>
     <label class="field" for="reflection-input">Your reflection
       <textarea id="reflection-input" maxlength="280" placeholder="I made it to my meeting even though I almost talked myself out of it…"></textarea>
@@ -34,11 +31,7 @@
   <h3>From the community</h3>
   <div class="prc__links" id="reflection-filters" role="group" aria-label="Filter reflections">
     <button class="prc__btn small pill" type="button" data-filter="all" aria-pressed="true">All</button>
-    <button class="prc__btn small pill" type="button" data-filter="win" aria-pressed="false">Small wins</button>
-    <button class="prc__btn small pill" type="button" data-filter="truth" aria-pressed="false">Gentle truths</button>
-    <button class="prc__btn small pill" type="button" data-filter="thanks" aria-pressed="false">Gratitude</button>
-    <button class="prc__btn small pill" type="button" data-filter="hope" aria-pressed="false">Hope</button>
   </div>
 </div>
-<div class="reflection-empty" id="reflection-empty"><strong>The wall is waiting for its first note.</strong>Write one above and it will appear here.</div>
+<div class="reflection-empty" id="reflection-empty"><strong>Loading reflections…</strong></div>
 <div class="reflection-wall" id="reflection-list"></div>
