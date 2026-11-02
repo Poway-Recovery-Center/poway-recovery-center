@@ -42,6 +42,9 @@
   gap: 20px;
 }
 
+// Space between a form + sidebar and the heading that follows it (Reflection Wall: "From the community")
+.with-sidebar + .feature__subhead { margin-top: 32px; }
+
 @container tool-panel (max-width: 1040px) {
   .feature .with-sidebar { grid-template-columns: 1fr; }
   // Sidebar notes sit side by side under the main column
