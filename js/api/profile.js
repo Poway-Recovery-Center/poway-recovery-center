@@ -12,7 +12,7 @@ export function getAllUsers() {
 
 export async function logoutUser() {
     await apiRequest('/api/authenticate', 'DELETE').catch(() => {});
-    window.location.href = "login.html";
+    window.location.href = "/login";
 }
 
 // Admin only: messages sent from the Contact Us form

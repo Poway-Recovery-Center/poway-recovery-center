@@ -1,10 +1,24 @@
-// Meeting schedule (popup on the home page, _includes/features/schedule.html)
+// Meeting schedule (home page tool, _includes/features/schedule.html, js/schedule.js):
+// FullCalendar with group buttons in its toolbar, meetings colored by group, and a details window for reserving
 @use "../tokens" as *;
 
-// FullCalendar (same library and toolbar as the Open Coding Society pages calendar), in PRC colors
+// One color per group that meets at the center: a tint for the meeting card and its group label
+$programs: (
+  "aa": #0f7a74,
+  "al-anon": #2f6db5,
+  "alateen": #c0392b,
+  "aca": #7a5bb5,
+  "na": #6b4fa3,
+  "ca": #b5651d,
+  "ga": #b0702a,
+  "sa": #a23b6f,
+);
+
+.schedule { display: grid; gap: 18px; }
+
 .schedule__calendar {
   --fc-border-color: #{$line};
-  --fc-today-bg-color: #{$mist};
+  --fc-today-bg-color: transparent;
   --fc-neutral-bg-color: #{$mist};
   --fc-page-bg-color: #{$white};
   --fc-button-bg-color: #{$white};
@@ -14,128 +28,173 @@
   --fc-button-hover-border-color: #{$teal};
   --fc-button-active-bg-color: #{$teal};
   --fc-button-active-border-color: #{$teal};
-  --fc-event-bg-color: #{$teal};
-  --fc-event-border-color: #{$teal};
-  --fc-event-text-color: #{$white};
 
   @include panel(16px);
-  margin-bottom: 20px;
+  // The tools section is shown at 90% with CSS zoom, which throws off FullCalendar's width measurements
+  // (the grid stopped short of its box). Undo the zoom here and shrink the text instead, so it fills the width.
+  zoom: calc(1 / .9);
+  font-size: .9em;
 
   .fc-toolbar { flex-wrap: wrap; gap: 10px; }
+  .fc-toolbar-chunk { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   .fc-toolbar-title { @include display-font; font-size: 1.25rem; }
-  .fc .fc-button { font-weight: 600; text-transform: none; box-shadow: none; }
+  .fc .fc-button { font-weight: 600; text-transform: none; box-shadow: none; padding: .35em .75em; }
   .fc .fc-button-primary:not(:disabled).fc-button-active { color: $white; }
   .fc .fc-button-primary:disabled { opacity: .55; }
   .fc .fc-button:focus-visible { outline: 2px solid $ocean; outline-offset: 2px; }
-  .fc-col-header-cell-cushion, .fc-daygrid-day-number { color: $ink; text-decoration: none; }
-  .fc-day-today .fc-daygrid-day-number { font-weight: 700; color: $teal; }
-  .fc-daygrid-day { cursor: pointer; }
+  .fc-col-header-cell { padding: 6px 0; background: $mist; }
+  .fc-col-header-cell-cushion, .fc-daygrid-day-number { color: $ink; text-decoration: none; font-weight: 600; }
+  .fc-day-today .fc-daygrid-day-number, .fc-day-today .fc-col-header-cell-cushion { color: $teal; font-weight: 700; }
   .fc-daygrid-day.fc-day-past { background: #fafbfb; }
-  .fc-daygrid-day.is-selected { box-shadow: inset 0 0 0 2px $teal; }
+
+  // Today: no fill, just a darker outline around the whole day (heading and meetings together in Week view)
+  .fc-daygrid-day.fc-day-today { box-shadow: inset 0 0 0 2px $teal; }
+  .fc-dayGridWeek-view, .fc-dayGridDay-view {
+    .fc-col-header-cell.fc-day-today { box-shadow: inset 2px 0 0 $teal, inset -2px 0 0 $teal, inset 0 2px 0 $teal; }
+    .fc-daygrid-day.fc-day-today { box-shadow: inset 2px 0 0 $teal, inset -2px 0 0 $teal, inset 0 -2px 0 $teal; }
+  }
   .fc-daygrid-more-link { color: $ocean; font-weight: 600; }
+  .fc-daygrid-day-events { padding: 2px 4px; }
+  .fc-daygrid-event-harness { margin-bottom: 5px; }
+
+  // Group buttons (custom buttons named group-*): the active one is filled
+  [class*="fc-group"] { border-radius: 999px !important; margin-left: 0 !important; }
+  .fc-groupAll-button { margin-left: 8px !important; }
+  [class*="fc-group"][title], [class*="fc-group"] { background: $white; }
 }
 
+// Active group button ("● AA") is drawn by its text; give it the group color too
+@each $slug, $color in $programs {
+  .schedule__calendar .fc-group-#{$slug}-button { border-color: rgba($color, .5); color: $color; }
+}
+
+// A meeting on the calendar: time, name, group
 .schedule__event {
   cursor: pointer;
-  font-size: .8rem;
-  border-radius: 6px;
+  border-radius: 7px;
+  border: 0;
+  background: rgba($teal, .1);
+  color: $ink;
+  padding: 0;
 
-  &.is-mine { background: $sand; border-color: $sand; .fc-event-main, .fc-event-time, .fc-event-title { color: $ink; } }
-  &.is-full { background: $sage; border-color: $sage; .fc-event-main, .fc-event-time, .fc-event-title { color: $muted; } }
-  &.is-past { opacity: .55; }
+  &:hover { filter: brightness(.97); }
+  &.is-past { opacity: .5; }
+  &.is-mine { box-shadow: inset 0 0 0 2px $sand; }
 }
 
-.schedule__range { font-size: 1.2rem; margin: 0 0 12px; }
-
-.schedule__day { padding-top: 0; }
-
-.schedule__table {
-  background: $white;
-  border: 1px solid $line;
-  border-radius: $radius;
+@each $slug, $color in $programs {
+  .schedule__event.program-#{$slug} { background: rgba($color, .1); }
+  .schedule__event.program-#{$slug} .meeting-chip__meta { color: $color; }
+  .meeting-modal[data-program="#{$slug}"] .meeting-modal__group { background: $color; }
 }
 
-.schedule__row {
+.meeting-chip {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr) 110px 220px;
-  gap: 18px;
+  gap: 1px;
+  padding: 5px 7px;
+  white-space: normal;
+  line-height: 1.25;
+  color: $ink;
+}
+
+.meeting-chip__time { font-size: .74em; font-weight: 600; color: $muted; }
+.meeting-chip__name { font-size: .86em; font-weight: 700; overflow-wrap: anywhere; }
+.meeting-chip__meta { font-size: .72em; font-weight: 700; letter-spacing: .02em; }
+
+// Reservations and how-it-works, side by side under the calendar
+.schedule__below {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
   align-items: start;
-  padding: 16px 20px;
-  border-top: 1px solid $line;
 
-  &:first-child { border-top: 0; }
-  &.is-past { background: #fafbfb; color: $muted; }
-  &.is-mine { box-shadow: inset 4px 0 0 $teal; }
-  &.is-focused { background: $mist; }
+  .note { margin: 0; }
 }
 
-.schedule__row--head {
-  padding-block: 10px;
-  font-size: .8rem;
-  font-weight: 700;
-  color: $muted;
+#schedule-status:empty, #schedule-source:empty { display: none; }
+#schedule-source { margin: 0; }
+
+// The meeting details window (native <dialog>)
+.meeting-modal {
+  width: min(460px, calc(100vw - 32px));
+  padding: 24px 24px 20px;
+  border: 0;
+  border-radius: $radius;
+  box-shadow: 0 20px 60px rgba($ink, .3);
+  color: $ink;
+
+  &::backdrop { background: rgba($ink, .45); }
+}
+
+.meeting-modal__close-form { position: absolute; top: 10px; right: 10px; margin: 0; }
+
+.meeting-modal__close {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
   background: $mist;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: $ink;
+  cursor: pointer;
+
+  &:hover { background: $sage; }
 }
 
-.schedule__time {
-  strong, span { display: block; }
-  strong { color: $teal; font-size: 1.05rem; }
-  span { font-size: .85rem; color: $muted; }
+.meeting-modal__group {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: $teal;
+  color: $white;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
 }
 
-.is-past .schedule__time strong { color: $muted; }
+.meeting-modal__title { @include display-font; font-size: 1.35rem; margin: 10px 40px 4px 0; }
+.meeting-modal__when { margin: 0 0 14px; color: $muted; font-weight: 600; }
 
-.schedule__info {
-  h3 { margin: 0 0 6px; font-size: 1.08rem; }
+.meeting-modal__facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  margin: 0 0 14px;
+  font-size: .92rem;
+
+  dt { color: $muted; font-weight: 600; }
+  dd { margin: 0; }
+  a { color: $ocean; font-weight: 700; }
 }
 
-.schedule__where { margin: 6px 0 0; font-size: .9rem; color: $muted; }
-
-.schedule__notes {
-  margin-top: 6px;
-  font-size: .9rem;
-
-  summary { cursor: pointer; color: $ocean; font-weight: 600; }
-  p { white-space: pre-line; margin: 6px 0 0; color: $ink; background: $mist; padding: 10px 12px; border-radius: 8px; }
-}
-
-.schedule__spots {
-  font-size: .9rem;
+.meeting-modal__spots {
+  font-size: .92rem;
+  margin-bottom: 14px;
 
   strong { font-size: 1.05rem; }
-  span { color: $muted; }
 }
 
-// Native <meter>: filled part is spots taken
 .schedule__meter {
   display: block;
   width: 100%;
   height: 6px;
   margin-top: 6px;
-  border: 0;
-  border-radius: 6px;
-  overflow: hidden;
-  background: $sage;
-  appearance: none;
-
-  &::-webkit-meter-bar { background: $sage; border: 0; border-radius: 6px; height: 6px; }
-  &::-webkit-meter-optimum-value,
-  &::-webkit-meter-suboptimum-value,
-  &::-webkit-meter-even-less-good-value { background: $teal; border-radius: 6px; }
-  &::-moz-meter-bar { background: $teal; border-radius: 6px; }
 }
 
-.schedule__actions {
+.meeting-modal__actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   align-items: center;
   gap: 8px;
+
+  &:empty { display: none; }
 }
 
-.schedule__mine { width: 100%; text-align: right; font-weight: 700; color: $teal; font-size: .9rem; }
+.schedule__mine { width: 100%; font-weight: 700; color: $teal; }
 
-.schedule__empty { padding: 28px 20px; margin: 0; color: $muted; text-align: center; }
+.meeting-modal__more { display: inline-block; margin-top: 12px; font-weight: 700; color: $ocean; }
+#meeting-status:empty { display: none; }
 
 .stepper {
   display: inline-flex;
@@ -146,7 +205,7 @@
   .prc__btn.small { width: 30px; padding: 0; }
 }
 
-// Sidebar reservation list
+// Reservation list
 .mine { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 
 .mine__item {
@@ -163,20 +222,8 @@
   &:hover { border-color: $teal; }
 }
 
-#schedule-status { margin-top: 12px; }
-
 @include md {
   .schedule__calendar .fc-toolbar { justify-content: center; }
   .schedule__calendar .fc-toolbar-title { font-size: 1.05rem; }
-
-  .schedule__row {
-    grid-template-columns: 80px minmax(0, 1fr);
-    row-gap: 10px;
-  }
-
-  .schedule__row--head { display: none; }
-  .schedule__row:nth-child(2) { border-top: 0; }
-  .schedule__spots, .schedule__actions { grid-column: 2; }
-  .schedule__actions { justify-content: flex-start; }
-  .schedule__mine { text-align: left; }
+  .schedule__below { grid-template-columns: 1fr; }
 }

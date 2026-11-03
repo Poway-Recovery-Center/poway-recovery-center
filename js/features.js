@@ -1,5 +1,5 @@
 // Home page support tools: [data-feature="<panel id>"] buttons show that tool in the panel beside the tools menu,
-// in place of today's meetings. The URL hash follows the shown tool (index.html#mood-room), so links from other pages open it directly.
+// in place of today's meetings. The URL hash follows the shown tool (/#mood-room), so links from other pages open it directly.
 document.addEventListener("DOMContentLoaded", () => {
   const panels = [...document.querySelectorAll(".feature")];
   const todayPanel = document.getElementById("today-panel");
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (panel) { e.preventDefault(); show(panel, trigger.dataset.date); }
       return;
     }
-    // Links such as the footer's index.html#mood-room show the tool without reloading
+    // Links such as the footer's /#mood-room show the tool without reloading
     const link = e.target.closest("a[href*='#']");
     const linked = link && link.hash && panels.find(p => "#" + p.id === link.hash);
     if (linked) { e.preventDefault(); show(linked); }

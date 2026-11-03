@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     login({
       body: { uid: form.uid.value, password: form.password.value },
       message: "login-message",
-      callback: () => { window.location.href = "profile.html"; }
+      callback: () => { window.location.href = "/profile"; }
     });
   });
 });

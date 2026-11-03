@@ -1,16 +1,9 @@
-<div class="with-sidebar">
-  <div class="schedule">
-    <!-- FullCalendar month / week / day view, as on Open Coding Society pages (js/schedule.js) -->
-    <div id="calendar" class="schedule__calendar"></div>
+<div class="schedule">
+  <!-- FullCalendar week / month / day view with group buttons in its toolbar, set up like the Open Coding Society calendar (js/schedule.js) -->
+  <div id="calendar" class="schedule__calendar"></div>
+  <p class="status-msg is-error" id="schedule-status" role="status"></p>
 
-    <h3 class="schedule__range" id="day-heading" aria-live="polite"></h3>
-    <div class="schedule__day" id="day-panel" tabindex="0">
-      <div class="schedule__table" id="day-table"><p class="schedule__empty">Loading meetings…</p></div>
-    </div>
-    <p class="status-msg is-error" id="schedule-status" role="status"></p>
-  </div>
-
-  <aside class="sidebar">
+  <div class="schedule__below">
     <section class="note" id="my-bookings">
       <h3>Your reservations</h3>
       <div id="my-bookings-list"><p class="small muted">Loading…</p></div>
@@ -18,12 +11,25 @@
     <section class="note note--sand">
       <h3>How reserving works</h3>
       <ul class="small">
+        <li>Click any meeting to see where it is and reserve a spot.</li>
         <li>Reserving is optional. Walk-ins are always welcome.</li>
         <li>You can hold up to 5 spots at a meeting if you're bringing people.</li>
         <li>Spots open 30 days ahead and close when the meeting starts.</li>
-        <li>Cancel any time before the meeting if your plans change.</li>
       </ul>
     </section>
-    <p class="small muted" id="schedule-source"></p>
-  </aside>
+  </div>
+  <p class="small muted" id="schedule-source"></p>
 </div>
+
+<!-- One meeting's details and reservation, opened by clicking it on the calendar -->
+<dialog class="meeting-modal" id="meeting-modal" aria-labelledby="meeting-title">
+  <form method="dialog" class="meeting-modal__close-form"><button class="meeting-modal__close" aria-label="Close">&times;</button></form>
+  <span class="meeting-modal__group" id="meeting-group"></span>
+  <h3 class="meeting-modal__title" id="meeting-title"></h3>
+  <p class="meeting-modal__when" id="meeting-when"></p>
+  <dl class="meeting-modal__facts" id="meeting-facts"></dl>
+  <div class="meeting-modal__spots" id="meeting-spots"></div>
+  <div class="meeting-modal__actions" id="meeting-actions"></div>
+  <p class="status-msg" id="meeting-status" role="status"></p>
+  <a class="meeting-modal__more" id="meeting-more" href="/resources#programs">About this group →</a>
+</dialog>

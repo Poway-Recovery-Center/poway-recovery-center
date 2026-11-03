@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.user = user;
     if (!user) return;
     links.forEach(link => {
-        link.href = "profile.html";
+        link.href = "/profile";
         // Home page hub tile: only its title changes
         const title = link.querySelector('.hub__title');
         if (title) {

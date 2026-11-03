@@ -1,23 +1,23 @@
 import { getCalendar, getMyBookings, bookSession, updateSession, cancelSession } from './api/schedule.js';
 
-// Meeting schedule: a FullCalendar month / week / day view, set up like the Open Coding Society pages
-// calendar (navigation/calendar-v2.md). Every meeting, spot count and reservation comes from the backend API;
-// the page only keeps track of which day is selected (?date=YYYY-MM-DD opens a day).
+// Meeting schedule, structured like the Open Coding Society calendar: a FullCalendar day grid (Week by default,
+// plus Month and Day) with group buttons in its toolbar (All, AA, Al-Anon, NA...), each meeting showing its time,
+// name and group, and clicking a meeting opens its details where you can reserve a spot.
+// Every meeting, group, spot count and reservation comes from the backend API (/api/schedule).
 document.addEventListener("DOMContentLoaded", () => {
   const $ = id => document.getElementById(id);
-  const calendarEl = $("calendar"), heading = $("day-heading"), table = $("day-table"), status = $("schedule-status");
-  const mineList = $("my-bookings-list"), source = $("schedule-source");
+  const calendarEl = $("calendar"), status = $("schedule-status"), mineList = $("my-bookings-list"), source = $("schedule-source");
+  const modal = $("meeting-modal"), modalStatus = $("meeting-status");
   const REFRESH_MS = 5 * 60 * 1000;
   const MAX_DAYS = 42;  // the backend sends at most six weeks, one full month grid
-  let today = null, selected = null, focusSession = null, data = null, myBookings = [];
-  const daysByDate = {};
+  let data = null, myBookings = [], group = "all", reuse = false, openKey = null;
+  const groups = new Map();  // program slug -> short name, learned from the meetings
 
-  // "YYYY-MM-DD" date math in UTC so the browser's time zone never shifts a day
   const toDate = iso => new Date(iso + "T00:00:00Z");
   const fmt = (iso, opts) => toDate(iso).toLocaleDateString(undefined, { timeZone: "UTC", ...opts });
   const plural = n => `${n} spot${n === 1 ? "" : "s"}`;
-  // FullCalendar hands back local Date objects (same helper as the OCS calendar's formatDate)
   const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const keyOf = s => `${s.id}-${s.date}`;
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (text !== undefined) node.textContent = text;
     return node;
   }
-
   function button(text, classes, onClick) {
     const b = el("button", "prc__btn " + classes, text);
     b.type = "button";
@@ -34,75 +33,107 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const asked = new URLSearchParams(location.search).get("date");
-  if (asked && /^\d{4}-\d{2}-\d{2}$/.test(asked)) selected = asked;
-  const narrow = matchMedia("(max-width: 480px)").matches;
+  const narrow = matchMedia("(max-width: 640px)").matches;
+
+  // Group buttons live in the calendar's own toolbar (like the OCS calendar's group buttons); "● " marks the active one
+  const toolbar = () => ({
+    left: ["prev,next today", ["groupAll", ...[...groups.keys()].map(slug => `group-${slug}`)].join(",")].join(" "),
+    center: "title",
+    right: "dayGridMonth,dayGridWeek,dayGridDay"
+  });
+  const groupButtons = () => {
+    const buttons = { groupAll: { text: group === "all" ? "● All groups" : "All groups", click: () => setGroup("all") } };
+    groups.forEach((name, slug) => {
+      buttons[`group-${slug}`] = { text: group === slug ? `● ${name}` : name, click: () => setGroup(slug) };
+    });
+    return buttons;
+  };
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: narrow ? "dayGridDay" : "dayGridMonth",
-    initialDate: selected || undefined,
-    headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,dayGridWeek,dayGridDay" },
+    initialView: narrow ? "dayGridDay" : "dayGridWeek",
+    initialDate: asked && /^\d{4}-\d{2}-\d{2}$/.test(asked) ? asked : undefined,
+    headerToolbar: toolbar(),
+    customButtons: groupButtons(),
     views: {
-      dayGridMonth: { buttonText: "Month" },
+      dayGridMonth: { buttonText: "Month", dayMaxEvents: 4 },
       dayGridWeek: { buttonText: "Week" },
       dayGridDay: { buttonText: "Day" }
     },
+    buttonText: { today: "Today" },
     height: "auto",
-    dayMaxEvents: 3,
     eventDisplay: "block",
-    eventTimeFormat: { hour: "numeric", minute: "2-digit", meridiem: "short" },
+    eventOrder: "start,title",
     events: loadEvents,
-    dayCellClassNames: arg => ymd(arg.date) === selected ? ["is-selected"] : [],
+    // Time, meeting name, then its group (same three-line card as the OCS calendar's appointments)
+    eventContent: arg => {
+      const s = arg.event.extendedProps.session;
+      const box = el("div", "meeting-chip");
+      box.append(el("span", "meeting-chip__time", `${s.start_formatted} – ${s.end_formatted}`),
+        el("span", "meeting-chip__name", s.name),
+        el("span", "meeting-chip__meta", [s.program_name, s.booked_by_me ? "You're going" : s.started ? "" : s.spots_left === 0 ? "Full" : ""].filter(Boolean).join(" · ")));
+      return { domNodes: [box] };
+    },
     eventDidMount: info => {
       const s = info.event.extendedProps.session;
-      info.el.title = `${s.start_formatted} ${s.name} · ` + (s.started ? "Started" : `${s.spots_left} of ${s.capacity} spots left`);
+      info.el.setAttribute("aria-label", `${s.name}, ${s.program_name}, ${fmt(s.date, { weekday: "long" })} ${s.start_formatted}`);
     },
-    datesSet: ({ view }) => {
-      const first = ymd(view.currentStart), last = ymd(new Date(view.currentEnd - 1));
-      if (view.type === "dayGridDay") selected = first;
-      else if (!selected || selected < first || selected > last) {
-        const now = today || ymd(new Date());
-        selected = now >= first && now <= last ? now : first;
-      }
-      renderSelected();
-    },
-    dateClick: info => select(ymd(info.date)),
-    eventClick: info => {
-      info.jsEvent.preventDefault();
-      select(info.event.extendedProps.session.date, info.event.id);
-    }
+    eventClick: info => { info.jsEvent.preventDefault(); openMeeting(info.event.extendedProps.session); },
+    // Clicking a day's number in Month view opens that day
+    navLinks: true,
+    navLinkDayClick: date => calendar.changeView("dayGridDay", date)
   });
 
-  // Events for the visible range, from /api/schedule (FullCalendar calls this on every view change and refetch)
+  function setGroup(slug) {
+    group = slug;
+    calendar.setOption("customButtons", groupButtons());
+    calendar.setOption("headerToolbar", toolbar());
+    reuse = true;
+    calendar.refetchEvents();
+  }
+
+  // Events for the visible range from /api/schedule; group changes re-filter what's loaded without asking again
   async function loadEvents(info, success, failure) {
     try {
       const start = ymd(info.start);
       const days = Math.min(MAX_DAYS, Math.round((info.end - info.start) / 86400000));
-      data = await getCalendar(start, days);
-      data.days.forEach(day => { daysByDate[day.date] = day; });
-      // A new day in Poway: follow it if the viewer was looking at "today"
-      if (today && data.today !== today && selected === today) selected = data.today;
-      today = data.today;
-      if (!selected) selected = today;
-      myBookings = data.logged_in ? await getMyBookings().catch(() => []) : [];
+      if (!(reuse && data && data.days[0]?.date === start && data.days.length === days)) {
+        data = await getCalendar(start, days);
+        myBookings = data.logged_in ? await getMyBookings().catch(() => []) : [];
+        learnGroups();
+        renderMine();
+        renderSource();
+      }
+      reuse = false;
       status.textContent = "";
-      success(data.days.flatMap(day => day.sessions.map(toEvent)));
-      renderSelected();
-      renderMine();
-      renderSource();
+      success(data.days.flatMap(day => day.sessions.filter(s => group === "all" || s.program === group).map(toEvent)));
+      if (openKey) refreshModal();
     } catch (err) {
       status.textContent = err.message;
-      table.replaceChildren(el("p", "schedule__empty", "The schedule couldn't be loaded."));
       failure(err);
     }
   }
 
+  // Add a toolbar button for any group we haven't seen yet
+  function learnGroups() {
+    let added = false;
+    data.days.forEach(day => day.sessions.forEach(s => {
+      if (!groups.has(s.program)) { groups.set(s.program, s.program_name); added = true; }
+    }));
+    if (!added) return;
+    const order = ["aa", "al-anon", "alateen", "aca", "na", "ca", "ga", "sa"];
+    const sorted = [...groups].sort((a, b) => ((order.indexOf(a[0]) + 1 || 99) - (order.indexOf(b[0]) + 1 || 99)));
+    groups.clear(); sorted.forEach(([k, v]) => groups.set(k, v));
+    calendar.setOption("customButtons", groupButtons());
+    calendar.setOption("headerToolbar", toolbar());
+  }
+
   function toEvent(s) {
-    const classes = ["schedule__event"];
+    const classes = ["schedule__event", `program-${s.program}`];
     if (s.booked_by_me) classes.push("is-mine");
     else if (s.started) classes.push("is-past");
     else if (s.spots_left === 0) classes.push("is-full");
     return {
-      id: `${s.id}-${s.date}`,
+      id: keyOf(s),
       title: s.name,
       start: `${s.date}T${s.start}`,
       end: s.end > s.start ? `${s.date}T${s.end}` : undefined,
@@ -111,110 +142,78 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  // Show one day's meetings under the calendar, moving the calendar there if it's out of view
-  function select(date, sessionKey) {
-    selected = date;
-    focusSession = sessionKey || null;
-    renderSelected();
+  // ---- Meeting details window ----
+
+  const findSession = key => data?.days.flatMap(d => d.sessions).find(s => keyOf(s) === key);
+  const dayOf = date => data?.days.find(d => d.date === date);
+
+  function openMeeting(s) {
+    openKey = keyOf(s);
+    modalStatus.textContent = "";
+    fillModal(s);
+    if (!modal.open) modal.showModal();
+  }
+  modal.addEventListener("close", () => { openKey = null; });
+  // Clicking the dimmed backdrop closes it
+  modal.addEventListener("click", e => { if (e.target === modal) modal.close(); });
+
+  function refreshModal() {
+    const s = findSession(openKey);
+    if (s) fillModal(s); else modal.close();
   }
 
-  // The home page shows the schedule on a given day (js/features.js)
-  document.addEventListener("schedule:show-date", e => select(e.detail));
+  function fillModal(s) {
+    const day = dayOf(s.date) || { bookable: false };
+    modal.dataset.program = s.program;
+    $("meeting-group").textContent = s.program_name;
+    $("meeting-title").textContent = s.name;
+    $("meeting-when").textContent = `${fmt(s.date, { weekday: "long", month: "long", day: "numeric" })} · ${s.start_formatted} – ${s.end_formatted}`;
 
-  function renderSelected() {
-    if (!selected) return;
-    heading.textContent = selected === today ? `Today, ${fmt(selected, { month: "long", day: "numeric" })}` : fmt(selected, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
-    calendarEl.querySelectorAll(".fc-daygrid-day[data-date]").forEach(cell => cell.classList.toggle("is-selected", cell.dataset.date === selected));
-    const day = daysByDate[selected];
-    if (!day) {
-      // Not fetched yet: datesSet and loadEvents render it once the calendar shows that day
-      const view = calendar.view;
-      if (view && (selected < ymd(view.activeStart) || selected >= ymd(view.activeEnd))) calendar.gotoDate(selected);
-      table.replaceChildren(el("p", "schedule__empty", "Loading meetings…"));
-      return;
-    }
-    renderDay(day);
-    if (focusSession) {
-      const row = table.querySelector(`[data-session="${focusSession}"]`);
-      focusSession = null;
-      if (row) { row.classList.add("is-focused"); row.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
-    }
-  }
+    const facts = $("meeting-facts");
+    facts.replaceChildren();
+    const fact = (label, value) => { if (!value) return; const dt = el("dt", null, label), dd = el("dd"); dd.append(value); facts.append(dt, dd); };
+    fact("Where", s.location);
+    fact("Kind", s.types.join(" · "));
+    fact("Attend", s.attendance);
+    const zoom = (s.notes || "").match(/https:\/\/\S+/);
+    if (zoom) { const a = el("a", null, "Join on Zoom ↗"); a.href = zoom[0]; a.target = "_blank"; a.rel = "noopener"; fact("Online", a); }
 
-  function renderSource() {
-    const synced = data.last_synced ? new Date(data.last_synced).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "not yet";
-    const link = el("a", null, "North County San Diego AA"); link.href = data.source_url; link.target = "_blank"; link.rel = "noopener";
-    source.replaceChildren("Meeting times come from ", link, `. Last updated ${synced}.`);
-    if (data.sync_error) source.append(" The directory can't be reached right now, so this is the last saved schedule.");
-  }
-
-  function renderDay(day) {
-    const rows = [];
-    const head = el("div", "schedule__row schedule__row--head");
-    ["Time", "Meeting", "Spots", ""].forEach(h => head.append(el("span", null, h)));
-    rows.push(head);
-    if (!day.sessions.length) rows.push(el("p", "schedule__empty", "No meetings at the center this day."));
-    day.sessions.forEach(s => rows.push(sessionRow(s, day)));
-    table.replaceChildren(...rows);
-  }
-
-  function sessionRow(s, day) {
-    const row = el("div", "schedule__row" + (s.started ? " is-past" : "") + (s.booked_by_me ? " is-mine" : ""));
-    row.dataset.session = `${s.id}-${s.date}`;
-
-    const time = el("div", "schedule__time");
-    time.append(el("strong", null, s.start_formatted), el("span", null, `to ${s.end_formatted}`));
-
-    const info = el("div", "schedule__info");
-    info.append(el("h3", null, s.name));
-    const meta = el("div", "tags");
-    if (s.attendance) meta.append(el("span", "tag", s.attendance));
-    s.types.forEach(t => meta.append(el("span", "tag", t)));
-    info.append(meta, el("p", "schedule__where", s.location));
-    if (s.notes) {
-      const notes = el("details", "schedule__notes");
-      notes.append(el("summary", null, "Location & Zoom details"), el("p", null, s.notes));
-      info.append(notes);
-    }
-
-    const spots = el("div", "schedule__spots");
-    if (s.started) spots.append(el("span", null, "Started"));
+    const spots = $("meeting-spots");
+    spots.replaceChildren();
+    if (s.started) spots.append(el("span", "muted", "This meeting has already started."));
     else {
-      spots.append(el("strong", null, s.spots_left), el("span", null, ` of ${s.capacity} left`));
+      spots.append(el("strong", null, `${s.spots_left} of ${s.capacity}`), " spots left");
       const bar = el("meter", "schedule__meter"); bar.max = s.capacity; bar.value = s.capacity - s.spots_left;
       spots.append(bar);
     }
 
-    const actions = el("div", "schedule__actions");
-    row.append(time, info, spots, actions);
+    $("meeting-actions").replaceChildren(...actionsFor(s, day));
+    const more = $("meeting-more");
+    more.href = `/groups/${s.program}`;
+    more.textContent = `About ${s.program_name} →`;
+  }
 
+  function actionsFor(s, day) {
     if (!data.logged_in) {
-      if (!s.started && day.bookable) {
-        const login = el("a", "prc__btn accent", "Log in to reserve"); login.href = "login.html";
-        actions.append(login);
-      }
-      return row;
+      if (s.started || !day.bookable) return [];
+      const login = el("a", "prc__btn accent fill", "Log in to reserve"); login.href = "/login";
+      return [login];
     }
-    // Most spots this person can hold here: the per-person limit, or what's left plus what they already have
     const most = Math.min(s.max_spots_per_user, s.my_spots + s.spots_left);
-
     if (s.booked_by_me) {
-      if (s.started) { actions.append(el("span", "schedule__mine", `You reserved ${plural(s.my_spots)}`)); return row; }
-      actions.append(el("span", "schedule__mine", "You're going"),
+      if (s.started) return [el("span", "schedule__mine", `You reserved ${plural(s.my_spots)}`)];
+      return [el("span", "schedule__mine", `You're going · ${plural(s.my_spots)}`),
         stepper(s.my_spots, most, n => act(null, () => updateSession(s.id, s.date, n))),
-        button("Cancel", "small alert-red", e => act(e.currentTarget, () => cancelSession(s.id, s.date))));
-      return row;
+        button("Cancel reservation", "small alert-red", e => act(e.currentTarget, () => cancelSession(s.id, s.date)))];
     }
-
     if (s.started || !day.bookable || s.spots_left === 0) {
-      const reason = s.started ? "" : !day.bookable ? "Opens later" : "Full";
-      if (reason) { const b = button(reason, "", null); b.disabled = true; actions.append(b); }
-      return row;
+      if (s.started) return [];
+      const b = button(!day.bookable ? "Reservations open later" : "Full", "", null); b.disabled = true;
+      return [b];
     }
     let count = 1;
-    const reserve = button("Reserve", "accent fill", e => act(e.currentTarget, () => bookSession(s.id, s.date, count)));
-    actions.append(stepper(count, most, n => { count = n; reserve.textContent = n === 1 ? "Reserve" : `Reserve ${n}`; }), reserve);
-    return row;
+    const reserve = button("Reserve a spot", "accent fill", e => act(e.currentTarget, () => bookSession(s.id, s.date, count)));
+    return [stepper(count, most, n => { count = n; reserve.textContent = n === 1 ? "Reserve a spot" : `Reserve ${n} spots`; }), reserve];
   }
 
   // − n + control for a spot count between 1 and max
@@ -234,14 +233,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function act(btn, request) {
     if (btn) btn.disabled = true;
-    try { await request(); } catch (err) { status.textContent = err.message; }
+    modalStatus.textContent = "";
+    try { await request(); } catch (err) { modalStatus.textContent = err.message; modalStatus.classList.add("is-error"); }
     calendar.refetchEvents();
   }
 
+  // ---- Below the calendar ----
+
   function renderMine() {
     if (!data.logged_in) {
-      const login = el("a", "prc__btn accent fill", "Log in"); login.href = "login.html";
-      const signup = el("a", "prc__btn", "Create an account"); signup.href = "signup.html";
+      const login = el("a", "prc__btn accent fill", "Log in"); login.href = "/login";
+      const signup = el("a", "prc__btn", "Create an account"); signup.href = "/signup";
       const links = el("div", "prc__links"); links.append(login, signup);
       mineList.replaceChildren(el("p", "small", "Log in to reserve spots and see them here."), links);
       return;
@@ -253,16 +255,33 @@ document.addEventListener("DOMContentLoaded", () => {
       jump.type = "button";
       jump.append(el("strong", null, `${fmt(b.date, { weekday: "short", month: "short", day: "numeric" })} · ${b.start_formatted}`),
         el("span", null, b.name + (b.my_spots > 1 ? ` · ${plural(b.my_spots)}` : "")));
-      jump.addEventListener("click", () => select(b.date, `${b.id}-${b.date}`));
+      jump.addEventListener("click", () => showDate(b.date, `${b.id}-${b.date}`));
       item.append(jump); list.append(item);
     });
     mineList.replaceChildren(list);
   }
 
+  function renderSource() {
+    const synced = data.last_synced ? new Date(data.last_synced).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "not yet";
+    const link = el("a", null, "the center's meeting calendar"); link.href = data.source_url; link.target = "_blank"; link.rel = "noopener";
+    source.replaceChildren("Meeting times come from ", link, `. Last updated ${synced}.`);
+    if (data.sync_error) source.append(" The calendar can't be reached right now, so this is the last saved schedule.");
+  }
+
+  // Jump to a date (and open one of its meetings once loaded): used by reservations and the home page's today list
+  function showDate(date, key) {
+    calendar.gotoDate(date);
+    if (!key) return;
+    let tries = 0;
+    const tryOpen = () => { const s = findSession(key); if (s) openMeeting(s); else if (++tries < 20) setTimeout(tryOpen, 300); };
+    tryOpen();
+  }
+  document.addEventListener("schedule:show-date", e => showDate(e.detail));
+
   calendar.render();
   // The schedule panel is hidden until picked, so size the calendar whenever its box changes
   new ResizeObserver(() => calendar.updateSize()).observe(calendarEl);
-  // Keep spots current and roll over to the next day without a page reload
+  // Keep spots current without a page reload
   setInterval(() => calendar.refetchEvents(), REFRESH_MS);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) calendar.refetchEvents(); });
 });

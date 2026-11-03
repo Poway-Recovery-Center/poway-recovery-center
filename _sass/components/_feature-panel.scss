@@ -40,7 +40,7 @@
   .note { padding: 14px 16px; }
 }
 
-// Schedule: main column plus a sidebar only when there's room for both
+// Main column plus a sidebar only when there's room for both
 .feature .with-sidebar {
   grid-template-columns: minmax(0, 1fr) 280px;
   gap: 20px;
@@ -52,19 +52,11 @@
   .feature .sidebar { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 }
 
-// Meeting rows: time, details, spots and actions in one line only when wide enough
+// Schedule: center the toolbar rows when the panel is narrow
 @container tool-panel (max-width: 760px) {
-  .feature .schedule__row {
-    grid-template-columns: 80px minmax(0, 1fr);
-    row-gap: 10px;
-  }
-  .feature .schedule__row--head { display: none; }
-  .feature .schedule__row:nth-child(2) { border-top: 0; }
-  .feature .schedule__spots, .feature .schedule__actions { grid-column: 2; }
-  .feature .schedule__actions { justify-content: flex-start; }
-  .feature .schedule__mine { text-align: left; }
   .feature .schedule__calendar .fc-toolbar { justify-content: center; }
   .feature .schedule__calendar .fc-toolbar-title { font-size: 1.05rem; }
+  .feature .schedule__below { grid-template-columns: 1fr; }
 }
 
 // Mood Room: text box and the right-hand box (music picks, then your room) side by side when there's room

@@ -1,0 +1,24 @@
+<!-- One recovery group's page (groups/*.html). Content comes from the backend (/api/programs/<slug>) via js/program.js -->
+<article class="group" id="group" data-program="{{ page.program }}" aria-busy="true">
+  <header class="group__head">
+    <div class="wrap group__head-inner">
+      <div class="group__head-text">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/resources#programs">Recovery groups</a> › <span id="group-crumb">{{ page.title }}</span></nav>
+        <h1 id="group-name">{{ page.title }}</h1>
+        <div class="group__intro" id="group-intro"><p class="muted">Loading…</p></div>
+        <div class="prc__links group__actions">
+          <a class="prc__btn accent fill" href="/#schedule">See meetings at the center</a>
+          <a class="prc__btn" href="/resources#programs">All recovery groups</a>
+        </div>
+      </div>
+      <figure class="group__photo"><img id="group-photo" alt="" width="1600" height="1067"></figure>
+    </div>
+  </header>
+
+  <div class="wrap group__body" id="group-body"></div>
+
+  <nav class="wrap group__others" aria-labelledby="group-others-title" hidden>
+    <h2 id="group-others-title">Other groups at the center</h2>
+    <div class="group__other-list" id="group-others"></div>
+  </nav>
+</article>

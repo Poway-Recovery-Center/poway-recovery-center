@@ -5,7 +5,7 @@ import { initTabs } from './tabs.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
   const user = await getCredentials();
-  if (!user) { window.location.href = "login.html"; return; }
+  if (!user) { window.location.href = "/login"; return; }
 
   const form = document.querySelector("#profile-form"), message = document.querySelector("#profile-message");
   const passwordForm = document.querySelector("#password-form"), passwordMessage = document.querySelector("#password-message");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ul = el("ul", "booking-list");
     list.forEach(b => {
       const li = el("li"), link = el("a");
-      link.href = `index.html?date=${b.date}#schedule`;
+      link.href = `/?date=${b.date}#schedule`;
       const date = new Date(b.date + "T00:00:00Z").toLocaleDateString(undefined, { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
       link.append(el("strong", null, `${date} · ${b.start_formatted}`), el("span", null, b.name + (b.my_spots > 1 ? ` · ${b.my_spots} spots` : "")));
       li.append(link); ul.append(li);

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await apiRequest("/api/user", "POST", {
         name: form.name.value, uid: form.uid.value, email: form.email.value, phone: form.phone.value, password: form.password.value
       });
-      window.location.href = "profile.html";
+      window.location.href = "/profile";
     } catch (err) { message.textContent = err.message; }
   });
 });
