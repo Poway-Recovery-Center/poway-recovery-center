@@ -7,11 +7,45 @@
 .mood { display: grid; gap: 18px; }
 .mood .form textarea { min-height: 64px; }
 
-.mood__result {
-  border-top: 4px solid $teal;
-
-  h3 { margin: 14px 0 8px; font-size: 1.4rem; }
+// Right-hand box: tinted so it stands apart from the white text box
+.mood__side {
+  background: $mist;
+  border-color: $sage;
 }
+
+.mood__result h3 { margin: 14px 0 8px; font-size: 1.4rem; }
+.mood__side .tag { background: $white; }
+
+.mood__picks-title { font-size: 1.1rem; margin: 0 0 2px; }
+.mood__picks > p { margin: 0 0 12px; }
+
+.mood__pick-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.mood__pick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: $white;
+  border: 1px solid $line;
+  border-radius: 8px;
+  color: $ink;
+  text-decoration: none;
+  transition: border-color .15s, transform .15s;
+
+  strong, .muted { display: block; }
+  strong { font-size: .95rem; }
+  .muted { line-height: 1.35; }
+
+  &:hover, &:focus-visible { border-color: $teal; transform: translateY(-1px); }
+}
+
+.mood__pick-arrow { color: $teal; font-weight: 700; flex-shrink: 0; }
 
 .mood__music {
   display: flex;
@@ -19,7 +53,7 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  background: $mist;
+  background: $white;
   border-radius: 8px;
   padding: 14px 16px;
   margin: 18px 0;
@@ -34,43 +68,243 @@
   &:empty { display: none; }
 }
 
-// Reflection Wall
+// Pressed toggle buttons (schedule days and filters)
 .prc__btn[aria-pressed="true"] {
   background: $ink !important;
   border-color: $ink !important;
   color: $white !important;
 }
 
-.reflection-wall { columns: 3 280px; column-gap: 16px; }
+// The wall: a whiteboard with a dot grid (like a Jamboard) covered in sticky notes
+// Sticky note colours, one per kind of reflection (also used for the filter dots and the new-note colour picker)
+.board [data-tag="win"] { --note: #fff07a; }
+.board [data-tag="truth"] { --note: #ffc8da; }
+.board [data-tag="thanks"] { --note: #c9efb2; }
+.board [data-tag="hope"] { --note: #bfe3f8; }
 
-.reflection-post {
-  break-inside: avoid;
-  margin: 0 0 16px;
-  @include panel(20px 20px 14px);
+.board {
+  position: relative;
+  min-height: 460px;
+  padding: 16px 18px 28px;
+  border: 1px solid #d9dedc;
+  border-radius: $radius;
+  background:
+    radial-gradient(circle, #c9d3d1 1px, transparent 1.4px) 0 0 / 22px 22px,
+    #fbfbf8;
+  box-shadow: inset 0 1px 3px rgba($ink, .06);
+}
+
+// Top-left: add button, then the filters
+.board__bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-bottom: 18px;
+}
+
+.board__add { box-shadow: 0 3px 10px rgba($ink, .18); }
+
+.board__filters { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.board__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid $line;
+  border-radius: 999px;
+  background: $white;
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  color: $ink;
+  cursor: pointer;
+
+  &[data-tag]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--note);
+    box-shadow: inset 0 0 0 1px rgba(#000, .12);
+  }
+
+  &:hover { border-color: $teal; }
+  &[aria-pressed="true"] { background: $ink; border-color: $ink; color: $white; }
+}
+
+.board__status { margin: -8px 0 12px; &:empty { display: none; } }
+
+// One sticky note: square, slightly tilted, darker glue strip along the top, lifted shadow and a curled corner
+.sticky {
+  --note: #fff07a;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
+  aspect-ratio: 1;
+  padding: 18px 16px 10px;
+  background:
+    linear-gradient(180deg, rgba(#000, .07), rgba(#000, 0) 14%),
+    linear-gradient(160deg, rgba(#fff, .35), rgba(#fff, 0) 45%),
+    var(--note);
+  border-radius: 2px 2px 3px 2px / 2px 2px 3px 2px;
+  border-bottom-right-radius: 40px 8px;
+  box-shadow:
+    0 1px 1px rgba(#000, .08),
+    0 8px 12px -6px rgba(#000, .32),
+    0 20px 22px -16px rgba(#000, .28);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform .2s, box-shadow .2s;
+  color: #2b2a24;
 
-  &[data-tag="win"] { background: #fdf6dc; }
-  &[data-tag="thanks"] { background: #e4f3f0; }
-  &[data-tag="hope"] { background: #f1f3e3; }
+  &[data-shade="1"] { background-color: color-mix(in srgb, var(--note) 92%, #fff); }
+  &[data-shade="2"] { background-color: color-mix(in srgb, var(--note) 95%, #a08b3c); }
 
-  blockquote { margin: 0; font-size: 1.05rem; line-height: 1.5; overflow-wrap: anywhere; }
+  &:hover,
+  &:focus-within {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow:
+      0 2px 2px rgba(#000, .08),
+      0 14px 18px -8px rgba(#000, .35),
+      0 28px 30px -20px rgba(#000, .3);
+    z-index: 1;
+  }
+
+  blockquote {
+    flex: 1;
+    margin: 0;
+    font-family: $font-hand;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+  }
+
+  &.is-long blockquote { font-size: 1.22rem; }
 
   footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    font-size: .82rem;
-    color: $muted;
+    gap: 8px;
+    font-size: .74rem;
+    color: rgba(#2b2a24, .62);
   }
-
-  .hold[aria-pressed="true"] { background: $sand !important; border-color: $sand !important; color: $ink !important; opacity: 1; }
 }
 
-.reflection-post__tag { font-weight: 700; color: $teal; }
+.board__notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 28px 24px;
+  padding: 4px 6px;
+}
 
+.sticky__tag { font-weight: 700; }
+
+.sticky__btn {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(#fff, .45);
+  font: inherit;
+  font-weight: 700;
+  color: #2b2a24;
+  cursor: pointer;
+
+  &:hover:not(:disabled) { background: rgba(#fff, .8); }
+  &:disabled { cursor: default; }
+  &.hold[aria-pressed="true"] { color: $red; background: rgba(#fff, .6); }
+}
+
+// The blank note for a new reflection: no tilt, a bit bigger, colour follows the kind picked
+.board__composer {
+  aspect-ratio: auto;
+  max-width: 440px;
+  margin: 0 0 26px;
+  padding: 20px 18px 12px;
+  transform: none;
+
+  &:hover, &:focus-within { transform: none; }
+
+  textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    resize: none;
+    font-family: $font-hand;
+    font-size: 1.55rem;
+    line-height: 1.15;
+    color: inherit;
+
+    &::placeholder { color: rgba(#2b2a24, .45); }
+    &:focus { outline: none; }
+  }
+}
+
+.board__kinds { display: flex; flex-wrap: wrap; gap: 6px; border: 0; padding: 0; margin: 0 0 10px; }
+
+.board__kind {
+  input { position: absolute; opacity: 0; pointer-events: none; }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border: 1px solid rgba(#000, .14);
+    border-radius: 999px;
+    background: rgba(#fff, .55);
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--note);
+      box-shadow: inset 0 0 0 1px rgba(#000, .15);
+    }
+  }
+
+  input:checked + span { background: $white; border-color: #2b2a24; }
+  input:focus-visible + span { outline: 2px solid $teal; outline-offset: 2px; }
+}
+
+.board__guide { margin: 6px 0 8px; font-size: .74rem; color: rgba(#2b2a24, .62); }
+
+.board__composer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: .74rem;
+  color: rgba(#2b2a24, .62);
+}
+
+.board__composer-actions { display: flex; gap: 6px; }
+
+.board__empty {
+  max-width: 360px;
+  margin: 40px auto;
+  padding: 22px;
+  text-align: center;
+  color: $muted;
+  border: 2px dashed #cdd6d4;
+  border-radius: $radius;
+  background: rgba(#fff, .7);
+
+  strong { display: block; font-size: 1.1rem; color: $ink; margin-bottom: 4px; }
+}
+
+// Empty state box (Recovery Tracker charts)
 .reflection-empty {
   border: 1px dashed #b0d0ca;
   border-radius: $radius;
@@ -87,9 +321,14 @@
 
 .tracker { display: grid; gap: 18px; min-width: 0; }
 
-.tracker__form { gap: 20px; }
+.tracker__start { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.tracker__start .status-msg { margin: 0; }
+
+.tracker__form { gap: 20px; position: relative; z-index: 1; }
+.tracker__form-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+.tracker__heading { @include display-font; font-size: 1.6rem; margin: 10px 0 0; }
 .tracker__form textarea { min-height: 64px; }
-.tracker__form .status-msg { margin: 0; }
 
 .tracker__metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px; }
 
@@ -167,11 +406,20 @@
   color: $ink;
 }
 
-.tracker__charts { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+// Overall wellbeing across the top, then the four areas in one row of the same total width
+.tracker__charts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .tracker__chart--wide { grid-column: 1 / -1; }
+
+@container tool-panel (max-width: 760px) {
+  .tracker__charts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container tool-panel (max-width: 420px) {
+  .tracker__charts { grid-template-columns: 1fr; }
+}
 
 .tracker__chart {
   @include panel(14px 14px 8px);
+  position: relative;
 
   header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
   h4 { @include display-font; font-size: 1.05rem; margin: 0; }
@@ -189,6 +437,51 @@
 .tracker__svg { display: block; width: 100%; height: auto; margin-top: 6px; overflow: visible; }
 .tracker__grid { stroke: $line; stroke-width: 1; }
 .tracker__axis { fill: $muted; font-size: 10px; }
+.tracker__chart--wide h4 { font-size: 1.3rem; }
+.tracker__chart--wide .tracker__axis { font-size: 7.5px; }
+
+// Overall wellbeing: one week's check-in, shown above the dot being hovered
+.tracker__tip {
+  position: absolute;
+  z-index: 3;
+  width: 220px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: $ink;
+  color: $white;
+  font-size: .8rem;
+  line-height: 1.4;
+  box-shadow: 0 8px 22px rgba($ink, .25);
+  transform: translate(-50%, calc(-100% - 12px));
+  pointer-events: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 10px;
+    height: 10px;
+    background: $ink;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+.tracker__tip-week { display: block; font-size: .85rem; }
+.tracker__tip-score { display: block; color: $sand; font-weight: 700; margin-bottom: 6px; }
+
+.tracker__tip-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1px 10px;
+  margin: 0;
+
+  dt { color: #a9c6c1; }
+  dd { margin: 0; }
+}
+
+.tracker__tip-did, .tracker__tip-note { margin: 6px 0 0; color: #d6e6e3; }
+.tracker__tip-note { font-style: italic; overflow-wrap: anywhere; }
 .tracker__line { fill: none; stroke: $teal; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .tracker__point { fill: $teal; stroke: $white; stroke-width: 2; }
 .tracker__hit { fill: transparent; }

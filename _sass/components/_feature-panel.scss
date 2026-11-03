@@ -2,18 +2,18 @@
 // Layouts inside respond to the panel's own width (container queries), not the window's, so nothing gets squeezed.
 @use "../tokens" as *;
 
+// The one large box: today's meetings or the open tool, each with a label bar across the top
 .tools__panel {
   container: tool-panel / inline-size;
   min-width: 0;
-}
-
-.feature {
   @include panel(0);
-  background: $cream;
   overflow: hidden;
 }
 
-.feature__head {
+.feature { background: $cream; }
+
+.feature__head,
+.tools__today > .section-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,9 +23,13 @@
   background: $mist;
   border-bottom: 1px solid $line;
 
-  h3 { @include display-font; font-size: 1.3rem; margin: 0 0 2px; }
-  p { color: $muted; font-size: .9rem; margin: 0; }
+  margin: 0;
+
+  h3 { @include display-font; font-size: 1.2rem; margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
+  p { color: $muted; font-size: .88rem; margin: 0; width: auto; }
 }
+
+.feature__icon { width: 22px; height: 22px; flex-shrink: 0; color: $teal; }
 
 .feature__body {
   padding: 20px;
@@ -36,14 +40,11 @@
   .note { padding: 14px 16px; }
 }
 
-// Schedule and Reflection Wall: main column plus a sidebar only when there's room for both
+// Schedule: main column plus a sidebar only when there's room for both
 .feature .with-sidebar {
   grid-template-columns: minmax(0, 1fr) 280px;
   gap: 20px;
 }
-
-// Space between a form + sidebar and the heading that follows it (Reflection Wall: "From the community")
-.with-sidebar + .feature__subhead { margin-top: 32px; }
 
 @container tool-panel (max-width: 1040px) {
   .feature .with-sidebar { grid-template-columns: 1fr; }
@@ -66,7 +67,7 @@
   .feature .schedule__calendar .fc-toolbar-title { font-size: 1.05rem; }
 }
 
-// Mood Room: what you typed and your room side by side once the room opens, when there's room
+// Mood Room: text box and the right-hand box (music picks, then your room) side by side when there's room
 @container tool-panel (min-width: 880px) {
   .feature .mood { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); align-items: start; }
 }

@@ -55,21 +55,40 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
 </section>
 
 <section class="section wide tools" id="tools" aria-label="Our support tools">
+  <!-- Tool icons: 24px outlines drawn with currentColor, used by the buttons and label bars below -->
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/>
+    </symbol>
+    <symbol id="icon-headphones" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3.5" y="14" width="4.5" height="6.5" rx="1.75"/><rect x="16" y="14" width="4.5" height="6.5" rx="1.75"/>
+    </symbol>
+    <symbol id="icon-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.5 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-4.5 2.5 1.2-4.2A7.5 7.5 0 0 1 11 4h2a7.5 7.5 0 0 1 7.5 7.5Z"/><path d="M8.5 10.5h7M8.5 13.5h4.5"/>
+    </symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-5.5 14-15 14Z"/><path d="M4 20.5 13.5 11"/>
+    </symbol>
+  </svg>
   <div class="tools__layout">
     <nav class="tools__menu" aria-label="Support tools">
       <button class="tool" type="button" data-feature="schedule" aria-controls="schedule" aria-pressed="false">
+        <svg class="tool__icon" aria-hidden="true"><use href="#icon-calendar"/></svg>
         <span class="tool__title">Meeting schedule</span>
         <span class="tool__desc">Every meeting at the center. Pick a day and reserve a spot.</span>
       </button>
       <button class="tool" type="button" data-feature="mood-room" aria-controls="mood-room" aria-pressed="false">
+        <svg class="tool__icon" aria-hidden="true"><use href="#icon-headphones"/></svg>
         <span class="tool__title">Mood Room</span>
         <span class="tool__desc">Say how you feel and get a grounding prompt and music to match.</span>
       </button>
       <button class="tool" type="button" data-feature="reflection-wall" aria-controls="reflection-wall" aria-pressed="false">
+        <svg class="tool__icon" aria-hidden="true"><use href="#icon-message"/></svg>
         <span class="tool__title">Reflection Wall</span>
         <span class="tool__desc">Share a small win or a note of hope, anonymously.</span>
       </button>
       <button class="tool" type="button" data-feature="recovery-tracker" aria-controls="recovery-tracker" aria-pressed="false">
+        <svg class="tool__icon" aria-hidden="true"><use href="#icon-leaf"/></svg>
         <span class="tool__title">Recovery Tracker</span>
         <span class="tool__desc">Weekly check-ins and your recovery trends. Log in to use it.</span>
       </button>
@@ -79,7 +98,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
     <div class="tools__panel" aria-live="polite">
       <div class="tools__today" id="today-panel">
         <div class="section-title">
-          <h3 id="today-title">Today at the center</h3>
+          <h3 id="today-title"><svg class="feature__icon" aria-hidden="true"><use href="#icon-calendar"/></svg>Today at the center</h3>
           <button class="prc__btn accent" type="button" data-feature="schedule">Full schedule</button>
         </div>
         <div class="today" id="today-list"><p class="muted">Loading today's meetings…</p></div>
@@ -88,7 +107,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
       <section class="feature" id="schedule" aria-labelledby="schedule-title" hidden>
         <header class="feature__head">
           <div>
-            <h3 id="schedule-title">Meeting schedule </h3>
+            <h3 id="schedule-title"><svg class="feature__icon" aria-hidden="true"><use href="#icon-calendar"/></svg>Meeting schedule</h3>
             <p>Meetings at 13939 &amp; 13943 Poway Rd. Pick a day, then reserve a spot.</p>
           </div>
           <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
@@ -99,7 +118,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
       <section class="feature" id="mood-room" aria-labelledby="mood-room-title" hidden>
         <header class="feature__head">
           <div>
-            <h3 id="mood-room-title">Mood Room</h3>
+            <h3 id="mood-room-title"><svg class="feature__icon" aria-hidden="true"><use href="#icon-headphones"/></svg>Mood Room</h3>
             <p>Say how you feel and get a grounding prompt and music to match. Nothing is saved.</p>
           </div>
           <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
@@ -110,7 +129,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
       <section class="feature" id="reflection-wall" aria-labelledby="reflection-wall-title" hidden>
         <header class="feature__head">
           <div>
-            <h3 id="reflection-wall-title">Reflection Wall</h3>
+            <h3 id="reflection-wall-title"><svg class="feature__icon" aria-hidden="true"><use href="#icon-message"/></svg>Reflection Wall</h3>
             <p>Share a small win, gratitude or hope for whoever reads it next, anonymously.</p>
           </div>
           <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>
@@ -121,7 +140,7 @@ scripts: [js/features.js, js/home.js, js/schedule.js, js/mood-room.js, js/reflec
       <section class="feature" id="recovery-tracker" aria-labelledby="recovery-tracker-title" hidden>
         <header class="feature__head">
           <div>
-            <h3 id="recovery-tracker-title">Recovery Tracker</h3>
+            <h3 id="recovery-tracker-title"><svg class="feature__icon" aria-hidden="true"><use href="#icon-leaf"/></svg>Recovery Tracker</h3>
             <p>A weekly check-in on your physical, emotional, mental and spiritual health.</p>
           </div>
           <button class="prc__btn small" type="button" data-feature-close>← Today at the center</button>

@@ -163,83 +163,108 @@ $hero-inset: 72px;
   transition: transform .2s;
 }
 
-// Support tools: buttons on the left show each tool in the panel on the right (_sass/components/_feature-panel.scss),
-// which holds today's meetings until a tool is picked
-.tools { scroll-margin-top: $header-height + 16px; }
+// Support tools: one box of tool buttons on the left, one large box on the right (_sass/components/_feature-panel.scss)
+// that holds today's meetings until a tool is picked.
+// Everything in the section is shown at 90% size.
+.tools {
+  scroll-margin-top: $header-height + 16px;
+  zoom: .9;
+}
 
 .tools__layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 16px;
   align-items: start;
 
-  @media (max-width: 1080px) { grid-template-columns: 200px minmax(0, 1fr); gap: 16px; }
   @include md { grid-template-columns: 1fr; }
 }
 
+// Holds the icon symbols; takes no space
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+// The one box holding every tool button
 .tools__menu {
+  @include panel(6px);
   display: grid;
-  gap: 8px;
+  align-content: start;
+  gap: 2px;
   position: sticky;
   top: $header-height + 16px;
+  z-index: 2;  // description pop-ups sit over the box beside it
 
-  @include md { position: static; }
-
-  @include md { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include md {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   @include sm { grid-template-columns: 1fr; }
 }
 
+// One tool: outline icon and name; the description pops up beside it on hover or keyboard focus
 .tool {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   position: relative;
-  @include panel(10px 34px 10px 14px);
+  padding: 9px 12px;
+  border: 0;
+  border-radius: calc($radius - 4px);
+  background: none;
   font: inherit;
   text-align: left;
   color: $ink;
   cursor: pointer;
-  transition: background .2s, border-color .2s, transform .2s;
-
-  &::after {
-    content: "→";
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: 700;
-    color: $teal;
-    transition: transform .2s;
-  }
+  transition: background .15s, color .15s;
 
   &:hover,
-  &:focus-visible {
-    background: $mist;
-    border-color: $ocean;
-    transform: translateX(2px);
+  &:focus-visible { background: $mist; }
 
-    &::after { transform: translate(3px, -50%); }
-  }
-
-  // The tool showing in the panel
+  // The tool showing in the large box
   &[aria-pressed="true"] {
     background: $mist;
-    border-color: $teal;
+    color: $teal;
+    font-weight: 700;
   }
 }
 
-.tool__title { @include display-font; font-size: 1rem; }
-.tool__desc { font-size: .8rem; line-height: 1.35; color: $muted; }
+.tool__icon { width: 20px; height: 20px; flex-shrink: 0; color: $teal; }
+.tool__title { font-size: .95rem; font-weight: 600; }
+.tool[aria-pressed="true"] .tool__title { font-weight: 700; }
 
-.tools__today .section-title { align-items: center; margin-bottom: 12px; }
-.tools__today h3 { @include display-font; font-size: 1.3rem; margin: 0; }
+.tool__desc {
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  width: 220px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: $ink;
+  color: $white;
+  font-size: .8rem;
+  font-weight: 400;
+  line-height: 1.4;
+  box-shadow: 0 6px 18px rgba($ink, .2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-4px, -50%);
+  transition: opacity .15s, transform .15s, visibility .15s;
+  pointer-events: none;
+  z-index: 5;
 
-// Today's meetings list
-.today {
-  @include panel(0);
-  overflow: hidden;
+  .tool:hover &,
+  .tool:focus-visible & {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -50%);
+  }
+
+  // No hover on phones and tablets
+  @include md { display: none; }
 }
+
+// Today's meetings list (inside the large box, so no box of its own)
+.today { overflow: hidden; }
 
 .today__row {
   width: 100%;
@@ -277,3 +302,7 @@ $hero-inset: 72px;
 .today__spots { text-align: right; @include sm { text-align: left; } }
 .today > p { padding: 20px; margin: 0; }
 
+
+// The two main boxes of the tools section get a darker outline than other panels
+.tools__menu,
+.tools__panel { border: 2px solid mix($line, $ocean, 55%); }

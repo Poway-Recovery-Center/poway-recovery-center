@@ -11,18 +11,27 @@
     </form>
   </div>
 
-  <div class="mood__result card" id="mood-result" hidden>
-    <div class="form-row">
-      <span class="tag" id="mood-label">A room for grounding</span>
-      <button class="prc__btn small" id="reset-room" type="button">Start over</button>
+  <!-- Right-hand box: quick music picks (from /api/mood/music) until a room opens, then the room -->
+  <div class="mood__side card">
+    <div class="mood__picks" id="mood-picks">
+      <h3 class="mood__picks-title">Music for right now</h3>
+      <p class="small muted">Tap one to open it in Apple Music.</p>
+      <div class="mood__pick-list" id="mood-pick-list"></div>
     </div>
-    <h3 id="mood-title">Let's lower the intensity, one minute at a time.</h3>
-    <p id="mood-description"></p>
-    <div class="mood__music">
-      <div><span class="small muted">Music to match</span><strong id="music-title">Calm focus</strong><span class="small muted" id="music-description"></span></div>
-      <a class="prc__btn" id="music-link" href="https://music.apple.com/" target="_blank" rel="noopener">Open in Apple Music ↗</a>
+
+    <div class="mood__result" id="mood-result" hidden>
+      <div class="form-row">
+        <span class="tag" id="mood-label">A room for grounding</span>
+        <button class="prc__btn small" id="reset-room" type="button">Start over</button>
+      </div>
+      <h3 id="mood-title">Let's lower the intensity, one minute at a time.</h3>
+      <p id="mood-description"></p>
+      <div class="mood__music">
+        <div><span class="small muted">Music to match</span><strong id="music-title">Calm focus</strong><span class="small muted" id="music-description"></span></div>
+        <a class="prc__btn" id="music-link" href="https://music.apple.com/" target="_blank" rel="noopener">Open in Apple Music ↗</a>
+      </div>
+      <button class="prc__btn medium accent" id="grounding-prompt" type="button">Give me a grounding prompt</button>
+      <p class="mood__prompt" id="grounding-text"></p>
     </div>
-    <button class="prc__btn medium accent" id="grounding-prompt" type="button">Give me a grounding prompt</button>
-    <p class="mood__prompt" id="grounding-text"></p>
   </div>
 </div>

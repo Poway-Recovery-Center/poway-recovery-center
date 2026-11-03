@@ -79,6 +79,64 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.note.value = thisWeek().note;
   }
 
+  // The form stays tucked away until the check-in button opens it; it grows out of the button and shrinks back into it.
+  // Two animations run in lockstep on the same timing: the drawer's height makes room in the page (so the content
+  // below moves with it), while the form's clip and offset make the visible box grow from the button's exact spot.
+  const openButton = $("#tracker-open"), startRow = $(".tracker__start"), drawer = $("#tracker-drawer");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const openLabel = () => thisWeek() ? "+ Update this week's check-in" : "+ Add check-in";
+  const TIMING = {duration: 420, easing: "cubic-bezier(.33, 1, .68, 1)", fill: "both"};
+  let running = [];
+
+  function animateDrawer(opening, done) {
+    // Clicked again mid-way: play the same motion backwards from where it is, so there's no jump
+    if (running.length) {
+      running.forEach(a => a.reverse());
+      running[0].onfinish = () => { running.forEach(a => a.cancel()); running = []; if (done) done(); };
+      return;
+    }
+    const gap = parseFloat(getComputedStyle(drawer.parentElement).rowGap) || 0;
+    const row = startRow.getBoundingClientRect(), b = openButton.getBoundingClientRect();
+    const full = form.getBoundingClientRect();
+    const shut = {
+      left: b.left - full.left,
+      right: Math.max(full.width - (b.left - full.left) - b.width, 0),
+      bottom: Math.max(full.height - row.height, 0),
+    };
+    const drawerFrames = [{height: "0px", marginTop: `${-gap}px`}, {height: `${full.height}px`, marginTop: "0px"}];
+    const formFrames = [
+      {transform: `translateY(${-row.height}px)`, clipPath: `inset(0px ${shut.right}px ${shut.bottom}px ${shut.left}px round 10px)`},
+      {transform: "translateY(0px)", clipPath: "inset(0px 0px 0px 0px round 10px)"},
+    ];
+    // The fade runs on its own, faster than the size change: in over the first third when opening,
+    // and gone by just past halfway when closing, so the box has faded out before it reaches the button
+    const fadeFrames = opening
+      ? [{opacity: 0}, {opacity: 1, offset: .35}, {opacity: 1}]
+      : [{opacity: 1}, {opacity: 0, offset: .55}, {opacity: 0}];
+    if (!opening) { drawerFrames.reverse(); formFrames.reverse(); }
+    running = [drawer.animate(drawerFrames, TIMING), form.animate(formFrames, TIMING),
+      form.animate(fadeFrames, {...TIMING, easing: "linear"})];
+    running[0].onfinish = () => { running.forEach(a => a.cancel()); running = []; if (done) done(); };
+  }
+
+  function openForm(open) {
+    openButton.setAttribute("aria-expanded", String(open));
+    openButton.textContent = openLabel();
+    if (open) {
+      say("");
+      drawer.hidden = false;
+      if (!reduceMotion.matches) animateDrawer(true);
+      form.querySelector("input").focus({preventScroll: true});
+    } else if (drawer.hidden || reduceMotion.matches) {
+      drawer.hidden = true;
+    } else {
+      animateDrawer(false, () => { drawer.hidden = true; });
+    }
+  }
+  openButton.textContent = openLabel();
+  openButton.addEventListener("click", () => openForm(openButton.getAttribute("aria-expanded") !== "true"));
+  $("#tracker-cancel").addEventListener("click", () => { openForm(false); openButton.focus(); });
+
   form.addEventListener("submit", async e => {
     e.preventDefault();
     const body = {note:form.note.value.trim(), actions:[...form.querySelectorAll("input[name=actions]:checked")].map(box => box.value)};
@@ -89,6 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const result = await saveCheckIn(body);
       data.checkins = data.checkins.filter(c => c.week !== result.checkin.week).concat(result.checkin).sort((a, b) => a.week.localeCompare(b.week));
+      openForm(false);
       say(result.message);
       render(result.concerns);
     } catch (err) { say(err.message, true); }
@@ -102,20 +161,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (alertBox.hidden) return;
     const what = concerns?.length ? `This week ${concerns.join(", ")}. ` : "";
     $("#tracker-alert-text").textContent = `${what}The center's counselors have been alerted so someone can reach out. You don't have to wait for it to pass on your own.`;
-  }
-
-  // "Sleep improved, stress rose": changes since last week first, then anything sitting at the hard end
-  function summarize(latest, previous) {
-    const parts = [];
-    METRICS.forEach(m => {
-      const now = well(m, latest[m.key]), before = previous && well(m, previous[m.key]);
-      const name = parts.length ? m.label.toLowerCase() : m.label;
-      if (previous && now > before) parts.push(`${name} ${m.invert ? "eased" : "improved"}`);
-      else if (previous && now < before) parts.push(`${name} ${m.invert ? "rose" : "dipped"}`);
-      else if (now <= 2) parts.push(`${name} ${m.invert ? "high" : "low"}`);
-    });
-    if (!parts.length) return previous ? "A steady week across the board." : "Your first check-in is in. Check in next week to see how things change.";
-    return parts.join(", ") + ".";
   }
 
   // Weeks in a row with a check-in, counting back from this week (or last week, if this one isn't in yet)
@@ -195,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     change.textContent = !previous ? "first week" : diff === 0 ? "no change" : `${diff > 0 ? "▲" : "▼"} ${Math.abs(diff)}`;
     if (diff) change.classList.add(better ? "is-better" : "is-worse");
 
-    const W = spec.wide ? 600 : 280, H = spec.wide ? 130 : 100, L = 28, R = 10, T = 10, B = 22;
+    const W = spec.wide ? 600 : 230, H = spec.wide ? 130 : 100, L = 28, R = 10, T = 10, B = 22;
     const x = i => checkins.length === 1 ? (L + W - R) / 2 : L + i * (W - L - R) / (checkins.length - 1);
     const y = v => T + (max - v) * (H - T - B) / (max - min);
     const svg = svgEl("svg", {viewBox:`0 0 ${W} ${H}`, class:"tracker__svg", role:"img", "aria-label":`${spec.label} over the last ${checkins.length} check-ins: ${checkins.map(value).join(", ")}`});
@@ -208,30 +253,67 @@ document.addEventListener("DOMContentLoaded", async () => {
       label.textContent = weekLabel(checkins[i].week); svg.append(label);
     });
     if (checkins.length > 1) svg.append(svgEl("polyline", {points:checkins.map((c, i) => `${x(i)},${y(value(c))}`).join(" "), class:"tracker__line"}));
+    // Overall wellbeing: hovering or focusing a dot shows that week's full check-in in a pop-up
+    const popup = spec.details ? Object.assign(document.createElement("div"), {className: "tracker__tip", hidden: true}) : null;
     checkins.forEach((c, i) => {
       const dot = svgEl("g", {class:"tracker__dot", tabindex:"0"});
-      const tip = svgEl("title", {}); tip.textContent = `Week of ${weekLabel(c.week)}: ${value(c)}${unit}`;
-      dot.append(tip, svgEl("circle", {cx:x(i), cy:y(value(c)), r:12, class:"tracker__hit"}), svgEl("circle", {cx:x(i), cy:y(value(c)), r:4.5, class:"tracker__point"}));
+      if (popup) {
+        dot.setAttribute("aria-label", `Week of ${weekLabel(c.week)}: wellbeing ${value(c)}${unit}`);
+        const showTip = () => {
+          popup.replaceChildren(weekDetails(c));
+          popup.hidden = false;
+          const d = dot.querySelector(".tracker__point").getBoundingClientRect(), box = card.getBoundingClientRect();
+          const left = Math.min(Math.max(d.left + d.width / 2 - box.left, 110), box.width - 110);
+          popup.style.left = `${left}px`;
+          popup.style.top = `${d.top - box.top}px`;
+        };
+        dot.addEventListener("mouseenter", showTip);
+        dot.addEventListener("focus", showTip);
+        dot.addEventListener("mouseleave", () => popup.hidden = true);
+        dot.addEventListener("blur", () => popup.hidden = true);
+      } else {
+        const tip = svgEl("title", {}); tip.textContent = `Week of ${weekLabel(c.week)}: ${value(c)}${unit}`;
+        dot.append(tip);
+      }
+      dot.append(svgEl("circle", {cx:x(i), cy:y(value(c)), r:12, class:"tracker__hit"}), svgEl("circle", {cx:x(i), cy:y(value(c)), r:4.5, class:"tracker__point"}));
       svg.append(dot);
     });
     card.append(svg);
+    if (popup) card.append(popup);
     return card;
   }
 
+  // One week's check-in for the wellbeing pop-up: score, each area, what they did and their note
+  function weekDetails(c) {
+    const box = document.createDocumentFragment();
+    const add = (tag, cls, text) => { const n = document.createElement(tag); n.className = cls; n.textContent = text; box.append(n); return n; };
+    add("strong", "tracker__tip-week", `Week of ${weekLabel(c.week)}`);
+    add("span", "tracker__tip-score", `Wellbeing ${score(c)}/100`);
+    const list = add("dl", "tracker__tip-list", "");
+    METRICS.forEach(m => {
+      const dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = m.label; dd.textContent = `${m.levels[c[m.key] - 1]} (${c[m.key]}/5)`;
+      list.append(dt, dd);
+    });
+    const did = ACTIONS.filter(a => c.actions.includes(a.key)).map(a => a.label);
+    if (did.length) add("p", "tracker__tip-did", `I ${did.join(", ")}`);
+    if (c.note) add("p", "tracker__tip-note", `“${c.note}”`);
+    return box;
+  }
+
   function render(concerns) {
-    const checkins = data.checkins, latest = checkins.at(-1), previous = checkins.at(-2);
+    const checkins = data.checkins, latest = checkins.at(-1);
     $("#tracker-history").hidden = !latest;
     showAlert(concerns);
     if (!latest) {
       $("#tracker-insights").replaceChildren();
       $("#tracker-helps").hidden = true;
-      $("#tracker-charts").innerHTML = `<div class="reflection-empty"><strong>No check-ins yet.</strong>Save your first one above and your patterns will show up here.</div>`;
+      $("#tracker-charts").innerHTML = `<div class="reflection-empty"><strong>No check-ins yet.</strong>Add your first check-in above and your patterns will show up here.</div>`;
       return;
     }
-    $("#tracker-summary").textContent = summarize(latest, previous);
     insights(checkins);
     const shown = checkins.slice(-SHOWN);
-    const specs = [{label:"Overall wellbeing", get:score, min:0, max:100, ticks:[0, 50, 100], unit:"/100", wide:true},
+    const specs = [{label:"Overall wellbeing", get:score, min:0, max:100, ticks:[0, 50, 100], unit:"/100", wide:true, details:true},
       ...METRICS.map(m => ({label:m.label, get:c => c[m.key], invert:m.invert}))];
     $("#tracker-charts").replaceChildren(...specs.map(spec => chart(spec, shown)));
 

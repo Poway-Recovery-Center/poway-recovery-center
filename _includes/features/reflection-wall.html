@@ -1,37 +1,30 @@
-<div class="with-sidebar">
-  <form class="form card" id="reflection-form" novalidate>
-    <h3 class="card__title">Add a reflection</h3>
-    <!-- Kinds of reflection come from the backend (/api/reflections/tags) -->
-    <fieldset class="chips" id="reflection-tags">
-      <legend>What kind of reflection is this?</legend>
-    </fieldset>
-    <label class="field" for="reflection-input">Your reflection
-      <textarea id="reflection-input" maxlength="280" placeholder="I made it to my meeting even though I almost talked myself out of it…"></textarea>
-    </label>
-    <div class="form-row">
-      <span class="small muted" id="reflection-count">0 / 280</span>
-      <button class="prc__btn medium accent fill" type="submit">Post anonymously</button>
+<!-- Reflection Wall: a board of sticky notes (js/reflection-wall.js). Kinds of reflection and the notes come from the backend (/api/reflections) -->
+<div class="board" id="reflection-board">
+  <div class="board__bar">
+    <button class="prc__btn medium accent fill board__add" id="reflection-add" type="button" aria-expanded="false" aria-controls="reflection-form">+ Add a reflection</button>
+    <div class="board__filters" id="reflection-filters" role="group" aria-label="Filter reflections">
+      <button class="board__filter" type="button" data-filter="all" aria-pressed="true">All</button>
     </div>
-    <p class="status-msg" id="reflection-status" role="status"></p>
+  </div>
+
+  <!-- New note: styled as a blank sticky note in the colour of the kind picked -->
+  <form class="board__composer sticky" id="reflection-form" data-tag="win" novalidate hidden>
+    <fieldset class="board__kinds" id="reflection-tags">
+      <legend class="visually-hidden">What kind of reflection is this?</legend>
+    </fieldset>
+    <label class="visually-hidden" for="reflection-input">Your reflection</label>
+    <textarea id="reflection-input" maxlength="280" rows="4" placeholder="I made it to my meeting even though I almost talked myself out of it…"></textarea>
+    <p class="board__guide">Leave out names and contact details · speak from your own experience · be kind.</p>
+    <div class="board__composer-foot">
+      <span id="reflection-count">0 / 280</span>
+      <span class="board__composer-actions">
+        <button class="prc__btn small" id="reflection-cancel" type="button">Cancel</button>
+        <button class="prc__btn small accent fill" type="submit">Stick it on the wall</button>
+      </span>
+    </div>
   </form>
 
-  <aside class="sidebar">
-    <div class="note note--sand">
-      <h3>Before you post</h3>
-      <ul class="small">
-        <li>Leave out names, places and contact details.</li>
-        <li>Speak from your own experience. Skip advice about medication or treatment.</li>
-        <li>Be kind. Everyone here is somewhere in their own process.</li>
-      </ul>
-    </div>
-  </aside>
+  <p class="status-msg board__status" id="reflection-status" role="status"></p>
+  <div class="board__empty" id="reflection-empty"><strong>Loading reflections…</strong></div>
+  <div class="board__notes" id="reflection-list"></div>
 </div>
-
-<div class="section-title feature__subhead">
-  <h3>From the community</h3>
-  <div class="prc__links" id="reflection-filters" role="group" aria-label="Filter reflections">
-    <button class="prc__btn small pill" type="button" data-filter="all" aria-pressed="true">All</button>
-  </div>
-</div>
-<div class="reflection-empty" id="reflection-empty"><strong>Loading reflections…</strong></div>
-<div class="reflection-wall" id="reflection-list"></div>
