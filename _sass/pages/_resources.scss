@@ -154,3 +154,122 @@ $program-height: 160px;
 
   @include sm { height: 130px; }
 }
+
+// "What's right for you?" quiz dialog
+.quiz {
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 24px 24px 18px;
+  border: 0;
+  border-radius: $radius;
+  box-shadow: 0 20px 60px rgba($ink, .3);
+  color: $ink;
+
+  &::backdrop { background: rgba($ink, .45); }
+}
+
+.quiz__close-form { position: absolute; top: 10px; right: 10px; margin: 0; }
+
+.quiz__close {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: $mist;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: $ink;
+  cursor: pointer;
+
+  &:hover { background: $sage; }
+}
+
+.quiz__step {
+  margin: 0;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: $teal;
+}
+
+.quiz__title {
+  @include display-font;
+  font-size: 1.3rem;
+  margin: 6px 40px 6px 0;
+  outline: none;
+}
+
+.quiz__hint { margin: 0 0 16px; font-size: .9rem; color: $muted; }
+
+.quiz__answers { display: grid; gap: 8px; }
+
+.quiz__answer {
+  padding: 12px 14px;
+  border: 1px solid $line;
+  border-radius: 8px;
+  background: $white;
+  font: inherit;
+  font-weight: 600;
+  color: $ink;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+
+  &:hover, &:focus-visible { border-color: $teal; background: $mist; }
+  &:focus-visible { outline: 2px solid $teal; outline-offset: 2px; }
+}
+
+.quiz__results { display: grid; gap: 10px; margin-top: 12px; }
+
+.quiz__result {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border: 1px solid $line;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .15s;
+
+  &.is-top { border: 2px solid $teal; background: $mist; }
+  &:hover, &:focus-visible { border-color: $teal; }
+
+  strong { display: block; }
+  span { display: block; font-size: .9rem; color: $muted; }
+}
+
+.quiz__result-img {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  background: $white;
+  border-radius: 6px;
+}
+
+.quiz__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.quiz__note { margin: 14px 0 0; font-size: .85rem; color: $muted; }
+
+.quiz__nav { margin-top: 12px; }
+
+.quiz__back {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  color: $teal;
+  cursor: pointer;
+
+  &[hidden] { display: none; }
+  &:hover { text-decoration: underline; }
+}

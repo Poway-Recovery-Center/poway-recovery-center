@@ -6,6 +6,7 @@ head_class: page-head--center
 heading: Resources
 intro: The recovery programs that meet at the center, plus treatment, everyday help and crisis lines in San Diego County.
 description: The recovery programs that meet at Poway Recovery Center, plus crisis lines, treatment search and everyday help in San Diego County.
+scripts: [/js/resources-quiz.js]
 ---
 <div class="wrap res">
   <section class="res-crisis" id="crisis" aria-labelledby="crisis-title">
@@ -21,7 +22,10 @@ description: The recovery programs that meet at Poway Recovery Center, plus cris
   <section class="res-programs" id="programs" aria-labelledby="programs-title">
     <div class="section-title">
       <h2 id="programs-title">Recovery programs</h2>
-      <a class="prc__btn accent" href="/#schedule">See when they meet</a>
+      <div class="prc__links">
+        <button type="button" class="prc__btn accent fill" id="quiz-open" aria-haspopup="dialog">What's right for you?</button>
+        <a class="prc__btn accent" href="/#schedule">See when they meet</a>
+      </div>
     </div>
     <p class="muted">Programs that meet at the center, for people with different addictions and those who are affected by them. Tap one to learn more about it.</p>
     <div class="programs">
@@ -95,6 +99,16 @@ description: The recovery programs that meet at Poway Recovery Center, plus cris
       </div>
     </div>
   </section>
+
+  <dialog class="quiz" id="quiz" aria-labelledby="quiz-title">
+    <form method="dialog" class="quiz__close-form"><button class="quiz__close" aria-label="Close">&times;</button></form>
+    <p class="quiz__step" id="quiz-step"></p>
+    <h3 class="quiz__title" id="quiz-title" tabindex="-1"></h3>
+    <div class="quiz__body" id="quiz-body"></div>
+    <div class="quiz__nav">
+      <button type="button" class="quiz__back" id="quiz-back">&larr; Back</button>
+    </div>
+  </dialog>
 
   <div class="res-hub">
     <section class="res-group" id="care">
